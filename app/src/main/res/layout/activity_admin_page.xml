@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AdminPage">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:padding="10dp"
+        android:background="@drawable/shape_rect1">
+
+        <ImageButton
+            android:id="@+id/tmblKembali"
+            android:src="@drawable/ic_back"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@null"
+            android:contentDescription="tombol kembali"/>
+
+        <TextView
+            android:id="@+id/namaAkun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Nama"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:textColor="@color/white"/>
+
+        <ImageButton
+            android:id="@+id/tombolKeluar"
+            android:src="@drawable/ic_logout"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@null"
+            android:layout_alignParentEnd="true"
+            android:contentDescription="tombol kembali"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

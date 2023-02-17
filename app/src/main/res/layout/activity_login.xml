@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Login">
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:padding="10dp"
+        android:background="@drawable/shape_rect1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Login"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:textColor="@color/white"/>
+
+    </RelativeLayout>
+    
+    <ImageView
+        android:id="@+id/icon1"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/shape_circle1"
+        android:layout_marginTop="60dp"
+        android:padding="5dp"
+        android:layout_marginBottom="40dp"
+        android:layout_centerHorizontal="true"/>
+    
+    <EditText
+        android:id="@+id/emailAkun"
+        android:layout_below="@+id/icon1"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:drawablePadding="5dp"
+        android:layout_margin="5dp"
+        android:padding="10dp"
+        android:inputType="textEmailAddress"
+        android:background="@drawable/shape_rect2"
+        android:hint="Email"/>
+
+    <EditText
+        android:id="@+id/passwordAkun"
+        android:layout_below="@+id/emailAkun"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:drawablePadding="5dp"
+        android:layout_margin="5dp"
+        android:padding="10dp"
+        android:inputType="textPassword"
+        android:background="@drawable/shape_rect2"
+        android:hint="Password"/>
+    
+    <TextView
+        android:id="@+id/lupaPass"
+        android:layout_below="@+id/passwordAkun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="Lupa Password?"
+        android:layout_alignParentEnd="true"/>
+    
+    <Button
+        android:id="@+id/tmblMasuk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lupaPass"
+        android:text="Masuk"
+        android:layout_centerHorizontal="true"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:minWidth="120dp"/>
+
+    <TextView
+        android:id="@+id/blmPunya"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:text="Belum punya akun? Daftar" />
+
+
+</RelativeLayout>

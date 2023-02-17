@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "601928692622",
+    "project_id": "belapin2",
+    "storage_bucket": "belapin2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:601928692622:android:dbc8e5857f739a2b30aadf",
+        "android_client_info": {
+          "package_name": "com.example.belapin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "601928692622-e5oep2gkgsibe3d6t2u6bcg19s7fppks.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJYSB7wIytmQ9OEYYpSBvL48QmmQbVJgk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "601928692622-e5oep2gkgsibe3d6t2u6bcg19s7fppks.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
