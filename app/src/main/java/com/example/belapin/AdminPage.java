@@ -27,8 +27,8 @@ import java.util.HashMap;
 
 public class AdminPage extends AppCompatActivity {
 
-    private TextView namaAkun;
-    private ImageButton tombolKeluar;
+    private TextView namaAkun, emailAkun, namaToko;
+    private ImageButton tombolKeluar, tambahBarang;
 
     private FirebaseAuth firebaseAuth;
 
@@ -40,7 +40,10 @@ public class AdminPage extends AppCompatActivity {
         setContentView(R.layout.activity_admin_page);
 
         namaAkun = findViewById(R.id.namaAkun);
+        emailAkun = findViewById(R.id.emailAkun);
+        namaToko = findViewById(R.id.namaToko);
         tombolKeluar = findViewById(R.id.tombolKeluar);
+        tambahBarang = findViewById(R.id.tambahBarang);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Mohon Tunggu");
@@ -54,6 +57,15 @@ public class AdminPage extends AppCompatActivity {
             public void onClick(View view) {
                 // sign out to login panel
                 signOutAdmin();
+            }
+        });
+
+        tambahBarang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // add product
+                Intent intent = new Intent(AdminPage.this, TambahBarang.class);
+                startActivity(intent);
             }
         });
 
@@ -103,10 +115,17 @@ public class AdminPage extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot s: snapshot.getChildren()){
+
+                    // get data from database
                     String name = ""+s.child("name").getValue();
                     String tipeAkun = ""+s.child("tipeAkun").getValue();
+                    String email = ""+s.child("email").getValue();
+                    String toko = ""+s.child("namaToko").getValue();
 
-                    namaAkun.setText(name + " ("+tipeAkun+")");
+                    // show data to screen
+                    namaAkun.setText(name);
+                    namaAkun.setText(email);
+                    namaAkun.setText(toko);
                 }
 
             }

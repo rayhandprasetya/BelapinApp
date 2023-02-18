@@ -8,27 +8,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:padding="10dp"
         android:background="@drawable/shape_rect1">
-
-        <ImageButton
-            android:id="@+id/tmblKembali"
-            android:src="@drawable/ic_back"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="@null"
-            android:contentDescription="tombol kembali"/>
-
-        <TextView
-            android:id="@+id/namaAkun"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="Nama"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            android:textColor="@color/white"/>
 
         <ImageButton
             android:id="@+id/tombolKeluar"
@@ -38,6 +20,42 @@
             android:background="@null"
             android:layout_alignParentEnd="true"
             android:contentDescription="tombol kembali"/>
+
+        <ImageButton
+            android:id="@+id/tambahBarang"
+            android:src="@drawable/ic_add"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@null"
+            android:layout_toStartOf="@id/tombolKeluar"
+            android:contentDescription="tombol kembali"/>
+
+        <TextView
+            android:id="@+id/namaAkun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nama"
+            android:textSize="15sp"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/namaToko"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/namaAkun"
+            android:text="Nama Toko"
+            android:textSize="15sp"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/emailAkun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/namaToko"
+            android:text="Email"
+            android:textSize="15sp"
+            android:textColor="@color/white"/>
+
 
     </RelativeLayout>
 

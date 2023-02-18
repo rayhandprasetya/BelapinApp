@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".TambahBarang">
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/shape_rect1">
+
+        <ImageButton
+            android:id="@+id/tmblKembali"
+            android:src="@drawable/ic_back"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@null"
+            android:contentDescription="tombol kembali"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Tambah Barang"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/tambahGambar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_add"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="5dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"/>
+        
+        <EditText
+            android:id="@+id/judul"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/shape_rect2"
+            android:hint="Produk"
+            android:drawablePadding="10dp"
+            android:inputType="textCapSentences|textMultiLine"
+            android:padding="10dp"
+            android:layout_below="@id/tambahGambar"/>
+
+        <EditText
+            android:id="@+id/deskripsi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/shape_rect2"
+            android:hint="Deskripsi"
+            android:drawablePadding="10dp"
+            android:inputType="textCapSentences|textMultiLine"
+            android:padding="10dp"
+            android:layout_below="@id/judul"/>
+
+        <EditText
+            android:id="@+id/kategori"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/shape_rect2"
+            android:drawablePadding="10dp"
+            android:hint="Kategori"
+            android:inputType="textCapSentences|textMultiLine"
+            android:padding="10dp"
+            android:layout_below="@id/deskripsi"/>
+
+        <EditText
+            android:id="@+id/kuantiti"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/shape_rect2"
+            android:drawablePadding="10dp"
+            android:hint="Kuantiti"
+            android:inputType="textCapWords"
+            android:padding="10dp"
+            android:layout_below="@id/kategori"/>
+
+        <EditText
+            android:id="@+id/harga"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/shape_rect2"
+            android:drawablePadding="10dp"
+            android:hint="Harga"
+            android:inputType="numberDecimal"
+            android:padding="10dp"
+            android:layout_below="@id/kuantiti"/>
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/diskon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_below="@id/harga"
+            android:text="Diskon"/>
+
+        <EditText
+            android:id="@+id/hargaDiskon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/shape_rect2"
+            android:drawablePadding="10dp"
+            android:hint="Harga Diskon"
+            android:inputType="numberDecimal"
+            android:padding="10dp"
+            android:layout_below="@id/diskon"/>
+
+        <EditText
+            android:id="@+id/hargaDiskonNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/shape_rect2"
+            android:drawablePadding="10dp"
+            android:hint="Harga Diskon Note"
+            android:inputType="textCapSentences"
+            android:padding="10dp"
+            android:layout_below="@id/hargaDiskon"/>
+
+        <Button
+            android:id="@+id/tombolTambah"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/hargaDiskonNote"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_centerHorizontal="true"
+            android:minWidth="150dp"
+            android:text="Tambah Barang"
+            android:layout_marginTop="5dp"/>
+
+
+
+    </RelativeLayout>
+
+</LinearLayout>
