@@ -7,6 +7,7 @@
     tools:context=".AdminPage">
 
     <RelativeLayout
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
@@ -56,6 +57,100 @@
             android:textSize="15sp"
             android:textColor="@color/white"/>
 
+        <LinearLayout
+            android:layout_below="@id/emailAkun"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/shape_rect3"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/tabBarang"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:background="@drawable/shape_rect4"
+                android:text="Barang"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/tabOrder"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="Order"
+                android:textColor="@color/white"/>
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/barang"
+        android:layout_below="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--Search & filter barang -->
+
+        <EditText
+            android:id="@+id/searchBarang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/shape_rect2"
+            android:drawableStart="@drawable/ic_search"
+            android:layout_toStartOf="@+id/filterBarang"
+            android:drawablePadding="10dp"
+            android:padding="10dp"
+            android:hint="Cari barang"/>
+
+        <ImageButton
+            android:id="@+id/filterBarang"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="2.5dp"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/ic_dashboard"
+            android:scaleType="fitXY"
+            android:background="@null"/>
+
+        <!-- show filtered barang title -->
+        <TextView
+            android:id="@+id/filteredBarang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/searchBarang"
+            android:textColor="@color/black"
+            android:text="Perlihatkan semua"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="5dp"/>
+
+
+        <!-- Recycler View show barang -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/banyakBarang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/filteredBarang"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/baris_barang_admin"/>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/order"
+        android:layout_below="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     </RelativeLayout>
 

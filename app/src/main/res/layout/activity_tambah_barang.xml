@@ -62,13 +62,16 @@
             android:id="@+id/deskripsi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_below="@id/judul"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
             android:background="@drawable/shape_rect2"
-            android:hint="Deskripsi"
             android:drawablePadding="10dp"
+            android:hint="Deskripsi"
             android:inputType="textCapSentences|textMultiLine"
-            android:padding="10dp"
-            android:layout_below="@id/judul"/>
+            android:padding="10dp" />
 
         <EditText
             android:id="@+id/kategori"
@@ -118,13 +121,16 @@
             android:id="@+id/hargaDiskon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_below="@id/diskon"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
             android:background="@drawable/shape_rect2"
             android:drawablePadding="10dp"
             android:hint="Harga Diskon"
             android:inputType="numberDecimal"
-            android:padding="10dp"
-            android:layout_below="@id/diskon"/>
+            android:padding="10dp" />
 
         <EditText
             android:id="@+id/hargaDiskonNote"
@@ -148,8 +154,6 @@
             android:minWidth="150dp"
             android:text="Tambah Barang"
             android:layout_marginTop="5dp"/>
-
-
 
     </RelativeLayout>
 
