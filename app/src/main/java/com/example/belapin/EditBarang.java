@@ -31,24 +31,28 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
-import kotlin.contracts.Returns;
+public class EditBarang extends AppCompatActivity {
 
-public class TambahBarang extends AppCompatActivity {
 
     private ImageButton tmblKembali;
     private ImageView tambahGambar;
     private EditText judul, deskripsi;
     private TextView kategori, kuantiti, harga, hargaDiskon, hargaDiskonNote;
     private SwitchCompat diskon;
-    private Button tombolTambah;
+    private Button tombolEdit;
+    private String barangId;
     //permission constants
     private static final int CAMERA_REQUEST_CODE = 200;
     private static final int STORAGE_REQUEST_CODE = 300;
@@ -65,9 +69,8 @@ public class TambahBarang extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tambah_barang);
+        setContentView(R.layout.activity_edit_barang);
 
-        // init
         tmblKembali = findViewById(R.id.tmblKembali);
         tambahGambar = findViewById(R.id.tambahGambar);
         judul = findViewById(R.id.judul);
@@ -78,13 +81,19 @@ public class TambahBarang extends AppCompatActivity {
         diskon = findViewById(R.id.diskon);
         hargaDiskon = findViewById(R.id.hargaDiskon);
         hargaDiskonNote = findViewById(R.id.hargaDiskonNote);
-        tombolTambah = findViewById(R.id.tombolTambah);
+        tombolEdit = findViewById(R.id.tombolEdit);
+
+        // get id of barang
+        barangId = getIntent().getStringExtra("barangId");
 
         // unchecked, hide
         hargaDiskon.setVisibility(View.GONE);
         hargaDiskonNote.setVisibility(View.GONE);
 
         firebaseAuth = FirebaseAuth.getInstance();
+
+        loadBarangDetail(); // to set on views
+        
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Mohon Tunggu");
@@ -93,7 +102,6 @@ public class TambahBarang extends AppCompatActivity {
         cameraPermissions = new String[]{android.Manifest.permission.CAMERA, android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermissions = new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
-        // if diskon is switched: bla bla
         diskon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
@@ -125,10 +133,10 @@ public class TambahBarang extends AppCompatActivity {
             }
         });
 
-        tombolTambah.setOnClickListener(new View.OnClickListener() {
+        tombolEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // input, validate, add
+                // input, validate, update
                 inputData();
             }
         });
@@ -137,6 +145,62 @@ public class TambahBarang extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 onBackPressed();
+            }
+        });
+    }
+
+    private void loadBarangDetail() {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
+        databaseReference.child((firebaseAuth.getUid())).child("Barang").child(barangId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // get data
+                String barangId = ""+snapshot.child("barangId").getValue();
+                String barangJudul = ""+snapshot.child("barangJudul").getValue();
+                String barangDeskripsi = ""+snapshot.child("barangDeskripsi").getValue();
+                String barangKategori = ""+snapshot.child("barangKategori").getValue();
+                String barangKuantiti = ""+snapshot.child("barangKuantiti").getValue();
+                String hargaAsli = ""+snapshot.child("hargaAsli").getValue();
+                String barangIcon = ""+snapshot.child("barangIcon").getValue();
+                String hargaDiskonLain = ""+snapshot.child("hargaDiskon").getValue();
+                String hargaDiskonNoteLain = ""+snapshot.child("hargaDiskonNote").getValue();
+                String diskonTersedia = ""+snapshot.child("diskonTersedia").getValue();
+                String timestamp = ""+snapshot.child("timestamp").getValue();
+                String uid = ""+snapshot.child("uid").getValue();
+
+                // set data to views
+                if (diskonTersedia.equals("true")) {
+                    diskon.setChecked(true);
+                    hargaDiskon.setVisibility(View.VISIBLE);
+                    hargaDiskonNote.setVisibility(View.VISIBLE);
+                }
+                else {
+                    diskon.setChecked(false);
+                    hargaDiskon.setVisibility(View.GONE);
+                    hargaDiskonNote.setVisibility(View.GONE);
+
+                }
+                judul.setText(barangJudul);
+                deskripsi.setText(barangDeskripsi);
+                kategori.setText(barangKategori);
+                hargaDiskon.setText(hargaDiskonLain);
+                hargaDiskonNote.setText(hargaDiskonNoteLain);
+                kuantiti.setText(barangKuantiti);
+                harga.setText(hargaAsli);
+
+                try {
+
+                    Picasso.get().load(barangIcon).placeholder(R.drawable.ic_add).into(tambahGambar);
+                }
+                catch (Exception e) {
+                    tambahGambar.setImageResource(R.drawable.ic_add);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }
@@ -179,131 +243,111 @@ public class TambahBarang extends AppCompatActivity {
             diskonNote = "";
         }
 
-        tambahBarang();
+        updateBarang();
+
     }
 
-    private void tambahBarang() {
-        // Data added to database
-        progressDialog.setMessage("Menambah barang");
+    private void updateBarang() {
+        // show progress
+        progressDialog.setMessage("Mengupdate barang");
         progressDialog.show();
 
-        final String timestamp = ""+System.currentTimeMillis();
         if (image_uri == null) {
-            // upload without image
-            HashMap<String, Object> hashMap = new HashMap<>();
-            hashMap.put("barangId", ""+timestamp);
-            hashMap.put("barangJudul", ""+barangJudul);
-            hashMap.put("barangDeskripsi", ""+barangDesc);
-            hashMap.put("barangKategori", ""+barangKategori);
-            hashMap.put("barangKuantiti", ""+barangKuantiti);
-            hashMap.put("hargaAsli", ""+hargaAsli);
-            hashMap.put("barangIcon", ""); // no image, set empty
-            hashMap.put("hargaDiskon", ""+hargaDiskon);
-            hashMap.put("hargaDiskonNote", ""+hargaDiskonNote);
-            hashMap.put("diskonTersedia", ""+diskonTersedia);
-            hashMap.put("timestamp", ""+timestamp);
-            hashMap.put("uid", ""+firebaseAuth.getUid());
 
-            // add to database
+            // update without image
+
+            // setup update in hashmap
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("barangJudul", "" + barangJudul);
+            hashMap.put("barangDeskripsi", "" + barangDesc);
+            hashMap.put("barangKategori", "" + barangKategori);
+            hashMap.put("barangKuantiti", "" + barangKuantiti);
+            hashMap.put("hargaAsli", "" + hargaAsli);
+            hashMap.put("diskonTersedia", "" + diskonTersedia);
+            hashMap.put("diskonNote", "" + diskonNote);
+            hashMap.put("hargaDiskonLain", "" + diskonHarga);
+
+            // update to db
             DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
-            databaseReference.child(firebaseAuth.getUid()).child("Barang").child(timestamp).setValue(hashMap)
+            databaseReference.child(firebaseAuth.getUid()).child("Barang").child(barangId).updateChildren(hashMap)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
-                            // success add data to db
+                            // update success
                             progressDialog.dismiss();
-                            Toast.makeText(TambahBarang.this, "Barang berhasil ditambahkan", Toast.LENGTH_SHORT).show();
-                            clearData();
+                            Toast.makeText(EditBarang.this, "Edit berhasil", Toast.LENGTH_SHORT).show();
+
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            // fail add data to db
+                            // update fail
                             progressDialog.dismiss();
-                            Toast.makeText(TambahBarang.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-
+                            Toast.makeText(EditBarang.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
-
         }
         else {
-            // upload with image
-            // up image to storage, name and path of image uploaded
-            String filePath = "barang_gambar/" + "" + timestamp;
+            // update with image
+            // first upload image
+            // image name and path on firebase storage
+            String filePath = "barang_gambar/" + "" + barangId; // overide previous image using same id
+
+            //update images
             StorageReference storageReference = FirebaseStorage.getInstance().getReference(filePath);
             storageReference.putFile(image_uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    // success uplaod image and get url upload
+                    // image uploaded, get url of uploaded image
                     Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
                     while (!uriTask.isSuccessful());
                     Uri downloadImageUri = uriTask.getResult();
 
                     if (uriTask.isSuccessful()) {
-                        // receive image url and upload to db
+                        // setup update in hashmap
                         HashMap<String, Object> hashMap = new HashMap<>();
-                        hashMap.put("barangId", ""+timestamp);
-                        hashMap.put("barangJudul", ""+barangJudul);
-                        hashMap.put("barangDeskripsi", ""+barangDesc);
-                        hashMap.put("barangKategori", ""+barangKategori);
-                        hashMap.put("barangKuantiti", ""+barangKuantiti);
-                        hashMap.put("hargaAsli", ""+hargaAsli);
-                        hashMap.put("barangIcon", ""+downloadImageUri);
-                        hashMap.put("hargaDiskon", ""+hargaDiskon);
-                        hashMap.put("hargaDiskonNote", ""+hargaDiskonNote);
-                        hashMap.put("diskonTersedia", ""+diskonTersedia);
-                        hashMap.put("timestamp", ""+timestamp);
-                        hashMap.put("uid", ""+firebaseAuth.getUid());
+                        hashMap.put("barangJudul", "" + barangJudul);
+                        hashMap.put("barangDeskripsi", "" + barangDesc);
+                        hashMap.put("barangKategori", "" + barangKategori);
+                        hashMap.put("tambahGambar", "" + downloadImageUri);
+                        hashMap.put("barangKuantiti", "" + barangKuantiti);
+                        hashMap.put("hargaAsli", "" + hargaAsli);
+                        hashMap.put("diskonTersedia", "" + diskonTersedia);
+                        hashMap.put("diskonNote", "" + diskonNote);
+                        hashMap.put("hargaDiskonLain", "" + diskonHarga);
 
-                        // add to database
-                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
-                        databaseReference.child(firebaseAuth.getUid()).child("Barang").child(timestamp).setValue(hashMap)
+                        // update to db
+                        DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
+                        databaseReference.child(firebaseAuth.getUid()).child("Barang").child(barangId).updateChildren(hashMap)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {
-                                        // success add data to db
+                                        // update success
                                         progressDialog.dismiss();
-                                        Toast.makeText(TambahBarang.this, "Barang berhasil ditambahkan", Toast.LENGTH_SHORT).show();
-                                        clearData();
+                                        Toast.makeText(EditBarang.this, "Edit berhasil", Toast.LENGTH_SHORT).show();
+
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        // fail add data to db
+                                        // update fail
                                         progressDialog.dismiss();
-                                        Toast.makeText(TambahBarang.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-
+                                        Toast.makeText(EditBarang.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                 });
 
-
                     }
-
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    // failed upload image
+                    // upload failed
                     progressDialog.dismiss();
-                    Toast.makeText(TambahBarang.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-
+                    Toast.makeText(EditBarang.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
+
         }
-
-    }
-
-    private void clearData() {
-        // clear data after uploading barang
-        judul.setText("");
-        deskripsi.setText("");
-        kategori.setText("");
-        kuantiti.setText("");
-        harga.setText("");
-        hargaDiskon.setText("");
-        hargaDiskonNote.setText("");
-        tambahGambar.setImageResource(R.drawable.ic_add);
-        image_uri = null;
     }
 
     private void categoryDialog() {
@@ -372,7 +416,7 @@ public class TambahBarang extends AppCompatActivity {
     }
 
     private boolean storageChecking() {
-        boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
+        boolean result = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
                 (PackageManager.PERMISSION_GRANTED);
         return result;
     }
@@ -382,7 +426,7 @@ public class TambahBarang extends AppCompatActivity {
     }
 
     private boolean cameraChecking() {
-        boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) ==
+        boolean result = ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) ==
                 (PackageManager.PERMISSION_GRANTED);
 
         boolean result2 = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) ==
@@ -450,4 +494,5 @@ public class TambahBarang extends AppCompatActivity {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
 }

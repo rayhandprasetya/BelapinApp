@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/toolBar"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/shape_rect1"
+        android:padding="10dp">
+
+        <ImageButton
+            android:id="@+id/tmblKembali"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@null"
+            android:src="@drawable/ic_back"/>
+        
+        <ImageButton
+            android:id="@+id/tmblHapus"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@null"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_delete"/>
+
+        <ImageButton
+            android:id="@+id/tmblEdit"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@null"
+            android:layout_toStartOf="@id/tmblHapus"
+            android:src="@drawable/ic_edit"/>
+        
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="2dp"
+            android:text="Detail Barang"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/gambarBarang"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:background="#3CED97"
+        android:padding="5dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_add"/>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/gambarBarang"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/hargaDiskonNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_rect5"
+            android:padding="5dp"
+            android:textSize="10sp"
+            android:text="10% off"
+            android:paddingEnd="5dp"
+            android:textColor="#3CED97"/>
+        
+        <TextView
+            android:id="@+id/judul"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Judul Barang"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/deskripsi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Deskripsi Barang"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/kategori"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Kategori"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/kuantiti"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Kuantiti"
+            android:textColor="@color/black" />
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+            
+            <TextView
+                android:id="@+id/hargaDiskon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rp10000"
+                android:layout_marginEnd="10dp" />
+
+            <TextView
+                android:id="@+id/hargaAsli"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rp15000"
+                android:layout_toEndOf="@id/hargaDiskon" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>
