@@ -1,14 +1,14 @@
 package com.example.belapin;
 
-public class ModelToko {
+public class ModelPasar {
 
     private String uid, email, name, namaToko, phone, ongkir, negara, kota,
             provinsi, alamat, latitute, longitude, timestamp, tipeAkun, online, tokoBuka;
 
-    public ModelToko() {
+    public ModelPasar() {
     }
 
-    public ModelToko(String uid, String email, String name, String namaToko, String phone, String ongkir, String negara, String kota, String provinsi, String alamat, String latitute, String longitude, String timestamp, String tipeAkun, String online, String tokoBuka) {
+    public ModelPasar(String uid, String email, String name, String namaToko, String phone, String ongkir, String negara, String kota, String provinsi, String alamat, String latitute, String longitude, String timestamp, String tipeAkun, String online, String tokoBuka) {
         this.uid = uid;
         this.email = email;
         this.name = name;

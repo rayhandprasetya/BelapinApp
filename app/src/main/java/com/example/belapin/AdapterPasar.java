@@ -1,6 +1,7 @@
 package com.example.belapin;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class AdapterToko extends RecyclerView.Adapter<AdapterToko.HolderToko> {
+public class AdapterPasar extends RecyclerView.Adapter<AdapterPasar.HolderToko> {
 
     private Context context;
-    public ArrayList<ModelToko> tokoList;
+    public ArrayList<ModelPasar> tokoList;
 
-    public AdapterToko(Context context, ArrayList<ModelToko> tokoList) {
+    public AdapterPasar(Context context, ArrayList<ModelPasar> tokoList) {
         this.context = context;
         this.tokoList = tokoList;
     }
@@ -33,7 +34,7 @@ public class AdapterToko extends RecyclerView.Adapter<AdapterToko.HolderToko> {
     @Override
     public void onBindViewHolder(@NonNull HolderToko holder, int position) {
         // get data
-        ModelToko modelToko = tokoList.get(position);
+        ModelPasar modelToko = tokoList.get(position);
         String akunTipe = modelToko.getTipeAkun();
         String alamat = modelToko.getAlamat();
         String kota = modelToko.getKota();
@@ -75,6 +76,16 @@ public class AdapterToko extends RecyclerView.Adapter<AdapterToko.HolderToko> {
             // toko close
             holder.tokoTutup.setVisibility(View.VISIBLE);
         }
+
+        // handle click listener, show toko detail
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, DetailPasar.class);
+                intent.putExtra("tokoUid", uid);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

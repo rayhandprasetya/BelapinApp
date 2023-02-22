@@ -34,8 +34,8 @@ public class UserPage extends AppCompatActivity {
     private RecyclerView tokoTampilan;
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
-    private ArrayList<ModelToko> tokoList;
-    private AdapterToko adapterToko;
+    private ArrayList<ModelPasar> tokoList;
+    private AdapterPasar adapterToko;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -189,7 +189,7 @@ public class UserPage extends AppCompatActivity {
                 // clear list befor add
                 tokoList.clear();
                 for (DataSnapshot s: snapshot.getChildren()) {
-                    ModelToko modelToko = s.getValue(ModelToko.class);
+                    ModelPasar modelToko = s.getValue(ModelPasar.class);
 
                     String tokoKota = ""+s.child("kota").getValue();
 
@@ -203,7 +203,7 @@ public class UserPage extends AppCompatActivity {
                 }
 
                 // setup adapter
-                adapterToko = new AdapterToko(UserPage.this, tokoList);
+                adapterToko = new AdapterPasar(UserPage.this, tokoList);
 
                 // set adapter for recyclerview
                 tokoTampilan.setAdapter(adapterToko);

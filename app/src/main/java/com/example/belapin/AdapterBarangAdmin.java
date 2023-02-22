@@ -80,6 +80,7 @@ public class AdapterBarangAdmin extends RecyclerView.Adapter<AdapterBarangAdmin.
         else {
             holder.hargaDiskon.setVisibility(View.GONE);
             holder.hargaDiskonNote.setVisibility(View.GONE);
+            holder.hargaAsli.setPaintFlags(0);
         }
 
         try {
@@ -151,6 +152,7 @@ public class AdapterBarangAdmin extends RecyclerView.Adapter<AdapterBarangAdmin.
         else {
             hargaDiskonUI.setVisibility(View.GONE);
             hargaDiskonNoteUI.setVisibility(View.GONE);
+
         }
 
         try {
