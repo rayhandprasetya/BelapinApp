@@ -3,7 +3,6 @@ package com.example.belapin;
 import android.widget.Filter;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class FilterBarang extends Filter {
 

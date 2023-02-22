@@ -3,12 +3,20 @@ package com.example.belapin;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -16,6 +24,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -53,23 +63,21 @@ public class SplashScreen extends AppCompatActivity {
     private void CheckUserType() {
         // check if user is seller, start seller page, otherwise start user page
         DatabaseReference reference = FirebaseDatabase.getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
-        reference.orderByChild("uid").equalTo(firebaseAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+        reference.child(firebaseAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot s: snapshot.getChildren()) {
-                    String tipeAkun = ""+s.child("tipeAkun").getValue();
-                    if (tipeAkun.equals("Admin")) {
-                        // login as admin
-                        Intent intent = new Intent(SplashScreen.this, AdminPage.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                    else {
-                        // login as user
-                        Intent intent = new Intent(SplashScreen.this, UserPage.class);
-                        startActivity(intent);
-                        finish();
-                    }
+                String tipeAkun = ""+snapshot.child("tipeAkun").getValue();
+                if (tipeAkun.equals("Admin")) {
+                    // login as admin
+                    Intent intent = new Intent(SplashScreen.this, AdminPage.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else {
+                    // login as user
+                    Intent intent = new Intent(SplashScreen.this, UserPage.class);
+                    startActivity(intent);
+                    finish();
                 }
             }
 
