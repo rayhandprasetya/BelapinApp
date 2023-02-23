@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_rect1">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/tambahGambar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_add"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"/>
+        
+        <TextView
+            android:id="@+id/judul"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/tambahGambar"
+            android:layout_marginTop="5dp"
+            android:text="Nama Barang"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/kuantiti"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/judul"
+            android:layout_marginTop="5dp"
+            android:text="Kuantiti"
+            android:textSize="10sp"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/deskripsi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/kuantiti"
+            android:layout_marginTop="5dp"
+            android:text="Deskripsi"
+            android:textColor="@color/white"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp">
+
+        <TextView
+            android:id="@+id/hargaAsli"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Rp10000"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/hargaTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_alignParentEnd="true"
+            android:text="Harga Total"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginStart="10dp">
+
+        <ImageView
+            android:id="@+id/tombolKurang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@null"
+            android:src="@drawable/ic_remove"/>
+
+        <TextView
+            android:id="@+id/kuantitiTambahKurang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:textSize="17sp"
+            android:textColor="@color/black"/>
+
+        <ImageView
+            android:id="@+id/tombolTambah"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@null"
+            android:src="@drawable/ic_add2"/>
+
+    </LinearLayout>
+    
+    <Button
+        android:id="@+id/tombolLanjut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="#3CED97"
+        android:padding="5dp"
+        android:text="Tambah ke kerajang"
+        android:textAllCaps="false"/>
+
+</LinearLayout>

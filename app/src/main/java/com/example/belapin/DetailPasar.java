@@ -195,7 +195,4 @@ public class DetailPasar extends AppCompatActivity {
         });
     }
 
-
-
-
 }

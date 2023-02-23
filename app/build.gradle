@@ -37,6 +37,10 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:1.2.1"
 
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+    // SQLite
+    implementation 'com.github.p32929:AndroidEasySQL-Library:1.4.1'
+
+    // loading image from firebase
     implementation 'com.squareup.picasso:picasso:2.71828'
 
     implementation 'com.google.firebase:firebase-auth:21.1.0'
