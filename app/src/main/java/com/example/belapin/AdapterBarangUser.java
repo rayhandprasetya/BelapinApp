@@ -139,6 +139,7 @@ public class AdapterBarangUser extends RecyclerView.Adapter<AdapterBarangUser.Ho
         catch (Exception e) {
             tambahGambar.setImageResource(R.drawable.ic_add);
         }
+
         judul.setText(""+judulBrg);
         kuantiti.setText(""+kuantitiBrg);
         deskripsi.setText(""+deskripsiBrg);
@@ -194,8 +195,6 @@ public class AdapterBarangUser extends RecyclerView.Adapter<AdapterBarangUser.Ho
     }
 
     private int barangIdDB = 1;
-
-
     private void tambahKeranjang(String barangId, String judul, String hargaSatuan, String harga, String kuantitiL) {
         barangIdDB++;
         EasyDB easyDB = EasyDB.init(context, "DB_ITEMS")
@@ -217,6 +216,9 @@ public class AdapterBarangUser extends RecyclerView.Adapter<AdapterBarangUser.Ho
                 .doneDataAdding();
 
         Toast.makeText(context, "Menambah ke keranjang...", Toast.LENGTH_SHORT).show();
+
+        // update hitung keranjang
+        ((DetailPasar)context).hitungKeranjang();
 
     }
 

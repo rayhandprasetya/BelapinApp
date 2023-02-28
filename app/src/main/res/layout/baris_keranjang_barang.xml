@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp">
+    
+    <TextView
+        android:id="@+id/namaBarang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="Nama Barang"/>
+
+    <TextView
+        android:id="@+id/hargaBarang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:layout_below="@id/namaBarang"
+        android:text="10"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/namaBarang"
+        android:layout_centerHorizontal="true">
+        
+        <TextView
+            android:id="@+id/hargaSatuan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="10000/KG"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/kuantitiBrgKeranjang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginStart="4dp"
+            android:text="[2]"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/hapusBarang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/namaBarang"
+        android:text="Hapus"
+        android:layout_alignParentEnd="true"
+        android:textColor="#D87063"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/hapusBarang"
+        android:layout_marginTop="4dp"
+        android:background="#86D863"/>
+</RelativeLayout>

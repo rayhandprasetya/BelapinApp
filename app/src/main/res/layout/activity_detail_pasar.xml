@@ -20,7 +20,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="48dp"
             android:padding="10dp">
 
             <TextView
@@ -56,6 +56,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
+                android:layout_marginTop="8dp"
                 android:background="@null"
                 android:src="@drawable/ic_add"/>
 
@@ -75,6 +76,18 @@
                 android:textStyle="bold"
                 android:textColor="@color/white"
                 android:textSize="20sp"/>
+
+            <!-- total barang in keranjang -->
+            <TextView
+                android:id="@+id/totalBarangKeranjang"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:textColor="@color/white"
+                android:text="10"
+                android:textSize="8sp"
+                android:gravity="center"
+                android:background="@drawable/shape_circle3"
+                android:layout_alignParentEnd="true"/>
 
         </RelativeLayout>
 

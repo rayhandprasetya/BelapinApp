@@ -81,7 +81,8 @@
         </LinearLayout>
 
     </RelativeLayout>
-    
+
+    <!-- tab toko -->
     <RelativeLayout
         android:id="@+id/catalog"
         android:layout_below="@id/toolbar"
@@ -98,11 +99,23 @@
 
     </RelativeLayout>
 
+    <!-- tab order -->
     <RelativeLayout
+        android:visibility="gone"
         android:id="@+id/riwayat"
         android:layout_below="@id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <!-- show order (newest first)-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/belanjaanHistory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:stackFromEnd="true"
+            app:reverseLayout="true"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/baris_belanjaan_user"/>
 
     </RelativeLayout>
 

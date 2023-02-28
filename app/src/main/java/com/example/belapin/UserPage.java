@@ -31,11 +31,14 @@ public class UserPage extends AppCompatActivity {
     private TextView namaAkun, emailAkun, nohp, tabToko, tabOrder;
     private ImageButton tombolKeluar;
     private RelativeLayout catalog, riwayat;
-    private RecyclerView tokoTampilan;
+    private RecyclerView tokoTampilan, belanjaanHistory;
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
     private ArrayList<ModelPasar> tokoList;
     private AdapterPasar adapterToko;
+
+    private ArrayList<ModelBelanjaan> belanjaanList;
+    private AdapterBelanjaanUser adapterBelanjaanUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,7 @@ public class UserPage extends AppCompatActivity {
         catalog = findViewById(R.id.catalog);
         riwayat = findViewById(R.id.riwayat);
         tokoTampilan = findViewById(R.id.tokoTampilan);
+        belanjaanHistory = findViewById(R.id.belanjaanHistory);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Mohon Tunggu");
@@ -131,7 +135,6 @@ public class UserPage extends AppCompatActivity {
                 // gagal update
                 progressDialog.dismiss();
                 Toast.makeText(UserPage.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-
             }
         });
     }
@@ -167,8 +170,8 @@ public class UserPage extends AppCompatActivity {
                     nohp.setText(phone);
 
                     loadToko(kota);
+                    loadBelanjaan();
                 }
-
             }
 
             @Override
@@ -178,7 +181,103 @@ public class UserPage extends AppCompatActivity {
         });
     }
 
-    private void loadToko(String kotaSaya) {
+    private void loadBelanjaan() {
+        // init belanjaan list
+        belanjaanList = new ArrayList<>();
+
+        // get belanjaan
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                belanjaanList.clear();
+                for (DataSnapshot s: snapshot.getChildren()) {
+                    String uid = ""+s.getRef().getKey();
+                    DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users").child(uid).child("Belanjaan");
+                    databaseReference.orderByChild("yangOrder").equalTo(firebaseAuth.getUid()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                                for (DataSnapshot s: snapshot.getChildren()) {
+                                    ModelBelanjaan modelBelanjaan = s.getValue(ModelBelanjaan.class);
+
+                                    // add to list
+                                    belanjaanList.add(modelBelanjaan);
+                                }
+
+                                // setup adapter
+                                adapterBelanjaanUser = new AdapterBelanjaanUser(UserPage.this, belanjaanList);
+
+                                // set to recycleview
+                                belanjaanHistory.setAdapter(adapterBelanjaanUser);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+//    private void loadBelanjaan() {
+//        // init belanjaan list
+//        belanjaanList = new ArrayList<>();
+//
+//        // setup adapter
+//        adapterBelanjaanUser = new AdapterBelanjaanUser(UserPage.this, belanjaanList);
+//
+//        // set adapter to RecyclerView
+//        belanjaanHistory.setAdapter(adapterBelanjaanUser);
+//
+//        // get belanjaan
+//        DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
+//        databaseReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                belanjaanList.clear();
+//                for (DataSnapshot s: snapshot.getChildren()) {
+//                    String uid = ""+s.getRef().getKey();
+//                    DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users").child(uid).child("Belanjaan");
+//                    databaseReference.orderByChild("yangOrder").equalTo(firebaseAuth.getUid()).addValueEventListener(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                            if (snapshot.exists()) {
+//                                for (DataSnapshot s: snapshot.getChildren()) {
+//                                    ModelBelanjaan modelBelanjaan = s.getValue(ModelBelanjaan.class);
+//
+//                                    // add to list
+//                                    belanjaanList.add(modelBelanjaan);
+//                                }
+//
+//                                // update adapter data
+//                                adapterBelanjaanUser.notifyDataSetChanged();
+//                            }
+//                        }
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError error) {
+//
+//                        }
+//                    });
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//    }
+
+    private void loadToko(final String kotaSaya) {
 
         tokoList = new ArrayList<>();
 
@@ -207,7 +306,6 @@ public class UserPage extends AppCompatActivity {
 
                 // set adapter for recyclerview
                 tokoTampilan.setAdapter(adapterToko);
-
             }
 
             @Override
