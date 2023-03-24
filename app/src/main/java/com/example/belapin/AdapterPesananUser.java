@@ -52,7 +52,6 @@ public class AdapterPesananUser extends RecyclerView.Adapter<AdapterPesananUser.
         // return list size
         return belanjaanDetailArrayList.size();
     }
-
     class HolderPesananUser extends RecyclerView.ViewHolder {
 
         // views of baris_pesananbarang.xml

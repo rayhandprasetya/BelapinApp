@@ -30,7 +30,7 @@ public class AdapterBelanjaanUser extends RecyclerView.Adapter<AdapterBelanjaanU
         this.context = context;
         this.belanjaanArrayList = belanjaanArrayList;
     }
-    
+
     @NonNull
     @Override
     public HolderBelanjaanUser onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -48,7 +48,7 @@ public class AdapterBelanjaanUser extends RecyclerView.Adapter<AdapterBelanjaanU
         String pesananId = modelBelanjaan.getPesananId();
         String yangOrder = modelBelanjaan.getYangOrder();
         String biayaOrder = modelBelanjaan.getCost();
-        String statusOrder = modelBelanjaan.getStatusOrder();
+//        String statusOrder = modelBelanjaan.getStatusOrder();
         String waktuOrder = modelBelanjaan.getWaktoOrder();
         String keOrder = modelBelanjaan.getOrderKe();
 
@@ -57,14 +57,14 @@ public class AdapterBelanjaanUser extends RecyclerView.Adapter<AdapterBelanjaanU
 
         holder.totalAmount.setText("Total: Rp"+biayaOrder);
         holder.belanjaanId.setText("Belanjaan ID:"+pesananId);
-        holder.statusBelanjaan.setText(statusOrder);
+//        holder.statusBelanjaan.setText(statusOrder);
         // change status
-        if (statusOrder.equals("Selesai")) {
-            holder.statusBelanjaan.setTextColor(context.getResources().getColor(R.color.green));
-        }
-        else if (statusOrder.equals("Batal")) {
-            holder.statusBelanjaan.setTextColor(context.getResources().getColor(R.color.red));
-        }
+//        if (statusOrder.equals("Selesai")) {
+//            holder.statusBelanjaan.setTextColor(context.getResources().getColor(R.color.green));
+//        }
+//        else if (statusOrder.equals("Batal")) {
+//            holder.statusBelanjaan.setTextColor(context.getResources().getColor(R.color.red));
+//        }
 
         // convert timestamp to time format
         Calendar calendar = Calendar.getInstance();
@@ -122,7 +122,7 @@ public class AdapterBelanjaanUser extends RecyclerView.Adapter<AdapterBelanjaanU
             waktu = itemView.findViewById(R.id.waktu);
             namaPasar = itemView.findViewById(R.id.namaPasar);
             totalAmount = itemView.findViewById(R.id.totalAmount);
-            statusBelanjaan = itemView.findViewById(R.id.statusBelanjaan);
+//            statusBelanjaan = itemView.findViewById(R.id.statusBelanjaan);
             next = itemView.findViewById(R.id.next);
 
         }

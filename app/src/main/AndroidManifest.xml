@@ -21,6 +21,9 @@
         android:theme="@style/AppTheme.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".LoginPanel"
+            android:exported="false" />
+        <activity
             android:name=".BelanjaanDetailUser"
             android:exported="false" />
         <activity

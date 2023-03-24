@@ -49,7 +49,7 @@ public class SplashScreen extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user==null) {
                     // user not logged
-                    Intent intent = new Intent(SplashScreen.this, Login.class);
+                    Intent intent = new Intent(SplashScreen.this, LoginPanel.class);
                     startActivity(intent);
                 }
                 else {

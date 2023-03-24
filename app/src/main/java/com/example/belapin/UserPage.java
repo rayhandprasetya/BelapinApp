@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -28,7 +30,8 @@ import java.util.HashMap;
 
 public class UserPage extends AppCompatActivity {
 
-    private TextView namaAkun, emailAkun, nohp, tabToko, tabOrder;
+    private TextView namaAkun, emailAkun;
+    private ImageView tabToko, tabOrder, foodMenu;
     private ImageButton tombolKeluar;
     private RelativeLayout catalog, riwayat;
     private RecyclerView tokoTampilan, belanjaanHistory;
@@ -37,7 +40,7 @@ public class UserPage extends AppCompatActivity {
     private ArrayList<ModelPasar> tokoList;
     private AdapterPasar adapterToko;
 
-    private ArrayList<ModelBelanjaan> belanjaanList;
+    private ArrayList<ModelBelanjaan> belanjaanArrayList;
     private AdapterBelanjaanUser adapterBelanjaanUser;
 
     @Override
@@ -47,14 +50,15 @@ public class UserPage extends AppCompatActivity {
 
         namaAkun = findViewById(R.id.namaAkun);
         emailAkun = findViewById(R.id.emailAkun);
-        nohp = findViewById(R.id.nohp);
         tabToko = findViewById(R.id.tabToko);
         tabOrder = findViewById(R.id.tabOrder);
         tombolKeluar = findViewById(R.id.tombolKeluar);
         catalog = findViewById(R.id.catalog);
         riwayat = findViewById(R.id.riwayat);
         tokoTampilan = findViewById(R.id.tokoTampilan);
+        foodMenu = findViewById(R.id.foodMenu);
         belanjaanHistory = findViewById(R.id.belanjaanHistory);
+//        belanjaanHistory.setLayoutManager(new LinearLayoutManager(UserPage.this));
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Mohon Tunggu");
@@ -80,6 +84,14 @@ public class UserPage extends AppCompatActivity {
             }
         });
 
+//        foodMenu.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(UserPage.this, FoodMenu.class);
+//                startActivity(intent);
+//            }
+//        });
+
         tabOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,11 +106,17 @@ public class UserPage extends AppCompatActivity {
         catalog.setVisibility(View.VISIBLE);
         riwayat.setVisibility(View.GONE);
 
-        tabToko.setTextColor(getResources().getColor(R.color.black));
-        tabToko.setBackgroundResource(R.drawable.shape_rect4);
+//        tabToko.setTextColor(getResources().getColor(R.color.black));
+//        tabToko.setBackgroundResource(R.drawable.shape_rect4);
+//
+////        tabOrder.setTextColor(getResources().getColor(R.color.white));
+//        tabOrder.setBackgroundColor(getResources().getColor(android.R.color.transparent));
 
-        tabOrder.setTextColor(getResources().getColor(R.color.white));
-        tabOrder.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+//        belanjaanList = new ArrayList<>();
+//        loadBelanjaan();
+//        // set adapter to recycler view
+//        adapterBelanjaanUser = new AdapterBelanjaanUser(this, belanjaanList);
+//        belanjaanHistory.setAdapter(adapterBelanjaanUser);
     }
 
     private void showRiwayat() {
@@ -106,11 +124,11 @@ public class UserPage extends AppCompatActivity {
         catalog.setVisibility(View.GONE);
         riwayat.setVisibility(View.VISIBLE);
 
-        tabToko.setTextColor(getResources().getColor(R.color.white));
-        tabToko.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-
-        tabOrder.setTextColor(getResources().getColor(R.color.black));
-        tabOrder.setBackgroundResource(R.drawable.shape_rect4);
+//        tabToko.setTextColor(getResources().getColor(R.color.white));
+//        tabToko.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+//
+//        tabOrder.setTextColor(getResources().getColor(R.color.black));
+//        tabOrder.setBackgroundResource(R.drawable.shape_rect4);
     }
 
     private void signOutUser() {
@@ -121,7 +139,9 @@ public class UserPage extends AppCompatActivity {
         hashMap.put("online","false");
 
         //update value to database
-        DatabaseReference reference = FirebaseDatabase.getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
+        DatabaseReference reference = FirebaseDatabase
+                .getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app")
+                .getReference("Users");
         reference.child(firebaseAuth.getUid()).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
@@ -167,7 +187,6 @@ public class UserPage extends AppCompatActivity {
                     // set user data
                     namaAkun.setText(name);
                     emailAkun.setText(email);
-                    nohp.setText(phone);
 
                     loadToko(kota);
                     loadBelanjaan();
@@ -183,18 +202,23 @@ public class UserPage extends AppCompatActivity {
 
     private void loadBelanjaan() {
         // init belanjaan list
-        belanjaanList = new ArrayList<>();
+        belanjaanArrayList = new ArrayList<>();
 
         // get belanjaan
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
+        DatabaseReference databaseReference = FirebaseDatabase
+                .getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app")
+                .getReference("Users");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                belanjaanList.clear();
+                belanjaanArrayList.clear();
                 for (DataSnapshot s: snapshot.getChildren()) {
                     String uid = ""+s.getRef().getKey();
-                    DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users").child(uid).child("Belanjaan");
-                    databaseReference.orderByChild("yangOrder").equalTo(firebaseAuth.getUid()).addValueEventListener(new ValueEventListener() {
+                    DatabaseReference databaseReference = FirebaseDatabase
+                            .getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app")
+                            .getReference("Users").child(uid).child("Belanjaan");
+                    databaseReference.orderByChild("yangOrder").equalTo(firebaseAuth.getUid())
+                            .addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (snapshot.exists()) {
@@ -202,11 +226,11 @@ public class UserPage extends AppCompatActivity {
                                     ModelBelanjaan modelBelanjaan = s.getValue(ModelBelanjaan.class);
 
                                     // add to list
-                                    belanjaanList.add(modelBelanjaan);
+                                    belanjaanArrayList.add(modelBelanjaan);
                                 }
 
                                 // setup adapter
-                                adapterBelanjaanUser = new AdapterBelanjaanUser(UserPage.this, belanjaanList);
+                                adapterBelanjaanUser = new AdapterBelanjaanUser(UserPage.this, belanjaanArrayList);
 
                                 // set to recycleview
                                 belanjaanHistory.setAdapter(adapterBelanjaanUser);
@@ -281,8 +305,11 @@ public class UserPage extends AppCompatActivity {
 
         tokoList = new ArrayList<>();
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
-        databaseReference.orderByChild("tipeAkun").equalTo("Admin").addValueEventListener(new ValueEventListener() {
+        DatabaseReference databaseReference = FirebaseDatabase
+                .getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app")
+                .getReference("Users");
+        databaseReference.orderByChild("tipeAkun").equalTo("Admin")
+                .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 // clear list befor add
@@ -290,15 +317,15 @@ public class UserPage extends AppCompatActivity {
                 for (DataSnapshot s: snapshot.getChildren()) {
                     ModelPasar modelToko = s.getValue(ModelPasar.class);
 
-                    String tokoKota = ""+s.child("kota").getValue();
+//                    String tokoKota = ""+s.child("kota").getValue();
+//
+//                    // show only kota user
+//                    if (tokoKota.equals(kotaSaya)) {
+//                        tokoList.add(modelToko);
+//                    }
 
-                    // show only kota user
-                    if (tokoKota.equals(kotaSaya)) {
-                        tokoList.add(modelToko);
-                    }
-
-                    // if want to display all shop, skip if statment and add this
-                    // tokoList.add(modelToko);
+//                     if want to display all shop, skip if statment and add this
+                     tokoList.add(modelToko);
                 }
 
                 // setup adapter

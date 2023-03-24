@@ -44,7 +44,7 @@ public class TambahBarang extends AppCompatActivity {
     private ImageButton tmblKembali;
     private ImageView tambahGambar;
     private EditText judul, deskripsi;
-    private TextView kategori, kuantiti, harga, hargaDiskon, hargaDiskonNote;
+    private TextView kategori, harga, hargaDiskon, hargaDiskonNote;
     private SwitchCompat diskon;
     private Button tombolTambah;
     //permission constants
@@ -71,16 +71,16 @@ public class TambahBarang extends AppCompatActivity {
         judul = findViewById(R.id.judul);
         deskripsi = findViewById(R.id.deskripsi);
         kategori = findViewById(R.id.kategori);
-        kuantiti = findViewById(R.id.kuantiti);
+//        kuantiti = findViewById(R.id.kuantiti);
         harga = findViewById(R.id.harga);
-        diskon = findViewById(R.id.diskon);
-        hargaDiskon = findViewById(R.id.hargaDiskon);
-        hargaDiskonNote = findViewById(R.id.hargaDiskonNote);
+//        diskon = findViewById(R.id.diskon);
+//        hargaDiskon = findViewById(R.id.hargaDiskon);
+//        hargaDiskonNote = findViewById(R.id.hargaDiskonNote);
         tombolTambah = findViewById(R.id.tombolTambah);
 
         // unchecked, hide
-        hargaDiskon.setVisibility(View.GONE);
-        hargaDiskonNote.setVisibility(View.GONE);
+//        hargaDiskon.setVisibility(View.GONE);
+//        hargaDiskonNote.setVisibility(View.GONE);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -92,21 +92,21 @@ public class TambahBarang extends AppCompatActivity {
         storagePermissions = new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
         // if diskon is switched: bla bla
-        diskon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                if (checked) {
-                    // show diskon harga and note
-                    hargaDiskon.setVisibility(View.VISIBLE);
-                    hargaDiskonNote.setVisibility(View.VISIBLE);
-                }
-                else {
-                    // unchecked, hide
-                    hargaDiskon.setVisibility(View.GONE);
-                    hargaDiskonNote.setVisibility(View.GONE);
-                }
-            }
-        });
+//        diskon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+//                if (checked) {
+//                    // show diskon harga and note
+//                    hargaDiskon.setVisibility(View.VISIBLE);
+//                    hargaDiskonNote.setVisibility(View.VISIBLE);
+//                }
+//                else {
+//                    // unchecked, hide
+//                    hargaDiskon.setVisibility(View.GONE);
+//                    hargaDiskonNote.setVisibility(View.GONE);
+//                }
+//            }
+//        });
 
         tambahGambar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,6 +134,7 @@ public class TambahBarang extends AppCompatActivity {
         tmblKembali.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 onBackPressed();
             }
         });
@@ -147,9 +148,9 @@ public class TambahBarang extends AppCompatActivity {
         barangJudul = judul.getText().toString().trim();
         barangDesc = deskripsi.getText().toString().trim();
         barangKategori = kategori.getText().toString().trim();
-        barangKuantiti = kuantiti.getText().toString().trim();
+//        barangKuantiti = kuantiti.getText().toString().trim();
         hargaAsli = harga.getText().toString().trim();
-        diskonTersedia = diskon.isChecked();
+//        diskonTersedia = diskon.isChecked();
 
         // validate data
         if (TextUtils.isEmpty(barangJudul)) {
@@ -164,18 +165,18 @@ public class TambahBarang extends AppCompatActivity {
             Toast.makeText(this, "Kategori harus diisi", Toast.LENGTH_SHORT).show();
             return; // dont proceed further
         }
-        if (diskonTersedia) {
-            diskonHarga = hargaDiskon.getText().toString().trim();
-            diskonNote = hargaDiskonNote.getText().toString().trim();
-            if (TextUtils.isEmpty(diskonHarga)) {
-                Toast.makeText(this, "Diskon Harga harus diisi", Toast.LENGTH_SHORT).show();
-                return; // dont proceed further
-            }
-        }
-        else {
-            diskonHarga = "0";
-            diskonNote = "";
-        }
+//        if (diskonTersedia) {
+//            diskonHarga = hargaDiskon.getText().toString().trim();
+//            diskonNote = hargaDiskonNote.getText().toString().trim();
+//            if (TextUtils.isEmpty(diskonHarga)) {
+//                Toast.makeText(this, "Diskon Harga harus diisi", Toast.LENGTH_SHORT).show();
+//                return; // dont proceed further
+//            }
+//        }
+//        else {
+//            diskonHarga = "0";
+//            diskonNote = "";
+//        }
 
         tambahBarang();
     }
@@ -196,14 +197,16 @@ public class TambahBarang extends AppCompatActivity {
             hashMap.put("barangKuantiti", ""+barangKuantiti);
             hashMap.put("hargaAsli", ""+hargaAsli);
             hashMap.put("barangIcon", ""); // no image, set empty
-            hashMap.put("hargaDiskon", ""+hargaDiskon);
-            hashMap.put("hargaDiskonNote", ""+hargaDiskonNote);
-            hashMap.put("diskonTersedia", ""+diskonTersedia);
+//            hashMap.put("hargaDiskon", ""+hargaDiskon);
+//            hashMap.put("hargaDiskonNote", ""+hargaDiskonNote);
+//            hashMap.put("diskonTersedia", ""+diskonTersedia);
             hashMap.put("timestamp", ""+timestamp);
             hashMap.put("uid", ""+firebaseAuth.getUid());
 
             // add to database
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
+            DatabaseReference databaseReference = FirebaseDatabase
+                    .getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app")
+                    .getReference("Users");
             databaseReference.child(firebaseAuth.getUid()).child("Barang").child(timestamp).setValue(hashMap)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -219,7 +222,6 @@ public class TambahBarang extends AppCompatActivity {
                             // fail add data to db
                             progressDialog.dismiss();
                             Toast.makeText(TambahBarang.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-
                         }
                     });
 
@@ -247,9 +249,9 @@ public class TambahBarang extends AppCompatActivity {
                         hashMap.put("barangKuantiti", ""+barangKuantiti);
                         hashMap.put("hargaAsli", ""+hargaAsli);
                         hashMap.put("barangIcon", ""+downloadImageUri);
-                        hashMap.put("hargaDiskon", ""+hargaDiskon);
-                        hashMap.put("hargaDiskonNote", ""+hargaDiskonNote);
-                        hashMap.put("diskonTersedia", ""+diskonTersedia);
+//                        hashMap.put("hargaDiskon", ""+hargaDiskon);
+//                        hashMap.put("hargaDiskonNote", ""+hargaDiskonNote);
+//                        hashMap.put("diskonTersedia", ""+diskonTersedia);
                         hashMap.put("timestamp", ""+timestamp);
                         hashMap.put("uid", ""+firebaseAuth.getUid());
 
@@ -273,8 +275,6 @@ public class TambahBarang extends AppCompatActivity {
 
                                     }
                                 });
-
-
                     }
 
                 }
@@ -296,10 +296,10 @@ public class TambahBarang extends AppCompatActivity {
         judul.setText("");
         deskripsi.setText("");
         kategori.setText("");
-        kuantiti.setText("");
+//        kuantiti.setText("");
         harga.setText("");
-        hargaDiskon.setText("");
-        hargaDiskonNote.setText("");
+//        hargaDiskon.setText("");
+//        hargaDiskonNote.setText("");
         tambahGambar.setImageResource(R.drawable.ic_add);
         image_uri = null;
     }
@@ -314,7 +314,6 @@ public class TambahBarang extends AppCompatActivity {
                 String category = Constants.kategoriBarang[i];
 
                 kategori.setText(category);
-
             }
         }).show();
     }
@@ -351,7 +350,7 @@ public class TambahBarang extends AppCompatActivity {
 
     private void imageGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/+");
+        intent.setType("image/*");
         startActivityForResult(intent, IMAGE_PICK_GALLERY_CODE);
     }
 

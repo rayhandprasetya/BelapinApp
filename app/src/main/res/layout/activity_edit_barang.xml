@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context=".EditBarang">
 
     <RelativeLayout
@@ -26,6 +27,7 @@
             android:layout_centerHorizontal="true"
             android:text="Edit Barang"
             android:textColor="@color/white"
+            android:layout_marginTop="10dp"
             android:textStyle="bold"
             android:textSize="20sp"/>
 
@@ -46,114 +48,218 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"/>
 
+
+<!--        <EditText-->
+<!--            android:id="@+id/judul"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/tambahGambar"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:layout_marginEnd="5dp"-->
+<!--            android:layout_marginBottom="5dp"-->
+<!--            android:background="@drawable/shape_rect2"-->
+<!--            android:drawablePadding="10dp"-->
+<!--            android:hint="Produk"-->
+<!--            android:inputType="textCapSentences|textMultiLine"-->
+<!--            android:padding="10dp" />-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/deskripsi"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/judul"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:layout_marginEnd="5dp"-->
+<!--            android:layout_marginBottom="5dp"-->
+<!--            android:background="@drawable/shape_rect2"-->
+<!--            android:drawablePadding="10dp"-->
+<!--            android:hint="Deskripsi"-->
+<!--            android:inputType="textCapSentences|textMultiLine"-->
+<!--            android:padding="10dp" />-->
+
         <EditText
             android:id="@+id/judul"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@drawable/shape_rect2"
+            android:layout_gravity="center"
             android:hint="Produk"
-            android:drawablePadding="10dp"
+            android:layout_centerHorizontal="true"
+            android:textColor="#8D8D8D"
+            android:textSize="15sp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_below="@id/tambahGambar"
+            android:padding="15dp"
             android:inputType="textCapSentences|textMultiLine"
-            android:padding="10dp"
-            android:layout_below="@id/tambahGambar"/>
+            android:background="@drawable/textbox"/>
 
         <EditText
             android:id="@+id/deskripsi"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/judul"
+            android:layout_gravity="center"
+            android:hint="Deskripsi"
+            android:layout_centerHorizontal="true"
+            android:textColor="#8D8D8D"
+            android:textSize="15sp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/shape_rect2"
-            android:drawablePadding="10dp"
-            android:hint="Deskripsi"
+            android:layout_below="@id/judul"
+            android:padding="15dp"
             android:inputType="textCapSentences|textMultiLine"
-            android:padding="10dp" />
+            android:background="@drawable/textbox"/>
 
         <EditText
             android:id="@+id/kategori"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@drawable/shape_rect2"
-            android:drawablePadding="10dp"
+            android:layout_gravity="center"
             android:hint="Kategori"
-            android:inputType="textCapSentences|textMultiLine"
-            android:padding="10dp"
-            android:layout_below="@id/deskripsi"/>
-
-        <EditText
-            android:id="@+id/kuantiti"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@drawable/shape_rect2"
-            android:drawablePadding="10dp"
-            android:hint="Kuantiti"
-            android:inputType="textCapWords"
-            android:padding="10dp"
-            android:layout_below="@id/kategori"/>
-
-        <EditText
-            android:id="@+id/harga"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@drawable/shape_rect2"
-            android:drawablePadding="10dp"
-            android:hint="Harga"
-            android:inputType="numberDecimal"
-            android:padding="10dp"
-            android:layout_below="@id/kuantiti"/>
-
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/diskon"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_below="@id/harga"
-            android:text="Diskon"/>
-
-        <EditText
-            android:id="@+id/hargaDiskon"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/diskon"
+            android:layout_centerHorizontal="true"
+            android:textColor="#8D8D8D"
+            android:textSize="15sp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/shape_rect2"
-            android:drawablePadding="10dp"
-            android:hint="Harga Diskon"
-            android:inputType="numberDecimal"
-            android:padding="10dp" />
+            android:layout_below="@id/deskripsi"
+            android:padding="15dp"
+            android:inputType="textCapSentences|textMultiLine"
+            android:background="@drawable/textbox"/>
 
         <EditText
-            android:id="@+id/hargaDiskonNote"
-            android:layout_width="match_parent"
+            android:id="@+id/harga"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@drawable/shape_rect2"
-            android:drawablePadding="10dp"
-            android:hint="Harga Diskon Note"
-            android:inputType="textCapSentences"
-            android:padding="10dp"
-            android:layout_below="@id/hargaDiskon"/>
+            android:layout_gravity="center"
+            android:hint="Produk"
+            android:layout_centerHorizontal="true"
+            android:textColor="#8D8D8D"
+            android:textSize="15sp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_below="@id/kategori"
+            android:padding="15dp"
+            android:inputType="textCapSentences|textMultiLine"
+            android:background="@drawable/textbox"/>
 
         <Button
             android:id="@+id/tombolEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/hargaDiskonNote"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_centerHorizontal="true"
-            android:minWidth="150dp"
+            android:layout_marginTop="30dp"
+            android:backgroundTint="#3CED97"
             android:text="Edit Barang"
-            android:layout_marginTop="5dp"/>
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:layout_below="@id/harga"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:textSize="15sp"
+            android:background="@drawable/textbox" />
+
+<!--        <EditText-->
+<!--            android:id="@+id/kategori"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="5dp"-->
+<!--            android:background="@drawable/shape_rect2"-->
+<!--            android:drawablePadding="10dp"-->
+<!--            android:hint="Kategori"-->
+<!--            android:inputType="textCapSentences|textMultiLine"-->
+<!--            android:padding="10dp"-->
+<!--            android:layout_below="@id/deskripsi"/>-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/kuantiti"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/kategori"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:layout_marginEnd="5dp"-->
+<!--            android:layout_marginBottom="5dp"-->
+<!--            android:background="@drawable/shape_rect2"-->
+<!--            android:drawablePadding="10dp"-->
+<!--            android:hint="Kuantiti"-->
+<!--            android:inputType="textCapWords"-->
+<!--            android:padding="10dp" />-->
+
+
+
+<!--        <EditText-->
+<!--            android:id="@+id/harga"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="5dp"-->
+<!--            android:background="@drawable/shape_rect2"-->
+<!--            android:drawablePadding="10dp"-->
+<!--            android:hint="Harga"-->
+<!--            android:inputType="numberDecimal"-->
+<!--            android:padding="10dp"-->
+<!--            android:layout_below="@id/kategori"/>-->
+
+<!--        <androidx.appcompat.widget.SwitchCompat-->
+<!--            android:id="@+id/diskon"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/harga"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:layout_marginEnd="5dp"-->
+<!--            android:layout_marginBottom="5dp"-->
+<!--            android:text="Diskon" />-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/hargaDiskon"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/diskon"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:layout_marginEnd="5dp"-->
+<!--            android:layout_marginBottom="5dp"-->
+<!--            android:background="@drawable/shape_rect2"-->
+<!--            android:drawablePadding="10dp"-->
+<!--            android:hint="Harga Diskon"-->
+<!--            android:inputType="numberDecimal"-->
+<!--            android:padding="10dp" />-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/hargaDiskonNote"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/hargaDiskon"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:layout_marginEnd="5dp"-->
+<!--            android:layout_marginBottom="5dp"-->
+<!--            android:background="@drawable/shape_rect2"-->
+<!--            android:drawablePadding="10dp"-->
+<!--            android:hint="Harga Diskon Note"-->
+<!--            android:inputType="textCapSentences"-->
+<!--            android:padding="10dp" />-->
+
+<!--        <Button-->
+<!--            android:id="@+id/tombolEdit"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/harga"-->
+<!--            style="@style/Widget.AppCompat.Button.Colored"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            android:minWidth="150dp"-->
+<!--            android:text="Edit Barang"-->
+<!--            android:layout_marginTop="5dp"/>-->
+
+
 
     </RelativeLayout>
 

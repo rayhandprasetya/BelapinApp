@@ -54,28 +54,28 @@ public class AdapterPasar extends RecyclerView.Adapter<AdapterPasar.HolderToko> 
 
         // set data
         holder.namaToko.setText(namaToko);
-        holder.nohpToko.setText(nohp);
+//        holder.nohpToko.setText(nohp);
         holder.alamatToko.setText(alamat);
 
-        // check if online
-        if (online.equals("true")) {
-            // toko is online
-            holder.online.setVisibility(View.VISIBLE);
-        }
-        else {
-            // toko is offline
-            holder.online.setVisibility(View.GONE);
-        }
+//        // check if online
+//        if (online.equals("true")) {
+//            // toko is online
+//            holder.online.setVisibility(View.VISIBLE);
+//        }
+//        else {
+//            // toko is offline
+//            holder.online.setVisibility(View.GONE);
+//        }
 
-        // check if toko open
-        if (tokoBuka.equals("true")) {
-            // toko open
-            holder.tokoTutup.setVisibility(View.GONE);
-        }
-        else {
-            // toko close
-            holder.tokoTutup.setVisibility(View.VISIBLE);
-        }
+//        // check if toko open
+//        if (tokoBuka.equals("true")) {
+//            // toko open
+//            holder.tokoTutup.setVisibility(View.GONE);
+//        }
+//        else {
+//            // toko close
+//            holder.tokoTutup.setVisibility(View.VISIBLE);
+//        }
 
         // handle click listener, show toko detail
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -103,12 +103,12 @@ public class AdapterPasar extends RecyclerView.Adapter<AdapterPasar.HolderToko> 
         public HolderToko(@NonNull View itemView) {
             super(itemView);
 
-            tokoIcon = itemView.findViewById(R.id.tokoIcon);
-            online = itemView.findViewById(R.id.online);
-            tokoTutup = itemView.findViewById(R.id.tokoTutup);
+//            tokoIcon = itemView.findViewById(R.id.tokoIcon);
+//            online = itemView.findViewById(R.id.online);
+//            tokoTutup = itemView.findViewById(R.id.tokoTutup);
             namaToko = itemView.findViewById(R.id.namaToko);
             alamatToko = itemView.findViewById(R.id.alamatToko);
-            nohpToko = itemView.findViewById(R.id.nohpToko);
+//            nohpToko = itemView.findViewById(R.id.nohpToko);
 
         }
     }

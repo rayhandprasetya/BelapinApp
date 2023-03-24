@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Belapin</string>
+    <string name="apakah_anda_admin_daftar_sebagai_admin">Apakah anda Admin? Daftar sebagai <b>Admin</b></string>
+    <string name="belum_punya_akun_daftar">Belum punya akun? <b>Daftar</b></string>
 </resources>

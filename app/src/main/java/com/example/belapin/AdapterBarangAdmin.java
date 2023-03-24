@@ -54,34 +54,32 @@ public class AdapterBarangAdmin extends RecyclerView.Adapter<AdapterBarangAdmin.
         ModelBarang modelBarang = barangList.get(position);
         String id = modelBarang.getBarangId();
         String uid = modelBarang.getUid();
-        String diskonTersedia = modelBarang.getDiskonTersedia();
-        String hargaDiskonNote = modelBarang.getHargaDiskonNote();
-        String hargaDiskon = modelBarang.getHargaDiskon();
+//        String diskonTersedia = modelBarang.getDiskonTersedia();
+//        String hargaDiskonNote = modelBarang.getHargaDiskonNote();
+//        String hargaDiskon = modelBarang.getHargaDiskon();
         String hargaAsli = modelBarang.getHargaAsli();
         String kategoriBarang = modelBarang.getBarangKategori();
         String barangDeskripsi = modelBarang.getBarangDeskripsi();
         String gambar = modelBarang.getBarangIcon();
-        String kuantiti = modelBarang.getBarangKuantiti();
+//        String kuantiti = modelBarang.getBarangKuantiti();
         String judul = modelBarang.getBarangJudul();
         String timestamp = modelBarang.getTimestamp();
 
         // set data
         holder.judul.setText((judul));
-        holder.kuantiti.setText(kuantiti);
-        holder.hargaDiskonNote.setText(hargaDiskonNote);
-        holder.hargaDiskon.setText("Rp"+hargaDiskon);
+//        holder.kuantiti.setText(kuantiti);
+//        holder.hargaDiskonNote.setText(hargaDiskonNote);
+//        holder.hargaDiskon.setText("Rp"+hargaDiskon);
         holder.hargaAsli.setText("Rp"+hargaAsli);
-        if(diskonTersedia.equals("true")){
-            // product diskon
-            holder.hargaDiskon.setVisibility(View.VISIBLE);
-            holder.hargaDiskonNote.setVisibility(View.VISIBLE);
-            holder.hargaAsli.setPaintFlags(holder.hargaAsli.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG); // add strike through harga asli
-        }
-        else {
-            holder.hargaDiskon.setVisibility(View.GONE);
-            holder.hargaDiskonNote.setVisibility(View.GONE);
-            holder.hargaAsli.setPaintFlags(0);
-        }
+//        if(diskonTersedia.equals("true")){
+//            // product diskon
+//            holder.hargaDiskon.setVisibility(View.VISIBLE);
+//            holder.hargaDiskonNote.setVisibility(View.VISIBLE);
+//            holder.hargaAsli.setPaintFlags(holder.hargaAsli.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG); // add strike through harga asli
+//        }
+//        holder.hargaDiskon.setVisibility(View.GONE);
+//            holder.hargaDiskonNote.setVisibility(View.GONE);
+        holder.hargaAsli.setPaintFlags(0);
 
         try {
             Picasso.get().load(gambar).placeholder(R.drawable.ic_add).into(holder.gambarBarang);
@@ -113,54 +111,54 @@ public class AdapterBarangAdmin extends RecyclerView.Adapter<AdapterBarangAdmin.
         ImageButton tmblKembali = view.findViewById(R.id.tmblKembali);
         ImageButton tmblHapus = view.findViewById(R.id.tmblHapus);
         ImageButton tmblEdit = view.findViewById(R.id.tmblEdit);
-        ImageView gambarBarang = view.findViewById(R.id.gambarBarang);
-        TextView hargaDiskonNoteUI = view.findViewById(R.id.hargaDiskonNote);
+//        ImageView gambarBarang = view.findViewById(R.id.gambarBarang);
+//        TextView hargaDiskonNoteUI = view.findViewById(R.id.hargaDiskonNote);
         TextView judulUI = view.findViewById(R.id.judul);
         TextView deskripsi = view.findViewById(R.id.deskripsi);
         TextView kategori = view.findViewById(R.id.kategori);
-        TextView kuantitiUI = view.findViewById(R.id.kuantiti);
-        TextView hargaDiskonUI = view.findViewById(R.id.hargaDiskon);
+//        TextView kuantitiUI = view.findViewById(R.id.kuantiti);
+//        TextView hargaDiskonUI = view.findViewById(R.id.hargaDiskon);
         TextView hargaAsliUI = view.findViewById(R.id.hargaAsli);
 
         // get data
         String id = modelBarang.getBarangId();
         String uid = modelBarang.getUid();
-        String diskonTersedia = modelBarang.getDiskonTersedia();
-        String hargaDiskonNote = modelBarang.getHargaDiskonNote();
-        String hargaDiskon = modelBarang.getHargaDiskon();
+//        String diskonTersedia = modelBarang.getDiskonTersedia();
+//        String hargaDiskonNote = modelBarang.getHargaDiskonNote();
+//        String hargaDiskon = modelBarang.getHargaDiskon();
         String hargaAsli = modelBarang.getHargaAsli();
         String kategoriBarang = modelBarang.getBarangKategori();
         String barangDeskripsi = modelBarang.getBarangDeskripsi();
         String gambar = modelBarang.getBarangIcon();
-        String kuantiti = modelBarang.getBarangKuantiti();
+//        String kuantiti = modelBarang.getBarangKuantiti();
         String judul = modelBarang.getBarangJudul();
         String timestamp = modelBarang.getTimestamp();
 
         judulUI.setText(judul);
         deskripsi.setText(barangDeskripsi);
         kategori.setText(kategoriBarang);
-        kuantitiUI.setText(kuantiti);
-        hargaDiskonNoteUI.setText(hargaDiskonNote);
-        hargaDiskonUI.setText("Rp"+hargaDiskon);
+//        kuantitiUI.setText(kuantiti);
+//        hargaDiskonNoteUI.setText(hargaDiskonNote);
+//        hargaDiskonUI.setText("Rp"+hargaDiskon);
         hargaAsliUI.setText("Rp"+hargaAsli);
-        if(diskonTersedia.equals("true")){
-            // product diskon
-            hargaDiskonUI.setVisibility(View.VISIBLE);
-            hargaDiskonNoteUI.setVisibility(View.VISIBLE);
-            hargaAsliUI.setPaintFlags(hargaAsliUI.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG); // add strike through harga asli
-        }
-        else {
-            hargaDiskonUI.setVisibility(View.GONE);
-            hargaDiskonNoteUI.setVisibility(View.GONE);
+//        if(diskonTersedia.equals("true")){
+//            // product diskon
+//            hargaDiskonUI.setVisibility(View.VISIBLE);
+//            hargaDiskonNoteUI.setVisibility(View.VISIBLE);
+//            hargaAsliUI.setPaintFlags(hargaAsliUI.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG); // add strike through harga asli
+//        }
+//        else {
+//            hargaDiskonUI.setVisibility(View.GONE);
+//            hargaDiskonNoteUI.setVisibility(View.GONE);
+//
+//        }
 
-        }
-
-        try {
-            Picasso.get().load(gambar).placeholder(R.drawable.ic_add).into(gambarBarang);
-        }
-        catch (Exception e) {
-            gambarBarang.setImageResource(R.drawable.ic_add);
-        }
+//        try {
+//            Picasso.get().load(gambar).placeholder(R.drawable.ic_add).into(gambarBarang);
+//        }
+//        catch (Exception e) {
+//            gambarBarang.setImageResource(R.drawable.ic_add);
+//        }
 
         // show dialog
         bottomSheetDialog.show();
@@ -202,7 +200,6 @@ public class AdapterBarangAdmin extends RecyclerView.Adapter<AdapterBarangAdmin.
 
                             }
                         }).show();
-
             }
         });
 
@@ -220,7 +217,9 @@ public class AdapterBarangAdmin extends RecyclerView.Adapter<AdapterBarangAdmin.
 
     private void deleteBarang(String id) {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
+        DatabaseReference databaseReference = FirebaseDatabase
+                .getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app")
+                .getReference("Users");
         databaseReference.child(firebaseAuth.getUid()).child("Barang").
                 child(id).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -261,10 +260,10 @@ public class AdapterBarangAdmin extends RecyclerView.Adapter<AdapterBarangAdmin.
             super(itemView);
 
             gambarBarang = itemView.findViewById(R.id.gambarBarang);
-            hargaDiskonNote = itemView.findViewById(R.id.hargaDiskonNote);
+//            hargaDiskonNote = itemView.findViewById(R.id.hargaDiskonNote);
             judul = itemView.findViewById(R.id.judul);
-            kuantiti = itemView.findViewById(R.id.kuantiti);
-            hargaDiskon = itemView.findViewById(R.id.hargaDiskon);
+//            kuantiti = itemView.findViewById(R.id.kuantiti);
+//            hargaDiskon = itemView.findViewById(R.id.hargaDiskon);
             hargaAsli = itemView.findViewById(R.id.hargaAsli);
         }
     }

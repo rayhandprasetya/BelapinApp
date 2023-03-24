@@ -9,7 +9,7 @@
     <RelativeLayout
         android:id="@+id/pasarUser"
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="150dp">
 
         <ImageView
             android:layout_width="match_parent"
@@ -101,18 +101,35 @@
 
         <EditText
             android:id="@+id/searchBarang"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:hint="Cari barang"
+            android:layout_centerHorizontal="true"
+            android:textColor="#8D8D8D"
+            android:textSize="15sp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
             android:layout_toStartOf="@+id/filterBarang"
-            android:background="@drawable/shape_rect2"
-            android:drawableStart="@drawable/ic_search"
-            android:drawablePadding="10dp"
-            android:hint="Cari barang"
-            android:padding="10dp" />
+            android:padding="15dp"
+            android:background="@drawable/textbox"/>
+
+<!--        <EditText-->
+<!--            android:id="@+id/searchBarang"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:layout_marginEnd="5dp"-->
+<!--            android:layout_marginBottom="5dp"-->
+<!--            android:layout_toStartOf="@+id/filterBarang"-->
+<!--            android:background="@drawable/shape_rect2"-->
+<!--            android:drawableStart="@drawable/ic_search"-->
+<!--            android:drawablePadding="10dp"-->
+<!--            android:hint="Cari barang"-->
+<!--            android:padding="10dp" />-->
 
         <ImageButton
             android:id="@+id/filterBarang"
@@ -121,7 +138,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="2.5dp"
             android:layout_marginEnd="5dp"
-            android:src="@drawable/ic_dashboard"
+            android:src="@drawable/ic_filter"
             android:scaleType="fitXY"
             android:background="@null"/>
 

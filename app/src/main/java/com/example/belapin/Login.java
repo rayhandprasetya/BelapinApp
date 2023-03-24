@@ -44,7 +44,7 @@ public class Login extends AppCompatActivity {
         passwordAkun = findViewById(R.id.passwordAkun);
         blmPunya = findViewById(R.id.blmPunya);
         tmblMasuk = findViewById(R.id.tmblMasuk);
-        lupaPass = findViewById(R.id.lupaPass);
+//        lupaPass = findViewById(R.id.lupaPass);
 
         firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
@@ -60,13 +60,13 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        lupaPass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Login.this, LupaPassword.class);
-                startActivity(intent);
-            }
-        });
+//        lupaPass.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(Login.this, LupaPassword.class);
+//                startActivity(intent);
+//            }
+//        });
 
         tmblMasuk.setOnClickListener(new View.OnClickListener() {
             @Override

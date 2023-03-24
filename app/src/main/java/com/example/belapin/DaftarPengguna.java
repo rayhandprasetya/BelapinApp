@@ -36,12 +36,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-public class DaftarPengguna extends AppCompatActivity implements LocationListener{
+public class DaftarPengguna extends AppCompatActivity{
 
-    private ImageButton tmblKembali, tmblGps;
-    private EditText namaAkun, emailAkun, passwordAkun, passwordKonfirmasi,
-                    negaraAkun, provinsiAkun, kotaAkun, alamatLengkap,
-                    nohp;
+    private ImageButton tmblKembali;
+    private EditText namaAkun, emailAkun, passwordAkun, passwordKonfirmasi;
 
     private Button tmblDaftar;
 
@@ -68,7 +66,6 @@ public class DaftarPengguna extends AppCompatActivity implements LocationListene
 
         // Button
         tmblKembali = findViewById(R.id.tmblKembali);
-        tmblGps = findViewById(R.id.tmblGps);
         tmblDaftar = findViewById(R.id.tmblDaftar);
 
         // EditText
@@ -76,11 +73,6 @@ public class DaftarPengguna extends AppCompatActivity implements LocationListene
         emailAkun = findViewById(R.id.emailAkun);
         passwordAkun = findViewById(R.id.passwordAkun);
         passwordKonfirmasi = findViewById(R.id.passwordKonfirmasi);
-        negaraAkun = findViewById(R.id.negaraAkun);
-        provinsiAkun = findViewById(R.id.provinsiAkun);
-        kotaAkun = findViewById(R.id.kotaAkun);
-        alamatLengkap = findViewById(R.id.alamatLengkap);
-        nohp = findViewById(R.id.nohp);
         blmAdmin = findViewById(R.id.blmAdmin);
 
         locationPermissions = new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION};
@@ -94,21 +86,6 @@ public class DaftarPengguna extends AppCompatActivity implements LocationListene
             @Override
             public void onClick(View view) {
                 onBackPressed();
-            }
-        });
-
-        tmblGps.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // deteksi lokasi sekarang
-                if (checkLocationPermission()) {
-                    // already allowed
-                    detectLocation();
-                }
-                else {
-                    // not allowed
-                    requestLocationPermission();
-                }
             }
         });
 
@@ -129,14 +106,9 @@ public class DaftarPengguna extends AppCompatActivity implements LocationListene
         });
     }
 
-    private String namaLengkap, nohandphone, negara, kota, provinsi, alamat, email, password, pasKon;
+    private String namaLengkap, email, password, pasKon;
     private void inputData() {
         namaLengkap = namaAkun.getText().toString().trim();
-        nohandphone = nohp.getText().toString().trim();
-        negara = negaraAkun.getText().toString().trim();
-        kota = kotaAkun.getText().toString().trim();
-        provinsi = provinsiAkun.getText().toString().trim();
-        alamat = alamatLengkap.getText().toString().trim();
         email = emailAkun.getText().toString().trim();
         password = passwordAkun.getText().toString().trim();
         pasKon = passwordKonfirmasi.getText().toString().trim();
@@ -145,26 +117,7 @@ public class DaftarPengguna extends AppCompatActivity implements LocationListene
             Toast.makeText(this, "Masukkan nama", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (TextUtils.isEmpty(nohandphone)){
-            Toast.makeText(this, "Masukkan NO HP", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(negara)){
-            Toast.makeText(this, "Masukkan negara", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(kota)){
-            Toast.makeText(this, "Masukkan kota", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(provinsi)){
-            Toast.makeText(this, "Masukkan provinsi", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(alamat)){
-            Toast.makeText(this, "Masukkan alamat", Toast.LENGTH_SHORT).show();
-            return;
-        }
+
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
             Toast.makeText(this, "Email tidak valid", Toast.LENGTH_SHORT).show();
             return;
@@ -218,13 +171,6 @@ public class DaftarPengguna extends AppCompatActivity implements LocationListene
             hashMap.put("uid",""+firebaseAuth.getUid());
             hashMap.put("email",""+email);
             hashMap.put("name",""+namaLengkap);
-            hashMap.put("phone",""+nohandphone);
-            hashMap.put("negara",""+negara);
-            hashMap.put("kota",""+kota);
-            hashMap.put("provinsi",""+provinsi);
-            hashMap.put("alamat",""+alamat);
-            hashMap.put("latitude",""+latitude);
-            hashMap.put("longitude",""+longitude);
             hashMap.put("timestamp",""+timestamp);
             hashMap.put("tipeAkun","User");
             hashMap.put("online","true");
@@ -251,92 +197,5 @@ public class DaftarPengguna extends AppCompatActivity implements LocationListene
                 }
             });
         }
-    }
-
-    private void detectLocation() {
-        Toast.makeText(this, "Please wait...", Toast.LENGTH_SHORT).show();
-
-        locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-    }
-
-    private boolean checkLocationPermission() {
-        boolean result = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
-                == (PackageManager.PERMISSION_GRANTED);
-        return result;
-    }
-
-    private void requestLocationPermission() {
-        ActivityCompat.requestPermissions(this, locationPermissions, LOCATION_REQUEST_CODE);
-    }
-
-    @Override
-    public void onLocationChanged(@NonNull Location location) {
-        // location detected
-
-        latitude = location.getLatitude();
-        longitude = location.getLongitude();
-
-        findAddress();
-    }
-
-    private void findAddress() {
-        // find address, country, state
-
-        Geocoder geocoder;
-        List<Address> addresses;
-        geocoder = new Geocoder(this, Locale.getDefault());
-
-        try {
-            addresses = geocoder.getFromLocation(latitude, longitude, 1);
-            String alamat = addresses.get(0).getAddressLine(0);
-            String kota = addresses.get(0).getLocality();
-            String provinsi = addresses.get(0).getAdminArea();
-            String negara = addresses.get(0).getCountryName();
-
-            // set address
-            negaraAkun.setText(negara);
-            provinsiAkun.setText(provinsi);
-            kotaAkun.setText(kota);
-        }
-        catch (Exception e){
-            Toast.makeText(this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-        LocationListener.super.onStatusChanged(provider, status, extras);
-    }
-
-    @Override
-    public void onProviderEnabled(@NonNull String provider) {
-//        Toast.makeText(this, "Please ", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onProviderDisabled(@NonNull String provider) {
-        Toast.makeText(this, "Please turn on location", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case LOCATION_REQUEST_CODE: {
-                if (grantResults.length>0) {
-                    boolean locationAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                    if (locationAccepted) {
-                        // permission allowed
-                        detectLocation();
-
-                    }
-                    else {
-                        Toast.makeText(this, "Akftifkan lokasi di hp anda!", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-            break;
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

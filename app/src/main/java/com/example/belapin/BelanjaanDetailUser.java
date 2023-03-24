@@ -53,7 +53,7 @@ public class BelanjaanDetailUser extends AppCompatActivity {
         tmblKembali = findViewById(R.id.tmblKembali);
         belanjaanIdTv = findViewById(R.id.belanjaanIdTv);
         tanggalBelanja = findViewById(R.id.tanggalBelanja);
-        statusBelanjaan = findViewById(R.id.statusBelanjaan);
+//        statusBelanjaan = findViewById(R.id.statusBelanjaan);
         namaPasar = findViewById(R.id.namaPasar);
         totalBarang = findViewById(R.id.totalBarang);
         totalHarga = findViewById(R.id.totalHarga);
@@ -137,7 +137,7 @@ public class BelanjaanDetailUser extends AppCompatActivity {
                 String formatWaktu = DateFormat.format("dd/MM/yyyy", calendar).toString();
 
                 belanjaanIdTv.setText(idBelanja);
-                statusBelanjaan.setText(statusBelanja);
+//                statusBelanjaan.setText(statusBelanja);
                 tanggalBelanja.setText(formatWaktu);
                 totalHarga.setText("Rp"+costBelanja);
 
@@ -159,7 +159,6 @@ public class BelanjaanDetailUser extends AppCompatActivity {
                 String pasarNama = ""+snapshot.child("namaToko").getValue();
                 namaPasar.setText(pasarNama);
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 

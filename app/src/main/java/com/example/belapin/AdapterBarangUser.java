@@ -50,9 +50,9 @@ public class AdapterBarangUser extends RecyclerView.Adapter<AdapterBarangUser.Ho
 
         //get data
         final ModelBarang modelBarang = barangList.get(position);
-        String diskonTersedia = modelBarang.getDiskonTersedia();
-        String diskonNote = modelBarang.getHargaDiskonNote();
-        String hargaDiskon = modelBarang.getHargaDiskon();
+//        String diskonTersedia = modelBarang.getDiskonTersedia();
+//        String diskonNote = modelBarang.getHargaDiskonNote();
+//        String hargaDiskon = modelBarang.getHargaDiskon();
         String barangKategori = modelBarang.getBarangKategori();
         String hargaAsli = modelBarang.getHargaAsli();
         String barangDeskripsi = modelBarang.getBarangDeskripsi();
@@ -67,17 +67,17 @@ public class AdapterBarangUser extends RecyclerView.Adapter<AdapterBarangUser.Ho
         holder.description.setText(barangDeskripsi);
         holder.hargaAsli.setText("Rp"+hargaAsli);
 
-        if(diskonTersedia.equals("true")){
-            // product diskon
-            holder.hargaDiskon.setVisibility(View.VISIBLE);
-            holder.hargaDiskonNote.setVisibility(View.VISIBLE);
-            holder.hargaAsli.setPaintFlags(holder.hargaAsli.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG); // add strike through harga asli
-        }
-        else {
-            holder.hargaDiskon.setVisibility(View.GONE);
-            holder.hargaDiskonNote.setVisibility(View.GONE);
-            holder.hargaAsli.setPaintFlags(0);
-        }
+//        if(diskonTersedia.equals("true")){
+//            // product diskon
+//            holder.hargaDiskon.setVisibility(View.VISIBLE);
+//            holder.hargaDiskonNote.setVisibility(View.VISIBLE);
+//            holder.hargaAsli.setPaintFlags(holder.hargaAsli.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG); // add strike through harga asli
+//        }
+//        else {
+//            holder.hargaDiskon.setVisibility(View.GONE);
+//            holder.hargaDiskonNote.setVisibility(View.GONE);
+//            holder.hargaAsli.setPaintFlags(0);
+//        }
 
         holder.tambahKeranjang.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -250,11 +250,11 @@ public class AdapterBarangUser extends RecyclerView.Adapter<AdapterBarangUser.Ho
             // init views
             gambarBarang = itemView.findViewById(R.id.gambarBarang);
             next = itemView.findViewById(R.id.next);
-            hargaDiskonNote = itemView.findViewById(R.id.hargaDiskonNote);
+//            hargaDiskonNote = itemView.findViewById(R.id.hargaDiskonNote);
             judul = itemView.findViewById(R.id.judul);
             description = itemView.findViewById(R.id.description);
             tambahKeranjang = itemView.findViewById(R.id.tambahKeranjang);
-            hargaDiskon = itemView.findViewById(R.id.hargaDiskon);
+//            hargaDiskon = itemView.findViewById(R.id.hargaDiskon);
             hargaAsli = itemView.findViewById(R.id.hargaAsli);
         }
     }

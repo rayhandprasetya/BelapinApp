@@ -33,7 +33,7 @@ import java.util.HashMap;
 
 public class AdminPage extends AppCompatActivity {
 
-    private TextView namaAkun, emailAkun, namaToko, tabBarang, tabOrder, filteredBarang;
+    private TextView namaAkun, emailAkun, namaToko, filteredBarang;
     private EditText searchBarang;
     private ImageButton tombolKeluar, tambahBarang, filterBarang;
     private RelativeLayout barang, order;
@@ -49,12 +49,12 @@ public class AdminPage extends AppCompatActivity {
         setContentView(R.layout.activity_admin_page);
 
         namaAkun = findViewById(R.id.namaAkun);
-        emailAkun = findViewById(R.id.emailAkun);
+//        emailAkun = findViewById(R.id.emailAkun);
         namaToko = findViewById(R.id.namaToko);
         tombolKeluar = findViewById(R.id.tombolKeluar);
         tambahBarang = findViewById(R.id.tambahBarang);
-        tabBarang = findViewById(R.id.tabBarang);
-        tabOrder = findViewById(R.id.tabOrder);
+//        tabBarang = findViewById(R.id.tabBarang);
+//        tabOrder = findViewById(R.id.tabOrder);
         barang = findViewById(R.id.barang);
         order = findViewById(R.id.order);
         searchBarang = findViewById(R.id.searchBarang);
@@ -71,7 +71,7 @@ public class AdminPage extends AppCompatActivity {
 
         loadAllBarang();
 
-        showBarang();
+//        showBarang();
 
         // search
         searchBarang.addTextChangedListener(new TextWatcher() {
@@ -114,23 +114,23 @@ public class AdminPage extends AppCompatActivity {
             }
         });
 
-        tabBarang.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // load barang
-                showBarang();
+//        tabBarang.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // load barang
+//                showBarang();
+//
+//            }
+//        });
 
-            }
-        });
-
-        tabOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // load order
-                showOrder();
-
-            }
-        });
+//        tabOrder.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // load order
+//                showOrder();
+//
+//            }
+//        });
         filterBarang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -197,8 +197,11 @@ public class AdminPage extends AppCompatActivity {
         barangList = new ArrayList<>();
         // get all barang
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
-        databaseReference.child(firebaseAuth.getUid()).child("Barang").addValueEventListener(new ValueEventListener() {
+        DatabaseReference databaseReference = FirebaseDatabase
+                .getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app")
+                .getReference("Users");
+        databaseReference.child(firebaseAuth.getUid()).child("Barang")
+                .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -221,29 +224,29 @@ public class AdminPage extends AppCompatActivity {
         });
     }
 
-    private void showBarang() {
-        // show barang menu and hide order menu
-        barang.setVisibility(View.VISIBLE);
-        order.setVisibility(View.GONE);
+//    private void showBarang() {
+//        // show barang menu and hide order menu
+//        barang.setVisibility(View.VISIBLE);
+//        order.setVisibility(View.GONE);
+//
+//        tabBarang.setTextColor(getResources().getColor(R.color.black));
+//        tabBarang.setBackgroundResource(R.drawable.shape_rect4);
+//
+//        tabOrder.setTextColor(getResources().getColor(R.color.white));
+//        tabOrder.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+//    }
 
-        tabBarang.setTextColor(getResources().getColor(R.color.black));
-        tabBarang.setBackgroundResource(R.drawable.shape_rect4);
-
-        tabOrder.setTextColor(getResources().getColor(R.color.white));
-        tabOrder.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-    }
-
-    private void showOrder() {
-        // show order menu and hide barang menu
-        order.setVisibility(View.VISIBLE);
-        barang.setVisibility(View.GONE);
-
-        tabOrder.setTextColor(getResources().getColor(R.color.black));
-        tabOrder.setBackgroundResource(R.drawable.shape_rect4);
-
-        tabBarang.setTextColor(getResources().getColor(R.color.white));
-        tabBarang.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-    }
+//    private void showOrder() {
+//        // show order menu and hide barang menu
+//        order.setVisibility(View.VISIBLE);
+//        barang.setVisibility(View.GONE);
+//
+//        tabOrder.setTextColor(getResources().getColor(R.color.black));
+//        tabOrder.setBackgroundResource(R.drawable.shape_rect4);
+//
+//        tabBarang.setTextColor(getResources().getColor(R.color.white));
+//        tabBarang.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+//    }
 
 
     private void signOutAdmin() {
@@ -299,7 +302,7 @@ public class AdminPage extends AppCompatActivity {
 
                     // show data to screen
                     namaAkun.setText(name);
-                    namaAkun.setText(email);
+//                    namaAkun.setText(email);
                     namaAkun.setText(toko);
                 }
 

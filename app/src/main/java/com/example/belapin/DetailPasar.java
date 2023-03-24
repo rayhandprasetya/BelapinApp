@@ -113,9 +113,7 @@ public class DetailPasar extends AppCompatActivity {
 
         searchBarang.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {            }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -155,7 +153,6 @@ public class DetailPasar extends AppCompatActivity {
                         }
                     }
                 }).show();
-
             }
         });
     }
@@ -177,7 +174,6 @@ public class DetailPasar extends AppCompatActivity {
             // have barang in keranjang, then show hitung keranjang textview and set hitung
             totalBarangKeranjang.setVisibility(View.VISIBLE);
             totalBarangKeranjang.setText(""+hitung); // concatenate with string because cant set integer in textview
-
         }
     }
 
@@ -289,7 +285,7 @@ public class DetailPasar extends AppCompatActivity {
         hashMap.put("orderKe", ""+tokoUid);
 
         // add to database
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Belanjaan");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users").child(tokoUid).child("Belanjaan");
         databaseReference.child(timestamp).setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
@@ -347,15 +343,12 @@ public class DetailPasar extends AppCompatActivity {
                     String tipeAkun = ""+s.child("tipeAkun").getValue();
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
-
     }
-
     private void loadPasar() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
         databaseReference.child(tokoUid).addValueEventListener(new ValueEventListener() {

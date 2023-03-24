@@ -11,38 +11,38 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/tokoIcon"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/ic_shop"
-            app:civ_border_color="@color/white"
-            app:civ_border_width="5dp" />
+<!--        <de.hdodenhof.circleimageview.CircleImageView-->
+<!--            android:id="@+id/tokoIcon"-->
+<!--            android:layout_width="80dp"-->
+<!--            android:layout_height="80dp"-->
+<!--            android:src="@drawable/ic_shop"-->
+<!--            app:civ_border_color="@color/white"-->
+<!--            app:civ_border_width="5dp" />-->
 
         <!-- online/offline status -->
 
-        <ImageView
-            android:id="@+id/online"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/shape_circle3"/>
+<!--        <ImageView-->
+<!--            android:id="@+id/online"-->
+<!--            android:layout_width="20dp"-->
+<!--            android:layout_height="20dp"-->
+<!--            android:src="@drawable/shape_circle3"/>-->
 
-        <TextView
-            android:id="@+id/tokoTutup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toStartOf="@id/next"
-            android:padding="5dp"
-            android:text="Tutup"
-            android:background="@drawable/shape_rect6"
-            android:textColor="#EF200F"
-            android:textSize="10sp"/>
+<!--        <TextView-->
+<!--            android:id="@+id/tokoTutup"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_toStartOf="@id/next"-->
+<!--            android:padding="5dp"-->
+<!--            android:text="Tutup"-->
+<!--            android:background="@drawable/shape_rect6"-->
+<!--            android:textColor="#EF200F"-->
+<!--            android:textSize="10sp"/>-->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_toEndOf="@id/tokoIcon"
+            android:layout_marginStart="10dp"
             android:layout_toStartOf="@id/next">
 
             <TextView
@@ -55,12 +55,12 @@
                 android:textColor="@color/black"
                 android:textStyle="bold"/>
 
-            <TextView
-                android:id="@+id/nohpToko"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="No Hp Toko"
-                android:textColor="@color/black"/>
+<!--            <TextView-->
+<!--                android:id="@+id/nohpToko"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="No Hp Toko"-->
+<!--                android:textColor="@color/black"/>-->
 
             <TextView
                 android:id="@+id/alamatToko"

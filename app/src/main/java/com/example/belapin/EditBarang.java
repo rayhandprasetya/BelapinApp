@@ -76,19 +76,19 @@ public class EditBarang extends AppCompatActivity {
         judul = findViewById(R.id.judul);
         deskripsi = findViewById(R.id.deskripsi);
         kategori = findViewById(R.id.kategori);
-        kuantiti = findViewById(R.id.kuantiti);
+//        kuantiti = findViewById(R.id.kuantiti);
         harga = findViewById(R.id.harga);
-        diskon = findViewById(R.id.diskon);
-        hargaDiskon = findViewById(R.id.hargaDiskon);
-        hargaDiskonNote = findViewById(R.id.hargaDiskonNote);
+//        diskon = findViewById(R.id.diskon);
+//        hargaDiskon = findViewById(R.id.hargaDiskon);
+//        hargaDiskonNote = findViewById(R.id.hargaDiskonNote);
         tombolEdit = findViewById(R.id.tombolEdit);
 
         // get id of barang
         barangId = getIntent().getStringExtra("barangId");
 
         // unchecked, hide
-        hargaDiskon.setVisibility(View.GONE);
-        hargaDiskonNote.setVisibility(View.GONE);
+//        hargaDiskon.setVisibility(View.GONE);
+//        hargaDiskonNote.setVisibility(View.GONE);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -102,21 +102,21 @@ public class EditBarang extends AppCompatActivity {
         cameraPermissions = new String[]{android.Manifest.permission.CAMERA, android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermissions = new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
-        diskon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                if (checked) {
-                    // show diskon harga and note
-                    hargaDiskon.setVisibility(View.VISIBLE);
-                    hargaDiskonNote.setVisibility(View.VISIBLE);
-                }
-                else {
-                    // unchecked, hide
-                    hargaDiskon.setVisibility(View.GONE);
-                    hargaDiskonNote.setVisibility(View.GONE);
-                }
-            }
-        });
+//        diskon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+//                if (checked) {
+//                    // show diskon harga and note
+//                    hargaDiskon.setVisibility(View.VISIBLE);
+//                    hargaDiskonNote.setVisibility(View.VISIBLE);
+//                }
+//                else {
+//                    // unchecked, hide
+//                    hargaDiskon.setVisibility(View.GONE);
+//                    hargaDiskonNote.setVisibility(View.GONE);
+//                }
+//            }
+//        });
 
         tambahGambar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,7 +159,7 @@ public class EditBarang extends AppCompatActivity {
                 String barangJudul = ""+snapshot.child("barangJudul").getValue();
                 String barangDeskripsi = ""+snapshot.child("barangDeskripsi").getValue();
                 String barangKategori = ""+snapshot.child("barangKategori").getValue();
-                String barangKuantiti = ""+snapshot.child("barangKuantiti").getValue();
+//                String barangKuantiti = ""+snapshot.child("barangKuantiti").getValue();
                 String hargaAsli = ""+snapshot.child("hargaAsli").getValue();
                 String barangIcon = ""+snapshot.child("barangIcon").getValue();
                 String hargaDiskonLain = ""+snapshot.child("hargaDiskon").getValue();
@@ -169,27 +169,26 @@ public class EditBarang extends AppCompatActivity {
                 String uid = ""+snapshot.child("uid").getValue();
 
                 // set data to views
-                if (diskonTersedia.equals("true")) {
-                    diskon.setChecked(true);
-                    hargaDiskon.setVisibility(View.VISIBLE);
-                    hargaDiskonNote.setVisibility(View.VISIBLE);
-                }
-                else {
-                    diskon.setChecked(false);
-                    hargaDiskon.setVisibility(View.GONE);
-                    hargaDiskonNote.setVisibility(View.GONE);
-
-                }
+//                if (diskonTersedia.equals("true")) {
+//                    diskon.setChecked(true);
+//                    hargaDiskon.setVisibility(View.VISIBLE);
+//                    hargaDiskonNote.setVisibility(View.VISIBLE);
+//                }
+//                else {
+//                    diskon.setChecked(false);
+//                    hargaDiskon.setVisibility(View.GONE);
+//                    hargaDiskonNote.setVisibility(View.GONE);
+//
+//                }
                 judul.setText(barangJudul);
                 deskripsi.setText(barangDeskripsi);
                 kategori.setText(barangKategori);
-                hargaDiskon.setText(hargaDiskonLain);
-                hargaDiskonNote.setText(hargaDiskonNoteLain);
-                kuantiti.setText(barangKuantiti);
+//                hargaDiskon.setText(hargaDiskonLain);
+//                hargaDiskonNote.setText(hargaDiskonNoteLain);
+//                kuantiti.setText(barangKuantiti);
                 harga.setText(hargaAsli);
 
                 try {
-
                     Picasso.get().load(barangIcon).placeholder(R.drawable.ic_add).into(tambahGambar);
                 }
                 catch (Exception e) {
@@ -213,9 +212,9 @@ public class EditBarang extends AppCompatActivity {
         barangJudul = judul.getText().toString().trim();
         barangDesc = deskripsi.getText().toString().trim();
         barangKategori = kategori.getText().toString().trim();
-        barangKuantiti = kuantiti.getText().toString().trim();
+//        barangKuantiti = kuantiti.getText().toString().trim();
         hargaAsli = harga.getText().toString().trim();
-        diskonTersedia = diskon.isChecked();
+//        diskonTersedia = diskon.isChecked();
 
         // validate data
         if (TextUtils.isEmpty(barangJudul)) {
@@ -230,18 +229,18 @@ public class EditBarang extends AppCompatActivity {
             Toast.makeText(this, "Kategori harus diisi", Toast.LENGTH_SHORT).show();
             return; // dont proceed further
         }
-        if (diskonTersedia) {
-            diskonHarga = hargaDiskon.getText().toString().trim();
-            diskonNote = hargaDiskonNote.getText().toString().trim();
-            if (TextUtils.isEmpty(diskonHarga)) {
-                Toast.makeText(this, "Diskon Harga harus diisi", Toast.LENGTH_SHORT).show();
-                return; // dont proceed further
-            }
-        }
-        else {
-            diskonHarga = "0";
-            diskonNote = "";
-        }
+//        if (diskonTersedia) {
+//            diskonHarga = hargaDiskon.getText().toString().trim();
+//            diskonNote = hargaDiskonNote.getText().toString().trim();
+//            if (TextUtils.isEmpty(diskonHarga)) {
+//                Toast.makeText(this, "Diskon Harga harus diisi", Toast.LENGTH_SHORT).show();
+//                return; // dont proceed further
+//            }
+//        }
+//        else {
+//            diskonHarga = "0";
+//            diskonNote = "";
+//        }
 
         updateBarang();
 
@@ -261,11 +260,11 @@ public class EditBarang extends AppCompatActivity {
             hashMap.put("barangJudul", "" + barangJudul);
             hashMap.put("barangDeskripsi", "" + barangDesc);
             hashMap.put("barangKategori", "" + barangKategori);
-            hashMap.put("barangKuantiti", "" + barangKuantiti);
+//            hashMap.put("barangKuantiti", "" + barangKuantiti);
             hashMap.put("hargaAsli", "" + hargaAsli);
-            hashMap.put("diskonTersedia", "" + diskonTersedia);
-            hashMap.put("diskonNote", "" + diskonNote);
-            hashMap.put("hargaDiskonLain", "" + diskonHarga);
+//            hashMap.put("diskonTersedia", "" + diskonTersedia);
+//            hashMap.put("diskonNote", "" + diskonNote);
+//            hashMap.put("hargaDiskonLain", "" + diskonHarga);
 
             // update to db
             DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
@@ -310,11 +309,11 @@ public class EditBarang extends AppCompatActivity {
                         hashMap.put("barangDeskripsi", "" + barangDesc);
                         hashMap.put("barangKategori", "" + barangKategori);
                         hashMap.put("tambahGambar", "" + downloadImageUri);
-                        hashMap.put("barangKuantiti", "" + barangKuantiti);
+//                        hashMap.put("barangKuantiti", "" + barangKuantiti);
                         hashMap.put("hargaAsli", "" + hargaAsli);
-                        hashMap.put("diskonTersedia", "" + diskonTersedia);
-                        hashMap.put("diskonNote", "" + diskonNote);
-                        hashMap.put("hargaDiskonLain", "" + diskonHarga);
+//                        hashMap.put("diskonTersedia", "" + diskonTersedia);
+//                        hashMap.put("diskonNote", "" + diskonNote);
+//                        hashMap.put("hargaDiskonLain", "" + diskonHarga);
 
                         // update to db
                         DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
@@ -397,7 +396,7 @@ public class EditBarang extends AppCompatActivity {
 
     private void imageGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/+");
+        intent.setType("image/*");
         startActivityForResult(intent, IMAGE_PICK_GALLERY_CODE);
     }
 
@@ -412,9 +411,7 @@ public class EditBarang extends AppCompatActivity {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri);
         startActivityForResult(intent, IMAGE_PICK_CAMERA_CODE);
-
     }
-
     private boolean storageChecking() {
         boolean result = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
                 (PackageManager.PERMISSION_GRANTED);
@@ -424,7 +421,6 @@ public class EditBarang extends AppCompatActivity {
     private void storageRequest() {
         ActivityCompat.requestPermissions(this, storagePermissions, STORAGE_REQUEST_CODE);
     }
-
     private boolean cameraChecking() {
         boolean result = ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) ==
                 (PackageManager.PERMISSION_GRANTED);

@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".DaftarPengguna">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:padding="10dp"
-        android:background="@drawable/shape_rect1">
+        android:layout_height="50dp"
+        android:padding="10dp">
 
         <ImageButton
             android:id="@+id/tmblKembali"
@@ -20,192 +20,112 @@
             android:background="@null"
             android:contentDescription="tombol kembali"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="Daftar Pengguna"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            android:textColor="@color/white"/>
-
-        <ImageButton
-            android:id="@+id/tmblGps"
-            android:src="@drawable/ic_gps"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="@null"
-            android:layout_alignParentEnd="true"
-            android:contentDescription="tombol kembali"/>
-
     </RelativeLayout>
 
     <ImageView
         android:id="@+id/icon1"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="@drawable/shape_circle1"
-        android:layout_marginTop="60dp"
-        android:padding="5dp"
-        android:layout_marginBottom="40dp"
-        android:layout_centerHorizontal="true"/>
-
-
-    <EditText
-        android:id="@+id/emailAkun"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_below="@+id/alamatLengkap"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="5dp"
-        android:background="@drawable/shape_rect2"
-        android:drawablePadding="5dp"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:padding="10dp" />
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="60dp" />
 
-    <EditText
-        android:id="@+id/passwordAkun"
+    <TextView
+        android:id="@+id/ayo"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_below="@+id/emailAkun"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="5dp"
-        android:background="@drawable/shape_rect2"
-        android:drawablePadding="5dp"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:padding="10dp" />
-
-    <EditText
-        android:id="@+id/passwordKonfirmasi"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_below="@+id/passwordAkun"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="5dp"
-        android:background="@drawable/shape_rect2"
-        android:drawablePadding="5dp"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:padding="10dp" />
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_below="@id/icon1"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:text="Ayo tumbuh bersama belapin!"
+        android:textColor="#000000"/>
 
     <EditText
         android:id="@+id/namaAkun"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_below="@+id/icon1"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="5dp"
-        android:background="@drawable/shape_rect2"
-        android:drawablePadding="5dp"
-        android:hint="Nama Lengkap"
-        android:inputType="text"
-        android:padding="10dp" />
-
-    <LinearLayout
-        android:id="@+id/tambahAlamat"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/nohp"
-        android:layout_margin="5dp"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/negaraAkun"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@drawable/shape_rect2"
-            android:drawablePadding="5dp"
-            android:hint="Negara"
-            android:layout_weight="1"
-            android:inputType="textPostalAddress"
-            android:padding="12dp" />
-
-        <EditText
-            android:id="@+id/provinsiAkun"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@drawable/shape_rect2"
-            android:drawablePadding="5dp"
-            android:hint="Provinsi"
-            android:layout_weight="1"
-            android:inputType="textPostalAddress"
-            android:padding="12dp" />
-
-        <EditText
-            android:id="@+id/kotaAkun"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@drawable/shape_rect2"
-            android:drawablePadding="5dp"
-            android:hint="Kota"
-            android:layout_weight="1"
-            android:inputType="textPostalAddress"
-            android:padding="12dp" />
-
-    </LinearLayout>
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:inputType="text"
+        android:layout_below="@id/ayo"
+        android:textColor="#8D8D8D"
+        android:hint="Nama Lengkap"
+        android:layout_centerHorizontal="true"
+        android:textSize="15sp"
+        android:padding="15dp"
+        android:background="@drawable/textbox"/>
 
     <EditText
-        android:id="@+id/alamatLengkap"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_below="@+id/tambahAlamat"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="5dp"
-        android:background="@drawable/shape_rect2"
-        android:drawablePadding="5dp"
+        android:id="@+id/emailAkun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:inputType="text"
+        android:textColor="#8D8D8D"
+        android:hint="Email"
+        android:layout_centerHorizontal="true"
+        android:textSize="15sp"
+        android:layout_below="@id/namaAkun"
+        android:padding="15dp"
+        android:background="@drawable/textbox"/>
+
+    <EditText
+        android:id="@+id/passwordAkun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:inputType="text"
+        android:textColor="#8D8D8D"
+        android:hint="Password"
+        android:layout_centerHorizontal="true"
+        android:textSize="15sp"
+        android:layout_below="@id/emailAkun"
+        android:padding="15dp"
+        android:background="@drawable/textbox"/>
+
+    <EditText
+        android:id="@+id/passwordKonfirmasi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:inputType="text"
+        android:textColor="#8D8D8D"
         android:hint="Alamat Lengkap"
-        android:inputType="text"
-        android:padding="10dp" />
-
-    <EditText
-        android:id="@+id/nohp"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_below="@+id/namaAkun"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="5dp"
-        android:background="@drawable/shape_rect2"
-        android:drawablePadding="5dp"
-        android:hint="No Telepon"
-        android:inputType="text"
-        android:padding="10dp" />
-
+        android:layout_centerHorizontal="true"
+        android:textSize="15sp"
+        android:layout_below="@id/passwordAkun"
+        android:padding="15dp"
+        android:background="@drawable/textbox"/>
 
     <Button
         android:id="@+id/tmblDaftar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/passwordKonfirmasi"
         android:text="Daftar"
+        android:layout_below="@id/passwordKonfirmasi"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="#3CED97"
+        android:textColor="#FFFFFF"
         android:layout_centerHorizontal="true"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:minWidth="120dp"/>
+        android:textSize="15sp"
+        android:background="@drawable/textbox"/>
 
     <TextView
         android:id="@+id/blmAdmin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="Apakah anda admin? Daftar sebagai Admin" />
-
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:text="@string/apakah_anda_admin_daftar_sebagai_admin" />
 
 </RelativeLayout>

@@ -28,14 +28,14 @@
             android:orientation="vertical"
             android:layout_toEndOf="@id/gambarBarang">
             
-            <TextView
-                android:id="@+id/hargaDiskonNote"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/shape_rect5"
-                android:padding="5dp"
-                android:text="10% OFF"
-                android:textColor="#60F84D"/>
+<!--            <TextView-->
+<!--                android:id="@+id/hargaDiskonNote"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@drawable/shape_rect5"-->
+<!--                android:padding="5dp"-->
+<!--                android:text="10% OFF"-->
+<!--                android:textColor="#60F84D"/>-->
 
             <TextView
                 android:id="@+id/judul"
@@ -45,12 +45,12 @@
                 android:text="Judul"
                 android:textColor="@color/black"/>
 
-            <TextView
-                android:id="@+id/kuantiti"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1 ons"
-                android:textColor="@color/black"/>
+<!--            <TextView-->
+<!--                android:id="@+id/kuantiti"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="1 ons"-->
+<!--                android:textColor="@color/black"/>-->
             
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -58,17 +58,16 @@
                 android:padding="5dp"
                 android:layout_marginTop="5dp">
 
-                <TextView
-                    android:id="@+id/hargaDiskon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Rp9000"
-                    android:layout_marginEnd="10dp"
-                    android:textColor="#BBBBBB"/>
+<!--                <TextView-->
+<!--                    android:id="@+id/hargaDiskon"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Rp9000"-->
+<!--                    android:layout_marginEnd="10dp"-->
+<!--                    android:textColor="#BBBBBB"/>-->
 
                 <TextView
                     android:id="@+id/hargaAsli"
-                    android:layout_toEndOf="@id/hargaDiskon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Rp10000"
