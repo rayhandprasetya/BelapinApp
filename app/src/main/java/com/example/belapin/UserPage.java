@@ -136,7 +136,7 @@ public class UserPage extends AppCompatActivity {
         progressDialog.setMessage("Keluar");
 
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("online","false");
+        hashMap.put("online", "false");
 
         //update value to database
         DatabaseReference reference = FirebaseDatabase
@@ -154,35 +154,34 @@ public class UserPage extends AppCompatActivity {
             public void onFailure(@NonNull Exception e) {
                 // gagal update
                 progressDialog.dismiss();
-                Toast.makeText(UserPage.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(UserPage.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void checkUser() {
         FirebaseUser user = firebaseAuth.getCurrentUser();
-        if (user==null) {
+        if (user == null) {
             startActivity(new Intent(UserPage.this, Login.class));
             finish();
-        }
-        else {
+        } else {
             loadDataUser();
         }
     }
 
     private void loadDataUser() {
-        DatabaseReference reference = FirebaseDatabase.getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
         reference.orderByChild("uid").equalTo(firebaseAuth.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot s: snapshot.getChildren()){
+                for (DataSnapshot s : snapshot.getChildren()) {
 
                     // get user data
-                    String name = ""+s.child("name").getValue();
-                    String email = ""+s.child("email").getValue();
-                    String phone = ""+s.child("phone").getValue();
-                    String kota = ""+s.child("kota").getValue();
-                    String tipeAkun = ""+s.child("tipeAkun").getValue();
+                    String name = "" + s.child("name").getValue();
+                    String email = "" + s.child("email").getValue();
+                    String phone = "" + s.child("phone").getValue();
+                    String kota = "" + s.child("kota").getValue();
+                    String tipeAkun = "" + s.child("tipeAkun").getValue();
 
                     // set user data
                     namaAkun.setText(name);
@@ -205,43 +204,41 @@ public class UserPage extends AppCompatActivity {
         belanjaanArrayList = new ArrayList<>();
 
         // get belanjaan
-        DatabaseReference databaseReference = FirebaseDatabase
-                .getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app")
-                .getReference("Users");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 belanjaanArrayList.clear();
-                for (DataSnapshot s: snapshot.getChildren()) {
-                    String uid = ""+s.getRef().getKey();
+                for (DataSnapshot s : snapshot.getChildren()) {
+                    String uid = "" + s.getRef().getKey();
                     DatabaseReference databaseReference = FirebaseDatabase
-                            .getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app")
+                            .getInstance()
                             .getReference("Users").child(uid).child("Belanjaan");
                     databaseReference.orderByChild("yangOrder").equalTo(firebaseAuth.getUid())
                             .addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.exists()) {
-                                for (DataSnapshot s: snapshot.getChildren()) {
-                                    ModelBelanjaan modelBelanjaan = s.getValue(ModelBelanjaan.class);
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (snapshot.exists()) {
+                                        for (DataSnapshot s : snapshot.getChildren()) {
+                                            ModelBelanjaan modelBelanjaan = s.getValue(ModelBelanjaan.class);
 
-                                    // add to list
-                                    belanjaanArrayList.add(modelBelanjaan);
+                                            // add to list
+                                            belanjaanArrayList.add(modelBelanjaan);
+                                        }
+
+                                        // setup adapter
+                                        adapterBelanjaanUser = new AdapterBelanjaanUser(UserPage.this, belanjaanArrayList);
+
+                                        // set to recycleview
+                                        belanjaanHistory.setAdapter(adapterBelanjaanUser);
+                                    }
                                 }
 
-                                // setup adapter
-                                adapterBelanjaanUser = new AdapterBelanjaanUser(UserPage.this, belanjaanArrayList);
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
 
-                                // set to recycleview
-                                belanjaanHistory.setAdapter(adapterBelanjaanUser);
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
+                                }
+                            });
                 }
             }
 
@@ -310,12 +307,12 @@ public class UserPage extends AppCompatActivity {
                 .getReference("Users");
         databaseReference.orderByChild("tipeAkun").equalTo("Admin")
                 .addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                // clear list befor add
-                tokoList.clear();
-                for (DataSnapshot s: snapshot.getChildren()) {
-                    ModelPasar modelToko = s.getValue(ModelPasar.class);
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        // clear list befor add
+                        tokoList.clear();
+                        for (DataSnapshot s : snapshot.getChildren()) {
+                            ModelPasar modelToko = s.getValue(ModelPasar.class);
 
 //                    String tokoKota = ""+s.child("kota").getValue();
 //
@@ -325,20 +322,20 @@ public class UserPage extends AppCompatActivity {
 //                    }
 
 //                     if want to display all shop, skip if statment and add this
-                     tokoList.add(modelToko);
-                }
+                            tokoList.add(modelToko);
+                        }
 
-                // setup adapter
-                adapterToko = new AdapterPasar(UserPage.this, tokoList);
+                        // setup adapter
+                        adapterToko = new AdapterPasar(UserPage.this, tokoList);
 
-                // set adapter for recyclerview
-                tokoTampilan.setAdapter(adapterToko);
-            }
+                        // set adapter for recyclerview
+                        tokoTampilan.setAdapter(adapterToko);
+                    }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+                    }
+                });
     }
 }

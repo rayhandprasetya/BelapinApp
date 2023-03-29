@@ -31,10 +31,10 @@ public class AdapterPesananUser extends RecyclerView.Adapter<AdapterPesananUser.
 
     @Override
     public void onBindViewHolder(@NonNull HolderPesananUser holder, int position) {
-
         // get data at position
         ModelBelanjaanDetail modelBelanjaanDetail = belanjaanDetailArrayList.get(position);
-        String getbId = modelBelanjaanDetail.getbId();
+
+        String bId = modelBelanjaanDetail.getbId();
         String name = modelBelanjaanDetail.getName();
         String cost = modelBelanjaanDetail.getCost();
         String harga = modelBelanjaanDetail.getHarga();
@@ -42,9 +42,9 @@ public class AdapterPesananUser extends RecyclerView.Adapter<AdapterPesananUser.
 
         // set data
         holder.namaBarang.setText(name);
-        holder.hargaSatuan.setText("Rp"+harga);
-        holder.kuantitiBarang.setText("["+kuantiti+"]");
-        holder.hargaBarang.setText("Rp"+cost);
+        holder.hargaSatuan.setText("Rp" + harga);
+        holder.kuantitiBarang.setText("[" + kuantiti + "]");
+        holder.hargaBarang.setText("Rp" + cost);
     }
 
     @Override
@@ -52,6 +52,7 @@ public class AdapterPesananUser extends RecyclerView.Adapter<AdapterPesananUser.
         // return list size
         return belanjaanDetailArrayList.size();
     }
+
     class HolderPesananUser extends RecyclerView.ViewHolder {
 
         // views of baris_pesananbarang.xml

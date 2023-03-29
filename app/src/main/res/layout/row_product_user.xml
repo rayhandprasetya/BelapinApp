@@ -12,7 +12,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/gambarBarang"
+            android:id="@+id/productIv"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_centerVertical="true"
@@ -25,55 +25,42 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/gambarBarang"
+            android:layout_toEndOf="@id/productIv"
             android:orientation="vertical">
 
-            <!--            <TextView-->
-            <!--                android:id="@+id/hargaDiskonNote"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:background="@drawable/shape_rect5"-->
-            <!--                android:padding="5dp"-->
-            <!--                android:text="10% OFF"-->
-            <!--                android:textColor="#60F84D"/>-->
-
             <TextView
-                android:id="@+id/judul"
+                android:id="@+id/productTitleTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="Judul"
                 android:textColor="@color/black" />
 
-            <!--            <TextView-->
-            <!--                android:id="@+id/kuantiti"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:text="1 ons"-->
-            <!--                android:textColor="@color/black"/>-->
-
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:orientation="horizontal"
                 android:padding="5dp">
 
-                <!--                <TextView-->
-                <!--                    android:id="@+id/hargaDiskon"-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:text="Rp9000"-->
-                <!--                    android:layout_marginEnd="10dp"-->
-                <!--                    android:textColor="#BBBBBB"/>-->
-
                 <TextView
-                    android:id="@+id/hargaAsli"
+                    android:id="@+id/productPriceTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
                     android:text="Rp10000"
                     android:textColor="#BBBBBB" />
 
-            </RelativeLayout>
+                <TextView
+                    android:id="@+id/tambahKeranjang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_add"
+                    android:gravity="center_vertical"
+                    android:text="Tambah ke keranjang"
+                    android:textColor="@color/black" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

@@ -50,6 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <!--Full name-->
             <EditText
                 android:id="@+id/namaAkun"
                 android:layout_width="wrap_content"
@@ -64,6 +65,7 @@
                 android:padding="15dp"
                 android:background="@drawable/textbox"/>
 
+            <!--Market Name-->
             <EditText
                 android:id="@+id/namaToko"
                 android:layout_width="wrap_content"
@@ -79,6 +81,7 @@
                 android:padding="15dp"
                 android:background="@drawable/textbox"/>
 
+            <!--Market Address-->
             <EditText
                 android:id="@+id/alamatLengkap"
                 android:layout_width="wrap_content"

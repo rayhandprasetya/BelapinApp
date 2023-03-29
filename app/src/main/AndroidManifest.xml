@@ -21,6 +21,18 @@
         android:theme="@style/AppTheme.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".OrderDetailsSellerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RecipeDetailsUserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RecipeDetailsAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RecipeAddActivity"
+            android:exported="false" />
+        <activity
             android:name=".LoginPanel"
             android:exported="false" />
         <activity

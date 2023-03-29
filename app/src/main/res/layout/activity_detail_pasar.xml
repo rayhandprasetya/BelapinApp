@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DetailPasar">
-    
+
     <RelativeLayout
         android:id="@+id/pasarUser"
         android:layout_width="match_parent"
@@ -15,8 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="#79000000"/>
-        
+            android:src="#79000000" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,22 +25,25 @@
 
             <TextView
                 android:id="@+id/namaPasar"
+                style="@style/TextAppearance.AppCompat.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/TextAppearance.AppCompat.Title"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="3dp"
+                android:layout_marginBottom="3dp"
                 android:text="Nama Pasar"
-                android:textColor="@color/white"
-                android:layout_margin="3dp"/>
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/alamatPasar"
-                android:layout_below="@id/namaPasar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Alamat Pasar"
-                android:textColor="@color/white"
+                android:layout_below="@id/namaPasar"
                 android:layout_marginStart="3dp"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                android:text="Alamat Pasar"
+                android:textColor="@color/white" />
 
         </RelativeLayout>
 
@@ -50,7 +53,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/shape_rect1"
             android:padding="10dp">
-            
+
             <ImageButton
                 android:id="@+id/tmblTambah"
                 android:layout_width="30dp"
@@ -58,36 +61,36 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="8dp"
                 android:background="@null"
-                android:src="@drawable/ic_add"/>
+                android:src="@drawable/ic_add" />
 
             <ImageButton
                 android:id="@+id/tmblKembali"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:background="@null"
-                android:src="@drawable/ic_back"/>
-            
+                android:src="@drawable/ic_back" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:text="Detail Pasar"
-                android:textStyle="bold"
                 android:textColor="@color/white"
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <!-- total barang in keranjang -->
             <TextView
                 android:id="@+id/totalBarangKeranjang"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:textColor="@color/white"
-                android:text="10"
-                android:textSize="8sp"
-                android:gravity="center"
+                android:layout_alignParentEnd="true"
                 android:background="@drawable/shape_circle3"
-                android:layout_alignParentEnd="true"/>
+                android:gravity="center"
+                android:text="10"
+                android:textColor="@color/white"
+                android:textSize="8sp" />
 
         </RelativeLayout>
 
@@ -95,72 +98,35 @@
 
     <RelativeLayout
         android:id="@+id/daftarBarang"
-        android:layout_below="@id/pasarUser"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/pasarUser"
+        android:padding="10dp">
 
         <EditText
-            android:id="@+id/searchBarang"
-            android:layout_width="wrap_content"
+            android:id="@+id/searchEt"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:hint="Cari barang"
             android:layout_centerHorizontal="true"
-            android:textColor="#8D8D8D"
-            android:textSize="15sp"
+            android:layout_gravity="center"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
-            android:layout_toStartOf="@+id/filterBarang"
+            android:background="@drawable/textbox"
+            android:hint="Cari barang"
             android:padding="15dp"
-            android:background="@drawable/textbox"/>
-
-<!--        <EditText-->
-<!--            android:id="@+id/searchBarang"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="5dp"-->
-<!--            android:layout_marginTop="5dp"-->
-<!--            android:layout_marginEnd="5dp"-->
-<!--            android:layout_marginBottom="5dp"-->
-<!--            android:layout_toStartOf="@+id/filterBarang"-->
-<!--            android:background="@drawable/shape_rect2"-->
-<!--            android:drawableStart="@drawable/ic_search"-->
-<!--            android:drawablePadding="10dp"-->
-<!--            android:hint="Cari barang"-->
-<!--            android:padding="10dp" />-->
-
-        <ImageButton
-            android:id="@+id/filterBarang"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="2.5dp"
-            android:layout_marginEnd="5dp"
-            android:src="@drawable/ic_filter"
-            android:scaleType="fitXY"
-            android:background="@null"/>
-
-        <!-- show filtered barang title -->
-        <TextView
-            android:id="@+id/filteredBarang"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/searchBarang"
-            android:textColor="@color/black"
-            android:text="Perlihatkan semua"
-            android:layout_marginStart="5dp"
-            android:layout_marginBottom="5dp"/>
+            android:textColor="#8D8D8D"
+            android:textSize="15sp" />
 
         <!-- Recycler View show barang -->
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/banyakBarang"
+            android:id="@+id/recipesRv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/filteredBarang"
+            android:layout_below="@id/searchEt"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/baris_barang_admin"/>
+            tools:listitem="@layout/baris_barang_admin" />
 
     </RelativeLayout>
 

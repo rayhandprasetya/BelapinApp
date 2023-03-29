@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -16,6 +18,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -33,15 +37,10 @@ import java.util.HashMap;
 
 public class AdminPage extends AppCompatActivity {
 
-    private TextView namaAkun, emailAkun, namaToko, filteredBarang;
-    private EditText searchBarang;
-    private ImageButton tombolKeluar, tambahBarang, filterBarang;
-    private RelativeLayout barang, order;
-    private RecyclerView banyakBarang;
+    private TextView namaAkun, tabProductsTv, tabRecipesTv, tabOrdersTv;
+    private ImageButton tombolKeluar, tambahBarang;
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
-    private ArrayList<ModelBarang> barangList;
-    private AdapterBarangAdmin adapterBarangAdmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,17 +49,12 @@ public class AdminPage extends AppCompatActivity {
 
         namaAkun = findViewById(R.id.namaAkun);
 //        emailAkun = findViewById(R.id.emailAkun);
-        namaToko = findViewById(R.id.namaToko);
         tombolKeluar = findViewById(R.id.tombolKeluar);
         tambahBarang = findViewById(R.id.tambahBarang);
-//        tabBarang = findViewById(R.id.tabBarang);
-//        tabOrder = findViewById(R.id.tabOrder);
-        barang = findViewById(R.id.barang);
-        order = findViewById(R.id.order);
-        searchBarang = findViewById(R.id.searchBarang);
-        filterBarang = findViewById(R.id.filterBarang);
-        filteredBarang = findViewById(R.id.filteredBarang);
-        banyakBarang = findViewById(R.id.banyakBarang);
+        tabProductsTv = findViewById(R.id.tabProductsTv);
+        tabRecipesTv = findViewById(R.id.tabRecipesTv);
+        tabOrdersTv = findViewById(R.id.tabOrdersTv);
+
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Mohon Tunggu");
@@ -69,33 +63,7 @@ public class AdminPage extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         checkUser();
 
-        loadAllBarang();
-
-//        showBarang();
-
-        // search
-        searchBarang.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                try {
-                    adapterBarangAdmin.getFilter().filter(charSequence);
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
+        fragmentProducts();
 
         tombolKeluar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,118 +76,61 @@ public class AdminPage extends AppCompatActivity {
         tambahBarang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // add product
-                Intent intent = new Intent(AdminPage.this, TambahBarang.class);
-                startActivity(intent);
+                addNewOptionsDialog();
             }
         });
 
-//        tabBarang.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // load barang
-//                showBarang();
-//
-//            }
-//        });
-
-//        tabOrder.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // load order
-//                showOrder();
-//
-//            }
-//        });
-        filterBarang.setOnClickListener(new View.OnClickListener() {
+        tabProductsTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(AdminPage.this);
-                builder.setTitle("Pilih kategori").setItems(Constants.kategoriBarang1, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // get selected item
-                        String selected = Constants.kategoriBarang1[i];
-                        filteredBarang.setText(selected);
+                // load barang
+                fragmentProducts();
 
-                        if (selected.equals("All")) {
-                            // load all barang
-                            loadAllBarang();
+            }
+        });
 
-                        }
-                        else {
-                            // load selected barang
-                            loadFilteredBarang(selected);
-                        }
+        tabRecipesTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // load order
+                fragmentRecipes();
 
-                    }
-                }).show();
+            }
+        });
+
+        tabOrdersTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // load order
+                fragmentOrders();
+
             }
         });
 
     }
 
-    private void loadFilteredBarang(String selected) {
-        barangList = new ArrayList<>();
-        // get all barang
+    private void addNewOptionsDialog() {
+        PopupMenu popupMenu = new PopupMenu(this, tambahBarang);
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
-        databaseReference.child(firebaseAuth.getUid()).child("Barang").addValueEventListener(new ValueEventListener() {
+        popupMenu.getMenu().add(Menu.NONE, 1, 1, "Product");
+        popupMenu.getMenu().add(Menu.NONE, 2, 2, "Recipe");
+
+        popupMenu.show();
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                // before getting list reset
-                for (DataSnapshot s: snapshot.getChildren()) {
-                    String barangKategori = ""+s.child("barangKategori").getValue();
-
-                    // if selected category matches barang category the add it to list
-                    if (selected.equals(barangKategori)) {
-                        ModelBarang modelBarang = s.getValue(ModelBarang.class);
-                        barangList.add(modelBarang);
-                    }
+            public boolean onMenuItemClick(MenuItem item) {
+                int itemId = item.getItemId();
+                if (itemId == 1) {
+                    // add product
+                    Intent intent = new Intent(AdminPage.this, TambahBarang.class);
+                    startActivity(intent);
+                } else if (itemId == 2) {
+                    // add Recipe
+                    Intent intent = new Intent(AdminPage.this, RecipeAddActivity.class);
+                    startActivity(intent);
                 }
-
-                // setup adapter
-                adapterBarangAdmin = new AdapterBarangAdmin(AdminPage.this, barangList);
-
-                // set adapter
-                banyakBarang.setAdapter(adapterBarangAdmin);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    private void loadAllBarang() {
-        barangList = new ArrayList<>();
-        // get all barang
-
-        DatabaseReference databaseReference = FirebaseDatabase
-                .getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app")
-                .getReference("Users");
-        databaseReference.child(firebaseAuth.getUid()).child("Barang")
-                .addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                // before getting list reset
-                for (DataSnapshot s: snapshot.getChildren()) {
-                    ModelBarang modelBarang = s.getValue(ModelBarang.class);
-                    barangList.add(modelBarang);
-                }
-
-                // setup adapter
-                adapterBarangAdmin = new AdapterBarangAdmin(AdminPage.this, barangList);
-
-                // set adapter
-                banyakBarang.setAdapter(adapterBarangAdmin);
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
+                return false;
             }
         });
     }
@@ -254,10 +165,10 @@ public class AdminPage extends AppCompatActivity {
         progressDialog.setMessage("Keluar");
 
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("online","false");
+        hashMap.put("online", "false");
 
         //update value to database
-        DatabaseReference reference = FirebaseDatabase.getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
         reference.child(firebaseAuth.getUid()).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
@@ -270,7 +181,7 @@ public class AdminPage extends AppCompatActivity {
             public void onFailure(@NonNull Exception e) {
                 // gagal update
                 progressDialog.dismiss();
-                Toast.makeText(AdminPage.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(AdminPage.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -278,11 +189,10 @@ public class AdminPage extends AppCompatActivity {
 
     private void checkUser() {
         FirebaseUser user = firebaseAuth.getCurrentUser();
-        if (user==null) {
+        if (user == null) {
             startActivity(new Intent(AdminPage.this, Login.class));
             finish();
-        }
-        else {
+        } else {
             loadDataUser();
         }
     }
@@ -292,13 +202,13 @@ public class AdminPage extends AppCompatActivity {
         reference.orderByChild("uid").equalTo(firebaseAuth.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot s: snapshot.getChildren()){
+                for (DataSnapshot s : snapshot.getChildren()) {
 
                     // get data from database
-                    String name = ""+s.child("name").getValue();
-                    String tipeAkun = ""+s.child("tipeAkun").getValue();
-                    String email = ""+s.child("email").getValue();
-                    String toko = ""+s.child("namaToko").getValue();
+                    String name = "" + s.child("name").getValue();
+                    String tipeAkun = "" + s.child("tipeAkun").getValue();
+                    String email = "" + s.child("email").getValue();
+                    String toko = "" + s.child("namaToko").getValue();
 
                     // show data to screen
                     namaAkun.setText(name);
@@ -313,5 +223,52 @@ public class AdminPage extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void fragmentProducts(){
+        tabProductsTv.setTextColor(getResources().getColor(R.color.black));
+        tabProductsTv.setBackgroundResource(R.drawable.shape_rect04);
+
+        tabRecipesTv.setTextColor(getResources().getColor(R.color.white));
+        tabRecipesTv.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+
+        tabOrdersTv.setTextColor(getResources().getColor(R.color.white));
+        tabOrdersTv.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+
+        AdminProductsFragment fragment = new AdminProductsFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout, fragment, "AdminProductsFragment");  //create first framelayout with id fram in the activity where fragments will be displayed
+        fragmentTransaction.commit();
+    }
+    private void fragmentRecipes(){
+        tabProductsTv.setTextColor(getResources().getColor(R.color.white));
+        tabProductsTv.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+
+        tabRecipesTv.setTextColor(getResources().getColor(R.color.black));
+        tabRecipesTv.setBackgroundResource(R.drawable.shape_rect04);
+
+        tabOrdersTv.setTextColor(getResources().getColor(R.color.white));
+        tabOrdersTv.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+
+        AdminRecipesFragment fragment = new AdminRecipesFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout, fragment, "AdminRecipesFragment");  //create first framelayout with id fram in the activity where fragments will be displayed
+        fragmentTransaction.commit();
+    }
+
+    private void fragmentOrders(){
+        tabProductsTv.setTextColor(getResources().getColor(R.color.white));
+        tabProductsTv.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+
+        tabRecipesTv.setTextColor(getResources().getColor(R.color.white));
+        tabRecipesTv.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+
+        tabOrdersTv.setTextColor(getResources().getColor(R.color.black));
+        tabOrdersTv.setBackgroundResource(R.drawable.shape_rect04);
+
+        AdminOrdersFragment fragment = new AdminOrdersFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout, fragment, "AdminOrdersFragment");  //create first framelayout with id fram in the activity where fragments will be displayed
+        fragmentTransaction.commit();
     }
 }

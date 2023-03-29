@@ -88,9 +88,6 @@ public class AdapterKeranjang extends RecyclerView.Adapter<AdapterKeranjang.Hold
                 ((DetailPasar)context).totalSemuaHarga = 0.00;
                 ((DetailPasar)context).totalSemua.setText("Rp"+String.format("%.2f", totalPriceLain));
 
-                // update hitung keranjang after remove barang from keranjang
-                ((DetailPasar)context).hitungKeranjang();
-
             }
         });
 

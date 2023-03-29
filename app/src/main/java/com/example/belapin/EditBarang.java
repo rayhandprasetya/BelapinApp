@@ -1,32 +1,35 @@
 package com.example.belapin;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -42,6 +45,7 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class EditBarang extends AppCompatActivity {
 
@@ -52,17 +56,10 @@ public class EditBarang extends AppCompatActivity {
     private TextView kategori, kuantiti, harga, hargaDiskon, hargaDiskonNote;
     private SwitchCompat diskon;
     private Button tombolEdit;
+
+    private static final String TAG = "EDIT_PRODUCT_TAG";
     private String barangId;
-    //permission constants
-    private static final int CAMERA_REQUEST_CODE = 200;
-    private static final int STORAGE_REQUEST_CODE = 300;
-    //gambar constants
-    private static final int IMAGE_PICK_GALLERY_CODE = 400;
-    private static final int IMAGE_PICK_CAMERA_CODE = 500;
-    //array permission
-    private String[] cameraPermissions;
-    private String[] storagePermissions;
-    private Uri image_uri;
+    private Uri imageUri = null;
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
 
@@ -93,14 +90,11 @@ public class EditBarang extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 
         loadBarangDetail(); // to set on views
-        
+
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Mohon Tunggu");
         progressDialog.setCanceledOnTouchOutside(false);
-
-        cameraPermissions = new String[]{android.Manifest.permission.CAMERA, android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        storagePermissions = new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
 //        diskon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 //            @Override
@@ -150,23 +144,23 @@ public class EditBarang extends AppCompatActivity {
     }
 
     private void loadBarangDetail() {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         databaseReference.child((firebaseAuth.getUid())).child("Barang").child(barangId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 // get data
-                String barangId = ""+snapshot.child("barangId").getValue();
-                String barangJudul = ""+snapshot.child("barangJudul").getValue();
-                String barangDeskripsi = ""+snapshot.child("barangDeskripsi").getValue();
-                String barangKategori = ""+snapshot.child("barangKategori").getValue();
+                String barangId = "" + snapshot.child("barangId").getValue();
+                String barangJudul = "" + snapshot.child("barangJudul").getValue();
+                String barangDeskripsi = "" + snapshot.child("barangDeskripsi").getValue();
+                String barangKategori = "" + snapshot.child("barangKategori").getValue();
 //                String barangKuantiti = ""+snapshot.child("barangKuantiti").getValue();
-                String hargaAsli = ""+snapshot.child("hargaAsli").getValue();
-                String barangIcon = ""+snapshot.child("barangIcon").getValue();
-                String hargaDiskonLain = ""+snapshot.child("hargaDiskon").getValue();
-                String hargaDiskonNoteLain = ""+snapshot.child("hargaDiskonNote").getValue();
-                String diskonTersedia = ""+snapshot.child("diskonTersedia").getValue();
-                String timestamp = ""+snapshot.child("timestamp").getValue();
-                String uid = ""+snapshot.child("uid").getValue();
+                String hargaAsli = "" + snapshot.child("hargaAsli").getValue();
+                String barangIcon = "" + snapshot.child("barangIcon").getValue();
+                String hargaDiskonLain = "" + snapshot.child("hargaDiskon").getValue();
+                String hargaDiskonNoteLain = "" + snapshot.child("hargaDiskonNote").getValue();
+                String diskonTersedia = "" + snapshot.child("diskonTersedia").getValue();
+                String timestamp = "" + snapshot.child("timestamp").getValue();
+                String uid = "" + snapshot.child("uid").getValue();
 
                 // set data to views
 //                if (diskonTersedia.equals("true")) {
@@ -190,8 +184,7 @@ public class EditBarang extends AppCompatActivity {
 
                 try {
                     Picasso.get().load(barangIcon).placeholder(R.drawable.ic_add).into(tambahGambar);
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     tambahGambar.setImageResource(R.drawable.ic_add);
                 }
 
@@ -206,6 +199,7 @@ public class EditBarang extends AppCompatActivity {
 
     private String barangJudul, barangDesc, barangKategori, barangKuantiti, hargaAsli, diskonHarga, diskonNote;
     private boolean diskonTersedia = false;
+
     private void inputData() {
 
         // input data
@@ -251,7 +245,7 @@ public class EditBarang extends AppCompatActivity {
         progressDialog.setMessage("Mengupdate barang");
         progressDialog.show();
 
-        if (image_uri == null) {
+        if (imageUri == null) {
 
             // update without image
 
@@ -267,7 +261,7 @@ public class EditBarang extends AppCompatActivity {
 //            hashMap.put("hargaDiskonLain", "" + diskonHarga);
 
             // update to db
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
             databaseReference.child(firebaseAuth.getUid()).child("Barang").child(barangId).updateChildren(hashMap)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -282,11 +276,10 @@ public class EditBarang extends AppCompatActivity {
                         public void onFailure(@NonNull Exception e) {
                             // update fail
                             progressDialog.dismiss();
-                            Toast.makeText(EditBarang.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditBarang.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
-        }
-        else {
+        } else {
             // update with image
             // first upload image
             // image name and path on firebase storage
@@ -294,12 +287,12 @@ public class EditBarang extends AppCompatActivity {
 
             //update images
             StorageReference storageReference = FirebaseStorage.getInstance().getReference(filePath);
-            storageReference.putFile(image_uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            storageReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     // image uploaded, get url of uploaded image
                     Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                    while (!uriTask.isSuccessful());
+                    while (!uriTask.isSuccessful()) ;
                     Uri downloadImageUri = uriTask.getResult();
 
                     if (uriTask.isSuccessful()) {
@@ -309,14 +302,15 @@ public class EditBarang extends AppCompatActivity {
                         hashMap.put("barangDeskripsi", "" + barangDesc);
                         hashMap.put("barangKategori", "" + barangKategori);
                         hashMap.put("tambahGambar", "" + downloadImageUri);
-//                        hashMap.put("barangKuantiti", "" + barangKuantiti);
                         hashMap.put("hargaAsli", "" + hargaAsli);
+                        hashMap.put("barangIcon", "" + downloadImageUri);
+//                        hashMap.put("barangKuantiti", "" + barangKuantiti);
 //                        hashMap.put("diskonTersedia", "" + diskonTersedia);
 //                        hashMap.put("diskonNote", "" + diskonNote);
 //                        hashMap.put("hargaDiskonLain", "" + diskonHarga);
 
                         // update to db
-                        DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
+                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
                         databaseReference.child(firebaseAuth.getUid()).child("Barang").child(barangId).updateChildren(hashMap)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
@@ -331,7 +325,7 @@ public class EditBarang extends AppCompatActivity {
                                     public void onFailure(@NonNull Exception e) {
                                         // update fail
                                         progressDialog.dismiss();
-                                        Toast.makeText(EditBarang.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(EditBarang.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                 });
 
@@ -342,7 +336,7 @@ public class EditBarang extends AppCompatActivity {
                 public void onFailure(@NonNull Exception e) {
                     // upload failed
                     progressDialog.dismiss();
-                    Toast.makeText(EditBarang.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditBarang.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -371,124 +365,157 @@ public class EditBarang extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (i == 0) {
-                    // kamera diklik
-                    if (cameraChecking()){
-                        // permission granted
-                        imageCamera();
+                    //Camera is clicked
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        //android version is 13 or above, only camera permission required
+                        requestCameraPermissions.launch(new String[]{Manifest.permission.CAMERA});
+                    } else {
+                        //android version is below 13, need camera & storage permission
+                        requestCameraPermissions.launch(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE});
                     }
-                    else {
-                        cameraRequest();
+                } else if (i == 1) {
+                    //Gallery is clicked
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        //android version is 13 or above, no storage permission
+                        pickImageGallery();
+                    } else {
+                        //android version is below 13, need storage permission
+                        requestStoragePermission.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE);
                     }
-                }
-                else {
-                    // galeri diklik
-                    if (storageChecking()){
-                        // permission granted
-                        imageGallery();
-                    }
-                    else {
-                        storageRequest();
-                    }
+
                 }
             }
         }).show();
     }
 
-    private void imageGallery() {
+    private void pickImageGallery() {
+        Log.d(TAG, "pickImageGallery: ");
+        //intent to pick image from gallery, will show all resources from where we can pick the image
         Intent intent = new Intent(Intent.ACTION_PICK);
+        //set type of file we want to pick i.e. image
         intent.setType("image/*");
-        startActivityForResult(intent, IMAGE_PICK_GALLERY_CODE);
+        galleryActivityResultLauncher.launch(intent);
     }
 
-    private void imageCamera() {
+    private ActivityResultLauncher<Intent> galleryActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    //here we will receive the image, if picked
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        //image picked
+                        Intent data = result.getData();
+                        //get uri of the image picked
+                        imageUri = data.getData();
+                        Log.d(TAG, "onActivityResult: Picked image gallery: " + imageUri);
 
-        // media store to pick image
+                        //set to imageview
+                        try {
+                            Glide.with(EditBarang.this)
+                                    .load(imageUri)
+                                    .placeholder(R.drawable.ic_add)
+                                    .into(tambahGambar);
+                        } catch (Exception e) {
+                            Log.e(TAG, "onActivityResult: ", e);
+                        }
+                    } else {
+                        //Cancelled
+                        Toast.makeText(EditBarang.this, "Cancelled...", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            }
+    );
+
+    private void pickImageCamera() {
+        Log.d(TAG, "pickImageCamera: ");
+        //get ready the image data to store in MediaStore
         ContentValues contentValues = new ContentValues();
-        contentValues.put(MediaStore.Images.Media.TITLE, "Gambar sementara");
-        contentValues.put(MediaStore.Images.Media.DESCRIPTION, "Gambar desc semetanra");
+        contentValues.put(MediaStore.Images.Media.TITLE, "TEMP IMAGE TITLE");
+        contentValues.put(MediaStore.Images.Media.DESCRIPTION, "TEMP IMAGE DESCRIPTION");
+        //store the camera image in imageUri variable
+        imageUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
 
-        image_uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+        //Intent to launch camera
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri);
-        startActivityForResult(intent, IMAGE_PICK_CAMERA_CODE);
-    }
-    private boolean storageChecking() {
-        boolean result = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
-                (PackageManager.PERMISSION_GRANTED);
-        return result;
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        cameraActivityResultLauncher.launch(intent);
     }
 
-    private void storageRequest() {
-        ActivityCompat.requestPermissions(this, storagePermissions, STORAGE_REQUEST_CODE);
-    }
-    private boolean cameraChecking() {
-        boolean result = ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) ==
-                (PackageManager.PERMISSION_GRANTED);
+    private ActivityResultLauncher<Intent> cameraActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    //here we will receive the image, if taken from camera
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        //image is taken from camera
+                        //we already have the image in imageUri using function pickImageCamera()
+                        //save the picked image
+                        Log.d(TAG, "onActivityResult: Picked image camera: " + imageUri);
 
-        boolean result2 = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) ==
-                (PackageManager.PERMISSION_GRANTED);
-
-        return result && result2;
-    }
-
-    private void cameraRequest() {
-        ActivityCompat.requestPermissions(this, cameraPermissions, CAMERA_REQUEST_CODE);
-    }
-
-    // permission result
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case CAMERA_REQUEST_CODE: {
-                if (grantResults.length>0) {
-                    boolean cameraAccapted  = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                    boolean storageAccapted  = grantResults[1] == PackageManager.PERMISSION_GRANTED;
-                    if (cameraAccapted && storageAccapted) {
-                        // permission granted
-                        imageCamera();
+                        //set to imageview
+                        try {
+                            Glide.with(EditBarang.this)
+                                    .load(imageUri)
+                                    .placeholder(R.drawable.ic_add)
+                                    .into(tambahGambar);
+                        } catch (Exception e) {
+                            Log.e(TAG, "onActivityResult: ", e);
+                        }
+                    } else {
+                        //Cancelled
+                        Toast.makeText(EditBarang.this, "Cancelled...", Toast.LENGTH_SHORT).show();
                     }
-                    else {
-                        // permission one or both not granted
-                        Toast.makeText(this, "Izinkan aplikasi untuk mengakses kamera dan storage", Toast.LENGTH_SHORT).show();
-                    }
-
                 }
             }
-            case STORAGE_REQUEST_CODE: {
-                if (grantResults.length>0) {
-                    boolean storageAccapted  = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                    if (storageAccapted) {
-                        // app has permission to access gallery
-                        imageGallery();
-                    }
-                    else {
-                        // dont have permission acces to storage
-                        Toast.makeText(this, "Izinkan aplikasi untuk mengakses storage", Toast.LENGTH_SHORT).show();
-                    }
+    );
 
+    private ActivityResultLauncher<String> requestStoragePermission = registerForActivityResult(
+            new ActivityResultContracts.RequestPermission(),
+            new ActivityResultCallback<Boolean>() {
+                @Override
+                public void onActivityResult(Boolean isGranted) {
+                    Log.d(TAG, "onActivityResult: isGranted: " + isGranted);
+                    //lets check if from permission dialog user have granted the permission or denied the result is in isGranted as true/false
+                    if (isGranted) {
+                        //user has granted permission so we can pick image from gallery
+                        pickImageGallery();
+                    } else {
+                        //user denied permission so we can't pick image from gallery
+                        Toast.makeText(EditBarang.this, "Permission denied...", Toast.LENGTH_SHORT).show();
+
+                    }
                 }
             }
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
+    );
 
-    // image pick
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (resultCode == RESULT_OK) {
-            if (requestCode == IMAGE_PICK_GALLERY_CODE) {
+    private ActivityResultLauncher<String[]> requestCameraPermissions = registerForActivityResult(
+            new ActivityResultContracts.RequestMultiplePermissions(), new ActivityResultCallback<Map<String, Boolean>>() {
+                @Override
+                public void onActivityResult(Map<String, Boolean> result) {
+                    Log.d(TAG, "onActivityResult: ");
+                    Log.d(TAG, "onActivityResult: " + result.toString());
+                    //let's check if Camera or Storage or both permissions granted or not from permission dialog
+                    boolean areAllGranted = true;
+                    for (Boolean isGranted : result.values()) {
+                        Log.d(TAG, "onActivityResult: isGranted: " + isGranted);
+                        areAllGranted = areAllGranted && isGranted;
+                    }
 
-                // save data
-                image_uri = data.getData();
 
-                // set image
-                tambahGambar.setImageURI(image_uri);
+                    if (areAllGranted) {
+                        //Camera & Storage both permissions are granted, we can launch camera to take image
+                        Log.d(TAG, "onActivityResult: All Granted e.g. Camera & Storage...");
+                        pickImageCamera();
+                    } else {
+                        //Camera or Storage or both permissions denied
+                        Log.d(TAG, "onActivityResult: Camera or Storage or both denied...");
+                        Toast.makeText(EditBarang.this, "Camera or Storage or both permissions denied...", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
-            else if (requestCode == IMAGE_PICK_CAMERA_CODE) {
-                tambahGambar.setImageURI(image_uri);
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
+    );
 
 }

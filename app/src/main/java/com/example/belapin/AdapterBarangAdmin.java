@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -70,7 +71,7 @@ public class AdapterBarangAdmin extends RecyclerView.Adapter<AdapterBarangAdmin.
 //        holder.kuantiti.setText(kuantiti);
 //        holder.hargaDiskonNote.setText(hargaDiskonNote);
 //        holder.hargaDiskon.setText("Rp"+hargaDiskon);
-        holder.hargaAsli.setText("Rp"+hargaAsli);
+        holder.hargaAsli.setText("Rp" + hargaAsli);
 //        if(diskonTersedia.equals("true")){
 //            // product diskon
 //            holder.hargaDiskon.setVisibility(View.VISIBLE);
@@ -82,10 +83,12 @@ public class AdapterBarangAdmin extends RecyclerView.Adapter<AdapterBarangAdmin.
         holder.hargaAsli.setPaintFlags(0);
 
         try {
-            Picasso.get().load(gambar).placeholder(R.drawable.ic_add).into(holder.gambarBarang);
-        }
-        catch (Exception e) {
-            holder.gambarBarang.setImageResource(R.drawable.ic_add);
+            Glide.with(context)
+                    .load(gambar)
+                    .placeholder(R.drawable.ic_add)
+                    .into(holder.gambarBarang);
+        } catch (Exception e) {
+
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -140,7 +143,7 @@ public class AdapterBarangAdmin extends RecyclerView.Adapter<AdapterBarangAdmin.
 //        kuantitiUI.setText(kuantiti);
 //        hargaDiskonNoteUI.setText(hargaDiskonNote);
 //        hargaDiskonUI.setText("Rp"+hargaDiskon);
-        hargaAsliUI.setText("Rp"+hargaAsli);
+        hargaAsliUI.setText("Rp" + hargaAsli);
 //        if(diskonTersedia.equals("true")){
 //            // product diskon
 //            hargaDiskonUI.setVisibility(View.VISIBLE);
@@ -184,7 +187,7 @@ public class AdapterBarangAdmin extends RecyclerView.Adapter<AdapterBarangAdmin.
 
                 // show delete confirmation
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Hapus").setMessage("Yakin hapus" + judul +" ?")
+                builder.setTitle("Hapus").setMessage("Yakin hapus" + judul + " ?")
                         .setPositiveButton("HAPUS", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -232,7 +235,7 @@ public class AdapterBarangAdmin extends RecyclerView.Adapter<AdapterBarangAdmin.
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         // failed delete barang
-                        Toast.makeText(context, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -244,7 +247,7 @@ public class AdapterBarangAdmin extends RecyclerView.Adapter<AdapterBarangAdmin.
 
     @Override
     public Filter getFilter() {
-        if (filter==null) {
+        if (filter == null) {
             filter = new FilterBarang(this, filterList);
         }
         return filter;

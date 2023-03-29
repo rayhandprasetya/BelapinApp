@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RecipeAddActivity">
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@drawable/shape_rect1">
+
+        <ImageButton
+            android:id="@+id/backBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@android:color/transparent"
+            android:padding="10dp"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            android:id="@+id/namaToko"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Recipe Add"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/submitBtn"
+        android:layout_below="@id/toolbar"
+        android:padding="15dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/recipeIv"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_add"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="5dp" />
+
+            <!--Recipe Name-->
+            <EditText
+                android:id="@+id/recipeNameEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/recipeIv"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/textbox"
+                android:hint="Recipe Name"
+                android:inputType="textPersonName"
+                android:padding="15dp"
+                android:textColor="#8D8D8D"
+                android:textSize="15sp" />
+
+            <!--Person Count-->
+            <EditText
+                android:id="@+id/personCountEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/recipeNameEt"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/textbox"
+                android:hint="No. Of Persons e.g. 7"
+                android:inputType="textPersonName"
+                android:padding="15dp"
+                android:textColor="#8D8D8D"
+                android:textSize="15sp" />
+
+            <!--Time-->
+            <EditText
+                android:id="@+id/timeEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/personCountEt"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/textbox"
+                android:hint="Time e.g. 30 minutes"
+                android:inputType="textPersonName"
+                android:padding="15dp"
+                android:textColor="#8D8D8D"
+                android:textSize="15sp" />
+
+            <!--Ingredients-->
+            <EditText
+                android:id="@+id/ingredientsEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/timeEt"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/textbox"
+                android:hint="Ingredients e.g. Flour 1kg"
+                android:inputType="textCapSentences|textMultiLine"
+                android:padding="15dp"
+                android:textColor="#8D8D8D"
+                android:textSize="15sp" />
+
+            <!--How To Cock-->
+            <EditText
+                android:id="@+id/howToEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ingredientsEt"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/textbox"
+                android:hint="How to cock"
+                android:inputType="textCapSentences|textMultiLine"
+                android:padding="15dp"
+                android:textColor="#8D8D8D"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/productsTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/howToEt"
+                android:layout_marginTop="10dp"
+                android:text="Choose Products " />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/productsRv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/productsTv"
+                android:layout_marginTop="10dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/baris_product_recipe_admin" />
+
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <Button
+        android:id="@+id/submitBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/textbox"
+        android:backgroundTint="#3CED97"
+        android:text="Tambah Barang"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>

@@ -10,34 +10,34 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:background="@drawable/shape_rect1">
+        android:background="@drawable/shape_rect1"
+        android:padding="10dp">
 
         <ImageButton
             android:id="@+id/tombolKeluar"
-            android:src="@drawable/ic_logout"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:background="@null"
             android:layout_alignParentEnd="true"
-            android:contentDescription="tombol kembali"/>
+            android:background="@null"
+            android:contentDescription="tombol kembali"
+            android:src="@drawable/ic_logout" />
 
         <ImageButton
             android:id="@+id/tambahBarang"
-            android:src="@drawable/ic_add3"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:background="@null"
             android:layout_toStartOf="@id/tombolKeluar"
-            android:contentDescription="tombol kembali"/>
+            android:background="@null"
+            android:contentDescription="tombol kembali"
+            android:src="@drawable/ic_add3" />
 
         <TextView
             android:id="@+id/namaAkun"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nama"
-            android:textSize="15sp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/namaToko"
@@ -45,130 +45,57 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/namaAkun"
             android:text="Nama Pasar"
-            android:textSize="15sp"
-            android:textColor="@color/white"/>
-
-<!--        <TextView-->
-<!--            android:id="@+id/emailAkun"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@id/namaToko"-->
-<!--            android:text="Email"-->
-<!--            android:textSize="15sp"-->
-<!--            android:textColor="@color/white"/>-->
+            android:textColor="@color/white"
+            android:textSize="15sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="5dp">
+            android:layout_height="40dp"
+            android:layout_below="@+id/namaToko"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/shape_rect03"
+            android:orientation="horizontal">
 
+            <!--Products-->
             <TextView
-                android:id="@+id/tabBarang"
-                android:layout_width="wrap_content"
+                android:id="@+id/tabProductsTv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/shape_rect04"
+                android:gravity="center"
+                android:text="Products"
+                android:textColor="@color/black" />
+
+            <!--Recipes-->
+            <TextView
+                android:id="@+id/tabRecipesTv"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@color/white"/>
+                android:text="Recipes"
+                android:textColor="@color/white" />
 
-<!--            <TextView-->
-<!--                android:id="@+id/tabOrder"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:layout_weight="1"-->
-<!--                android:textStyle="bold"-->
-<!--                android:gravity="center"-->
-<!--                android:text="Order"-->
-<!--                android:textColor="@color/white"/>-->
-
+            <!--Orders-->
+            <TextView
+                android:id="@+id/tabOrdersTv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Orders"
+                android:textColor="@color/white" />
 
         </LinearLayout>
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/barang"
-        android:layout_below="@+id/toolbar"
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <!--Search & filter barang -->
-
-        <EditText
-            android:id="@+id/searchBarang"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:hint="Cari barang"
-            android:layout_centerHorizontal="true"
-            android:textColor="#8D8D8D"
-            android:textSize="15sp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_toStartOf="@+id/filterBarang"
-            android:padding="15dp"
-            android:background="@drawable/textbox"/>
-
-<!--        <EditText-->
-<!--            android:id="@+id/searchBarang"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="5dp"-->
-<!--            android:layout_marginTop="5dp"-->
-<!--            android:layout_marginEnd="5dp"-->
-<!--            android:layout_marginBottom="5dp"-->
-<!--            android:layout_toStartOf="@+id/filterBarang"-->
-<!--            android:background="@drawable/shape_rect2"-->
-<!--            android:drawableStart="@drawable/ic_search"-->
-<!--            android:drawablePadding="10dp"-->
-<!--            android:hint="Cari barang"-->
-<!--            android:padding="10dp" />-->
-
-        <ImageButton
-            android:id="@+id/filterBarang"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="2.5dp"
-            android:layout_marginEnd="5dp"
-            android:src="@drawable/ic_filter"
-            android:scaleType="fitXY"
-            android:background="@null"/>
-
-        <!-- show filtered barang title -->
-        <TextView
-            android:id="@+id/filteredBarang"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/searchBarang"
-            android:textColor="@color/black"
-            android:text="Perlihatkan semua"
-            android:layout_marginStart="5dp"
-            android:layout_marginBottom="5dp"/>
-
-
-        <!-- Recycler View show barang -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/banyakBarang"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/filteredBarang"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/baris_barang_admin"/>
-
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:id="@+id/order"
-        android:layout_below="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </RelativeLayout>
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar" />
 
 </RelativeLayout>

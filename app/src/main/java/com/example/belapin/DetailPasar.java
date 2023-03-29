@@ -37,36 +37,38 @@ import p32929.androideasysql_library.EasyDB;
 
 public class DetailPasar extends AppCompatActivity {
 
-    private TextView namaPasar, alamatPasar, filteredBarang, totalBarangKeranjang;
-    private ImageButton tmblTambah, tmblKembali, filterBarang;
-    private EditText searchBarang;
-    private String tokoUid, namaPasarLain, alamatPasarLain;
-    private RecyclerView banyakBarang;
-    private FirebaseAuth firebaseAuth;
-    private ArrayList<ModelBarang> barangList;
-    private AdapterBarangUser adapterBarangUser;
+    private ImageButton tmblTambah, tmblKembali;
+    private TextView totalBarangKeranjang, namaPasar, alamatPasar;
+    private EditText searchEt;
+    private RecyclerView recipesRv;
 
-    // keranjang
-    private ArrayList<ModelKeranjang> keranjangBarangList;
-    private AdapterKeranjang adapterKeranjang;
-    public String phoneKu;
+    private static final String TAG = "SHOP_DETAILS_TAG";
+
     private ProgressDialog progressDialog;
-    private EasyDB easyDB;
+
+    private FirebaseAuth firebaseAuth;
+
+    private String namaPasarLain = "";
+    private String alamatPasarLain = "";
+    private String phoneKu = "";
+    private String tokoUid = "";
+
+    EasyDB easyDB;
+    private ArrayList<ModelRecipeUser> recipeAdminArrayList;
+    private AdapterRecipeUser adapterRecipeAdmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_pasar);
 
+        tmblKembali = findViewById(R.id.tmblKembali);
+        tmblTambah = findViewById(R.id.tmblTambah);
         namaPasar = findViewById(R.id.namaPasar);
         alamatPasar = findViewById(R.id.alamatPasar);
-        filteredBarang = findViewById(R.id.filteredBarang);
-        tmblTambah = findViewById(R.id.tmblTambah);
-        tmblKembali = findViewById(R.id.tmblKembali);
-        filterBarang = findViewById(R.id.filterBarang);
-        searchBarang = findViewById(R.id.searchBarang);
-        banyakBarang = findViewById(R.id.banyakBarang);
         totalBarangKeranjang = findViewById(R.id.totalBarangKeranjang);
+        searchEt = findViewById(R.id.searchEt);
+        recipesRv = findViewById(R.id.recipesRv);
 
         // init dialog
         progressDialog = new ProgressDialog(this);
@@ -78,7 +80,7 @@ public class DetailPasar extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         loadUser();
         loadPasar();
-        loadBarang();
+        loadRecipes();
 
         // declere it to class level and init in on create
         easyDB = EasyDB.init(this, "DB_ITEMS")
@@ -111,14 +113,14 @@ public class DetailPasar extends AppCompatActivity {
             }
         });
 
-        searchBarang.addTextChangedListener(new TextWatcher() {
+        searchEt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {            }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 try {
-                    adapterBarangUser.getFilter().filter(charSequence);
+                    adapterRecipeAdmin.getFilter().filter(charSequence);
                 }
                 catch (Exception e) {
                     e.printStackTrace();
@@ -131,35 +133,17 @@ public class DetailPasar extends AppCompatActivity {
             }
         });
 
-        filterBarang.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(DetailPasar.this);
-                builder.setTitle("Pilih kategori").setItems(Constants.kategoriBarang1, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // get selected item
-                        String selected = Constants.kategoriBarang1[i];
-                        filteredBarang.setText(selected);
-
-                        if (selected.equals("All")) {
-                            // load all barang
-                            loadBarang();
-
-                        }
-                        else {
-                            // load selected barang
-                            adapterBarangUser.getFilter().filter(selected);
-                        }
-                    }
-                }).show();
-            }
-        });
     }
 
     private void hapusDataKeranjang() {
         // delete all records
         easyDB.deleteAllDataFromTable();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        hitungKeranjang();
     }
 
     public void hitungKeranjang() {
@@ -266,6 +250,8 @@ public class DetailPasar extends AppCompatActivity {
         });
     }
 
+    private ArrayList<ModelKeranjang> keranjangBarangList;
+    private AdapterKeranjang adapterKeranjang;
     private void confirmOrder() {
         // show progress dialog
         progressDialog.setMessage("Membuat pesanan...");
@@ -285,7 +271,7 @@ public class DetailPasar extends AppCompatActivity {
         hashMap.put("orderKe", ""+tokoUid);
 
         // add to database
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users").child(tokoUid).child("Belanjaan");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(tokoUid).child("Belanjaan");
         databaseReference.child(timestamp).setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
@@ -329,7 +315,7 @@ public class DetailPasar extends AppCompatActivity {
     }
 
     private void loadUser() {
-        DatabaseReference reference = FirebaseDatabase.getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
         reference.orderByChild("uid").equalTo(firebaseAuth.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -349,8 +335,9 @@ public class DetailPasar extends AppCompatActivity {
             }
         });
     }
+
     private void loadPasar() {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         databaseReference.child(tokoUid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -370,30 +357,36 @@ public class DetailPasar extends AppCompatActivity {
 
 
     }
-    private void loadBarang() {
-        // init list barang
-        barangList = new ArrayList<>();
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
-        databaseReference.child(tokoUid).child("Barang").addValueEventListener(new ValueEventListener() {
 
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                // clear list before adding
-                barangList.clear();
-                for (DataSnapshot s: snapshot.getChildren()) {
-                    ModelBarang modelBarang = s.getValue(ModelBarang.class);
-                    barangList.add(modelBarang);
-                }
+    private void loadRecipes() {
+        recipeAdminArrayList = new ArrayList<>();
 
-                adapterBarangUser = new AdapterBarangUser(DetailPasar.this, barangList);
-                banyakBarang.setAdapter(adapterBarangUser);
-            }
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        databaseReference
+                .child(""+tokoUid)
+                .child("Recipes")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        // before getting list reset
+                        recipeAdminArrayList.clear();
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                        for (DataSnapshot s : snapshot.getChildren()) {
+                            ModelRecipeUser modelRecipeAdmin = s.getValue(ModelRecipeUser.class);
+                            recipeAdminArrayList.add(modelRecipeAdmin);
+                        }
 
-            }
-        });
+                        // setup adapter
+                        adapterRecipeAdmin = new AdapterRecipeUser(DetailPasar.this, recipeAdminArrayList);
+                        // set adapter
+                        recipesRv.setAdapter(adapterRecipeAdmin);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
     }
 
 }

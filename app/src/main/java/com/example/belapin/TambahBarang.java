@@ -1,5 +1,9 @@
 package com.example.belapin;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -9,15 +13,18 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -27,6 +34,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -38,6 +46,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class TambahBarang extends AppCompatActivity {
 
@@ -47,16 +56,9 @@ public class TambahBarang extends AppCompatActivity {
     private TextView kategori, harga, hargaDiskon, hargaDiskonNote;
     private SwitchCompat diskon;
     private Button tombolTambah;
-    //permission constants
-    private static final int CAMERA_REQUEST_CODE = 200;
-    private static final int STORAGE_REQUEST_CODE = 300;
-    //gambar constants
-    private static final int IMAGE_PICK_GALLERY_CODE = 400;
-    private static final int IMAGE_PICK_CAMERA_CODE = 500;
-    //array permission
-    private String[] cameraPermissions;
-    private String[] storagePermissions;
-    private Uri image_uri;
+
+    private static final String TAG = "PRODUCT_ADD_TAG";
+    private Uri imageUri;
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
 
@@ -88,8 +90,6 @@ public class TambahBarang extends AppCompatActivity {
         progressDialog.setTitle("Mohon Tunggu");
         progressDialog.setCanceledOnTouchOutside(false);
 
-        cameraPermissions = new String[]{android.Manifest.permission.CAMERA, android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        storagePermissions = new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
         // if diskon is switched: bla bla
 //        diskon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -142,6 +142,7 @@ public class TambahBarang extends AppCompatActivity {
 
     private String barangJudul, barangDesc, barangKategori, barangKuantiti, hargaAsli, diskonHarga, diskonNote;
     private boolean diskonTersedia = false;
+
     private void inputData() {
 
         // input data
@@ -182,36 +183,42 @@ public class TambahBarang extends AppCompatActivity {
     }
 
     private void tambahBarang() {
+        Log.d(TAG, "tambahBarang: ");
         // Data added to database
         progressDialog.setMessage("Menambah barang");
         progressDialog.show();
 
-        final String timestamp = ""+System.currentTimeMillis();
-        if (image_uri == null) {
+        final String timestamp = "" + System.currentTimeMillis();
+        if (imageUri == null) {
             // upload without image
+            Log.d(TAG, "tambahBarang: uploading without image");
+
             HashMap<String, Object> hashMap = new HashMap<>();
-            hashMap.put("barangId", ""+timestamp);
-            hashMap.put("barangJudul", ""+barangJudul);
-            hashMap.put("barangDeskripsi", ""+barangDesc);
-            hashMap.put("barangKategori", ""+barangKategori);
-            hashMap.put("barangKuantiti", ""+barangKuantiti);
-            hashMap.put("hargaAsli", ""+hargaAsli);
+            hashMap.put("barangId", "" + timestamp);
+            hashMap.put("barangJudul", "" + barangJudul);
+            hashMap.put("barangDeskripsi", "" + barangDesc);
+            hashMap.put("barangKategori", "" + barangKategori);
+            hashMap.put("barangKuantiti", "" + barangKuantiti);
+            hashMap.put("hargaAsli", "" + hargaAsli);
             hashMap.put("barangIcon", ""); // no image, set empty
+            hashMap.put("timestamp", "" + timestamp);
+            hashMap.put("uid", "" + firebaseAuth.getUid());
 //            hashMap.put("hargaDiskon", ""+hargaDiskon);
 //            hashMap.put("hargaDiskonNote", ""+hargaDiskonNote);
 //            hashMap.put("diskonTersedia", ""+diskonTersedia);
-            hashMap.put("timestamp", ""+timestamp);
-            hashMap.put("uid", ""+firebaseAuth.getUid());
 
             // add to database
-            DatabaseReference databaseReference = FirebaseDatabase
-                    .getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app")
-                    .getReference("Users");
-            databaseReference.child(firebaseAuth.getUid()).child("Barang").child(timestamp).setValue(hashMap)
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+            databaseReference
+                    .child("" + firebaseAuth.getUid())
+                    .child("Barang")
+                    .child(timestamp)
+                    .setValue(hashMap)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
                             // success add data to db
+                            Log.d(TAG, "onSuccess: uploaded");
                             progressDialog.dismiss();
                             Toast.makeText(TambahBarang.this, "Barang berhasil ditambahkan", Toast.LENGTH_SHORT).show();
                             clearData();
@@ -220,73 +227,84 @@ public class TambahBarang extends AppCompatActivity {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             // fail add data to db
+                            Log.e(TAG, "onFailure: ", e);
                             progressDialog.dismiss();
-                            Toast.makeText(TambahBarang.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(TambahBarang.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
 
-        }
-        else {
+        } else {
+            Log.d(TAG, "tambahBarang: uploading with image...");
+
             // upload with image
             // up image to storage, name and path of image uploaded
-            String filePath = "barang_gambar/" + "" + timestamp;
-            StorageReference storageReference = FirebaseStorage.getInstance().getReference(filePath);
-            storageReference.putFile(image_uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    // success uplaod image and get url upload
-                    Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                    while (!uriTask.isSuccessful());
-                    Uri downloadImageUri = uriTask.getResult();
+            String filePathAndName = "barang_gambar/" + timestamp;
+            StorageReference ref = FirebaseStorage.getInstance().getReference().child(filePathAndName);
+            ref.putFile(imageUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            // success uplaod image and get url upload
+                            Log.d(TAG, "onSuccess: image uploaded");
+                            Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                            while (!uriTask.isSuccessful()) ;
+                            String imageUrl = uriTask.getResult().toString();
 
-                    if (uriTask.isSuccessful()) {
-                        // receive image url and upload to db
-                        HashMap<String, Object> hashMap = new HashMap<>();
-                        hashMap.put("barangId", ""+timestamp);
-                        hashMap.put("barangJudul", ""+barangJudul);
-                        hashMap.put("barangDeskripsi", ""+barangDesc);
-                        hashMap.put("barangKategori", ""+barangKategori);
-                        hashMap.put("barangKuantiti", ""+barangKuantiti);
-                        hashMap.put("hargaAsli", ""+hargaAsli);
-                        hashMap.put("barangIcon", ""+downloadImageUri);
+                            if (uriTask.isSuccessful()) {
+                                // receive image url and upload to db
+                                HashMap<String, Object> hashMap = new HashMap<>();
+                                hashMap.put("barangId", "" + timestamp);
+                                hashMap.put("barangJudul", "" + barangJudul);
+                                hashMap.put("barangDeskripsi", "" + barangDesc);
+                                hashMap.put("barangKategori", "" + barangKategori);
+                                hashMap.put("barangKuantiti", "" + barangKuantiti);
+                                hashMap.put("hargaAsli", "" + hargaAsli);
+                                hashMap.put("barangIcon", "" + imageUrl);
+                                hashMap.put("timestamp", "" + timestamp);
+                                hashMap.put("uid", "" + firebaseAuth.getUid());
 //                        hashMap.put("hargaDiskon", ""+hargaDiskon);
 //                        hashMap.put("hargaDiskonNote", ""+hargaDiskonNote);
 //                        hashMap.put("diskonTersedia", ""+diskonTersedia);
-                        hashMap.put("timestamp", ""+timestamp);
-                        hashMap.put("uid", ""+firebaseAuth.getUid());
 
-                        // add to database
-                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
-                        databaseReference.child(firebaseAuth.getUid()).child("Barang").child(timestamp).setValue(hashMap)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                        // success add data to db
-                                        progressDialog.dismiss();
-                                        Toast.makeText(TambahBarang.this, "Barang berhasil ditambahkan", Toast.LENGTH_SHORT).show();
-                                        clearData();
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        // fail add data to db
-                                        progressDialog.dismiss();
-                                        Toast.makeText(TambahBarang.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                // add to database
+                                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+                                databaseReference
+                                        .child("" + firebaseAuth.getUid())
+                                        .child("Barang")
+                                        .child(timestamp)
+                                        .setValue(hashMap)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                // success add data to db
+                                                Log.d(TAG, "onSuccess: uploaded");
+                                                progressDialog.dismiss();
+                                                Toast.makeText(TambahBarang.this, "Barang berhasil ditambahkan", Toast.LENGTH_SHORT).show();
+                                                clearData();
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                // fail add data to db
+                                                Log.e(TAG, "onFailure: ", e);
+                                                progressDialog.dismiss();
+                                                Toast.makeText(TambahBarang.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
 
-                                    }
-                                });
-                    }
+                                            }
+                                        });
+                            }
 
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    // failed upload image
-                    progressDialog.dismiss();
-                    Toast.makeText(TambahBarang.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            // failed upload image
+                            Log.e(TAG, "onFailure: ", e);
+                            progressDialog.dismiss();
+                            Toast.makeText(TambahBarang.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
 
-                }
-            });
+                        }
+                    });
         }
 
     }
@@ -301,7 +319,7 @@ public class TambahBarang extends AppCompatActivity {
 //        hargaDiskon.setText("");
 //        hargaDiskonNote.setText("");
         tambahGambar.setImageResource(R.drawable.ic_add);
-        image_uri = null;
+        imageUri = null;
     }
 
     private void categoryDialog() {
@@ -325,126 +343,148 @@ public class TambahBarang extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (i == 0) {
-                    // kamera diklik
-                    if (cameraChecking()){
-                        // permission granted
-                        imageCamera();
+                    //Camera is clicked
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        //android version is 13 or above, only camera permission required
+                        requestCameraPermissions.launch(new String[]{Manifest.permission.CAMERA});
+                    } else {
+                        //android version is below 13, need camera & storage permission
+                        requestCameraPermissions.launch(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE});
                     }
-                    else {
-                        cameraRequest();
+                } else if (i == 1) {
+                    //Gallery is clicked
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        //android version is 13 or above, no storage permission
+                        pickImageGallery();
+                    } else {
+                        //android version is below 13, need storage permission
+                        requestStoragePermission.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE);
                     }
-                }
-                else {
-                    // galeri diklik
-                    if (storageChecking()){
-                        // permission granted
-                        imageGallery();
-                    }
-                    else {
-                        storageRequest();
-                    }
+
                 }
             }
         }).show();
     }
 
-    private void imageGallery() {
+    private void pickImageGallery() {
+        Log.d(TAG, "pickImageGallery: ");
+        //intent to pick image from gallery, will show all resources from where we can pick the image
         Intent intent = new Intent(Intent.ACTION_PICK);
+        //set type of file we want to pick i.e. image
         intent.setType("image/*");
-        startActivityForResult(intent, IMAGE_PICK_GALLERY_CODE);
+        galleryActivityResultLauncher.launch(intent);
     }
 
-    private void imageCamera() {
+    private ActivityResultLauncher<Intent> galleryActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    //here we will receive the image, if picked
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        //image picked
+                        Intent data = result.getData();
+                        //get uri of the image picked
+                        imageUri = data.getData();
+                        Log.d(TAG, "onActivityResult: Picked image gallery: " + imageUri);
 
-        // media store to pick image
+                        //set to imageview
+                        Glide.with(TambahBarang.this)
+                                .load(imageUri)
+                                .placeholder(R.drawable.ic_add)
+                                .into(tambahGambar);
+                    } else {
+                        //Cancelled
+                        Toast.makeText(TambahBarang.this, "Cancelled...", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            }
+    );
+
+    private void pickImageCamera() {
+        Log.d(TAG, "pickImageCamera: ");
+        //get ready the image data to store in MediaStore
         ContentValues contentValues = new ContentValues();
-        contentValues.put(MediaStore.Images.Media.TITLE, "Gambar sementara");
-        contentValues.put(MediaStore.Images.Media.DESCRIPTION, "Gambar desc semetanra");
+        contentValues.put(MediaStore.Images.Media.TITLE, "TEMP IMAGE TITLE");
+        contentValues.put(MediaStore.Images.Media.DESCRIPTION, "TEMP IMAGE DESCRIPTION");
+        //store the camera image in imageUri variable
+        imageUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
 
-        image_uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+        //Intent to launch camera
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri);
-        startActivityForResult(intent, IMAGE_PICK_CAMERA_CODE);
-
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        cameraActivityResultLauncher.launch(intent);
     }
 
-    private boolean storageChecking() {
-        boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
-                (PackageManager.PERMISSION_GRANTED);
-        return result;
-    }
+    private ActivityResultLauncher<Intent> cameraActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    //here we will receive the image, if taken from camera
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        //image is taken from camera
+                        //we already have the image in imageUri using function pickImageCamera()
+                        //save the picked image
+                        Log.d(TAG, "onActivityResult: Picked image camera: " + imageUri);
 
-    private void storageRequest() {
-        ActivityCompat.requestPermissions(this, storagePermissions, STORAGE_REQUEST_CODE);
-    }
-
-    private boolean cameraChecking() {
-        boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) ==
-                (PackageManager.PERMISSION_GRANTED);
-
-        boolean result2 = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) ==
-                (PackageManager.PERMISSION_GRANTED);
-
-        return result && result2;
-    }
-
-    private void cameraRequest() {
-        ActivityCompat.requestPermissions(this, cameraPermissions, CAMERA_REQUEST_CODE);
-    }
-
-    // permission result
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case CAMERA_REQUEST_CODE: {
-                if (grantResults.length>0) {
-                    boolean cameraAccapted  = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                    boolean storageAccapted  = grantResults[1] == PackageManager.PERMISSION_GRANTED;
-                    if (cameraAccapted && storageAccapted) {
-                        // permission granted
-                        imageCamera();
+                        //set to imageview
+                        Glide.with(TambahBarang.this)
+                                .load(imageUri)
+                                .placeholder(R.drawable.ic_add)
+                                .into(tambahGambar);
+                    } else {
+                        //Cancelled
+                        Toast.makeText(TambahBarang.this, "Cancelled...", Toast.LENGTH_SHORT).show();
                     }
-                    else {
-                        // permission one or both not granted
-                        Toast.makeText(this, "Izinkan aplikasi untuk mengakses kamera dan storage", Toast.LENGTH_SHORT).show();
-                    }
-
                 }
             }
-            case STORAGE_REQUEST_CODE: {
-                if (grantResults.length>0) {
-                    boolean storageAccapted  = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                    if (storageAccapted) {
-                        // app has permission to access gallery
-                        imageGallery();
-                    }
-                    else {
-                        // dont have permission acces to storage
-                        Toast.makeText(this, "Izinkan aplikasi untuk mengakses storage", Toast.LENGTH_SHORT).show();
-                    }
+    );
 
+    private ActivityResultLauncher<String> requestStoragePermission = registerForActivityResult(
+            new ActivityResultContracts.RequestPermission(),
+            new ActivityResultCallback<Boolean>() {
+                @Override
+                public void onActivityResult(Boolean isGranted) {
+                    Log.d(TAG, "onActivityResult: isGranted: " + isGranted);
+                    //lets check if from permission dialog user have granted the permission or denied the result is in isGranted as true/false
+                    if (isGranted) {
+                        //user has granted permission so we can pick image from gallery
+                        pickImageGallery();
+                    } else {
+                        //user denied permission so we can't pick image from gallery
+                        Toast.makeText(TambahBarang.this, "Permission denied...", Toast.LENGTH_SHORT).show();
+
+                    }
                 }
             }
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
+    );
 
-    // image pick
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (resultCode == RESULT_OK) {
-            if (requestCode == IMAGE_PICK_GALLERY_CODE) {
+    private ActivityResultLauncher<String[]> requestCameraPermissions = registerForActivityResult(
+            new ActivityResultContracts.RequestMultiplePermissions(), new ActivityResultCallback<Map<String, Boolean>>() {
+                @Override
+                public void onActivityResult(Map<String, Boolean> result) {
+                    Log.d(TAG, "onActivityResult: ");
+                    Log.d(TAG, "onActivityResult: " + result.toString());
+                    //let's check if Camera or Storage or both permissions granted or not from permission dialog
+                    boolean areAllGranted = true;
+                    for (Boolean isGranted : result.values()) {
+                        Log.d(TAG, "onActivityResult: isGranted: " + isGranted);
+                        areAllGranted = areAllGranted && isGranted;
+                    }
 
-                // save data
-                image_uri = data.getData();
 
-                // set image
-                tambahGambar.setImageURI(image_uri);
+                    if (areAllGranted) {
+                        //Camera & Storage both permissions are granted, we can launch camera to take image
+                        Log.d(TAG, "onActivityResult: All Granted e.g. Camera & Storage...");
+                        pickImageCamera();
+                    } else {
+                        //Camera or Storage or both permissions denied
+                        Log.d(TAG, "onActivityResult: Camera or Storage or both denied...");
+                        Toast.makeText(TambahBarang.this, "Camera or Storage or both permissions denied...", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
-            else if (requestCode == IMAGE_PICK_CAMERA_CODE) {
-                tambahGambar.setImageURI(image_uri);
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
+    );
 }

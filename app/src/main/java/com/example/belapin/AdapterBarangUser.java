@@ -182,7 +182,7 @@ public class AdapterBarangUser extends RecyclerView.Adapter<AdapterBarangUser.Ho
                 String judulL = judul.getText().toString().trim();
                 String hargaSatuan = hargaAsli.getText().toString().trim().replace("Rp", "");
                 String harga = hargaTotal.getText().toString().trim().replace("Rp", "");
-                String kuantitiL = kuantiti.getText().toString().trim();
+                String kuantitiL = kuantitiTambahKurang.getText().toString().trim();
 
                 // add to database (SQLite)
                 tambahKeranjang(barangId, judulL, hargaSatuan, harga, kuantitiL);
@@ -216,9 +216,6 @@ public class AdapterBarangUser extends RecyclerView.Adapter<AdapterBarangUser.Ho
                 .doneDataAdding();
 
         Toast.makeText(context, "Menambah ke keranjang...", Toast.LENGTH_SHORT).show();
-
-        // update hitung keranjang
-        ((DetailPasar)context).hitungKeranjang();
 
     }
 
