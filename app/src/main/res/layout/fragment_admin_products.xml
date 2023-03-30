@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".AdminProductsFragment">
 
     <RelativeLayout
@@ -12,7 +12,6 @@
         android:layout_height="match_parent">
 
         <!--Search & filter barang -->
-
         <EditText
             android:id="@+id/searchBarang"
             android:layout_width="wrap_content"
@@ -29,21 +28,6 @@
             android:padding="15dp"
             android:textColor="#8D8D8D"
             android:textSize="15sp" />
-
-        <!--        <EditText-->
-        <!--            android:id="@+id/searchBarang"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginStart="5dp"-->
-        <!--            android:layout_marginTop="5dp"-->
-        <!--            android:layout_marginEnd="5dp"-->
-        <!--            android:layout_marginBottom="5dp"-->
-        <!--            android:layout_toStartOf="@+id/filterBarang"-->
-        <!--            android:background="@drawable/shape_rect2"-->
-        <!--            android:drawableStart="@drawable/ic_search"-->
-        <!--            android:drawablePadding="10dp"-->
-        <!--            android:hint="Cari barang"-->
-        <!--            android:padding="10dp" />-->
 
         <ImageButton
             android:id="@+id/filterBarang"
@@ -66,7 +50,6 @@
             android:layout_marginBottom="5dp"
             android:text="Perlihatkan semua"
             android:textColor="@color/black" />
-
 
         <!-- Recycler View show barang -->
         <androidx.recyclerview.widget.RecyclerView

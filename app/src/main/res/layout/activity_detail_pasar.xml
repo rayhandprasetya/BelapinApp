@@ -103,30 +103,43 @@
         android:layout_below="@id/pasarUser"
         android:padding="10dp">
 
-        <EditText
-            android:id="@+id/searchEt"
+        <LinearLayout
+            android:id="@+id/tabsLl"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/textbox"
-            android:hint="Cari barang"
-            android:padding="15dp"
-            android:textColor="#8D8D8D"
-            android:textSize="15sp" />
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_rect05"
+            android:orientation="horizontal"
+            android:padding="2dp">
 
-        <!-- Recycler View show barang -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recipesRv"
+            <!--Products-->
+            <TextView
+                android:id="@+id/tabProductsTv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/shape_rect04"
+                android:gravity="center"
+                android:text="Products"
+                android:textColor="@color/black" />
+
+            <!--Recipes-->
+            <TextView
+                android:id="@+id/tabRecipesTv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Recipes"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/frameLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/searchEt"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/baris_barang_admin" />
+            android:layout_height="match_parent"
+            android:layout_below="@id/tabsLl" />
 
     </RelativeLayout>
 

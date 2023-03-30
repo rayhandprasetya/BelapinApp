@@ -3,6 +3,7 @@ package com.example.belapin;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -65,7 +67,7 @@ public class AdapterBarangUser extends RecyclerView.Adapter<AdapterBarangUser.Ho
         // set data
         holder.judul.setText(barangJudul);
         holder.description.setText(barangDeskripsi);
-        holder.hargaAsli.setText("Rp"+hargaAsli);
+        holder.hargaAsli.setText("Rp" + hargaAsli);
 
 //        if(diskonTersedia.equals("true")){
 //            // product diskon
@@ -78,6 +80,15 @@ public class AdapterBarangUser extends RecyclerView.Adapter<AdapterBarangUser.Ho
 //            holder.hargaDiskonNote.setVisibility(View.GONE);
 //            holder.hargaAsli.setPaintFlags(0);
 //        }
+
+        try {
+            Glide.with(context)
+                    .load(barangIcon)
+                    .placeholder(R.drawable.ic_add)
+                    .into(holder.gambarBarang);
+        } catch (Exception e) {
+
+        }
 
         holder.tambahKeranjang.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,17 +146,16 @@ public class AdapterBarangUser extends RecyclerView.Adapter<AdapterBarangUser.Ho
         // set data
         try {
             Picasso.get().load(image).placeholder(R.drawable.ic_add).into(tambahGambar);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             tambahGambar.setImageResource(R.drawable.ic_add);
         }
 
-        judul.setText(""+judulBrg);
-        kuantiti.setText(""+kuantitiBrg);
-        deskripsi.setText(""+deskripsiBrg);
-        kuantitiTambahKurang.setText(""+kuantitiBrgApk);
-        hargaAsli.setText("Rp"+modelBarang.getHargaAsli());
-        hargaTotal.setText("Rp"+finalTotal);
+        judul.setText("" + judulBrg);
+        kuantiti.setText("" + kuantitiBrg);
+        deskripsi.setText("" + deskripsiBrg);
+        kuantitiTambahKurang.setText("" + kuantitiBrgApk);
+        hargaAsli.setText("Rp" + modelBarang.getHargaAsli());
+        hargaTotal.setText("Rp" + finalTotal);
 
         AlertDialog dialog = builder.create();
         dialog.show();
@@ -157,8 +167,8 @@ public class AdapterBarangUser extends RecyclerView.Adapter<AdapterBarangUser.Ho
                 finalTotal = finalTotal + total;
                 kuantitiBrgApk++;
 
-                hargaTotal.setText("Rp"+finalTotal);
-                kuantitiTambahKurang.setText(""+kuantitiBrgApk);
+                hargaTotal.setText("Rp" + finalTotal);
+                kuantitiTambahKurang.setText("" + kuantitiBrgApk);
             }
         });
 
@@ -170,8 +180,8 @@ public class AdapterBarangUser extends RecyclerView.Adapter<AdapterBarangUser.Ho
                     finalTotal = finalTotal - total;
                     kuantitiBrgApk--;
 
-                    hargaTotal.setText("Rp"+finalTotal);
-                    kuantitiTambahKurang.setText(""+kuantitiBrgApk);
+                    hargaTotal.setText("Rp" + finalTotal);
+                    kuantitiTambahKurang.setText("" + kuantitiBrgApk);
                 }
             }
         });
@@ -189,22 +199,29 @@ public class AdapterBarangUser extends RecyclerView.Adapter<AdapterBarangUser.Ho
 
                 dialog.dismiss();
 
+                try {
+                    ((DetailPasar)context).onResume();
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         });
 
     }
 
     private int barangIdDB = 1;
+
     private void tambahKeranjang(String barangId, String judul, String hargaSatuan, String harga, String kuantitiL) {
         barangIdDB++;
         EasyDB easyDB = EasyDB.init(context, "DB_ITEMS")
                 .setTableName("TABLE_BARANG")
-                .addColumn(new Column("Barang_Id", new String[] {"text", "unique"}))
-                .addColumn(new Column("Barang_BID", new String[] {"text", "not null"}))
-                .addColumn(new Column("Barang_Nama", new String[] {"text", "not null"}))
-                .addColumn(new Column("Barang_HargaSatuan", new String[] {"text", "not null"}))
-                .addColumn(new Column("Barang_Harga", new String[] {"text", "not null"}))
-                .addColumn(new Column("Barang_Kuantiti", new String[] {"text", "not null"}))
+                .addColumn(new Column("Barang_Id", new String[]{"text", "unique"}))
+                .addColumn(new Column("Barang_BID", new String[]{"text", "not null"}))
+                .addColumn(new Column("Barang_Nama", new String[]{"text", "not null"}))
+                .addColumn(new Column("Barang_HargaSatuan", new String[]{"text", "not null"}))
+                .addColumn(new Column("Barang_Harga", new String[]{"text", "not null"}))
+                .addColumn(new Column("Barang_Kuantiti", new String[]{"text", "not null"}))
                 .doneTableColumn();
 
         Boolean b = easyDB.addData("Barang_Id", barangIdDB)
@@ -226,7 +243,7 @@ public class AdapterBarangUser extends RecyclerView.Adapter<AdapterBarangUser.Ho
 
     @Override
     public Filter getFilter() {
-        if (filter==null) {
+        if (filter == null) {
             filter = new FilterBarangUser(this, filterList);
         }
         return filter;

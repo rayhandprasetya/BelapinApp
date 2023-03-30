@@ -145,7 +145,7 @@ public class Login extends AppCompatActivity {
                     if (tipeAkun.equals("Admin")) {
                         // login as admin
                         progressDialog.dismiss();
-                        Intent intent = new Intent(Login.this, AdminPage.class);
+                        Intent intent = new Intent(Login.this, AdminPageActivity.class);
                         startActivity(intent);
                         finish();
                     }

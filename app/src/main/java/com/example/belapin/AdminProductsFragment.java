@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,9 @@ public class AdminProductsFragment extends Fragment {
     private ImageButton filterBarang;
     private RelativeLayout barang, order;
     private RecyclerView banyakBarang;
+
+    private static final String TAG = "ADMIN_PRODUCTS_TAG";
+
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
     private ArrayList<ModelBarang> barangList;
@@ -64,7 +68,6 @@ public class AdminProductsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
 
 
 //        emailAkun = view.findViewById(R.id.emailAkun);
@@ -170,8 +173,12 @@ public class AdminProductsFragment extends Fragment {
 
                     // if selected category matches barang category the add it to list
                     if (selected.equals(barangKategori)) {
-                        ModelBarang modelBarang = s.getValue(ModelBarang.class);
-                        barangList.add(modelBarang);
+                        try {
+                            ModelBarang modelBarang = s.getValue(ModelBarang.class);
+                            barangList.add(modelBarang);
+                        } catch (Exception e) {
+                            Log.e(TAG, "onDataChange: ", e);
+                        }
                     }
                 }
 
@@ -195,7 +202,7 @@ public class AdminProductsFragment extends Fragment {
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         databaseReference
-                .child(""+firebaseAuth.getUid())
+                .child("" + firebaseAuth.getUid())
                 .child("Barang")
                 .addValueEventListener(new ValueEventListener() {
                     @Override
@@ -204,8 +211,12 @@ public class AdminProductsFragment extends Fragment {
                         barangList.clear();
 
                         for (DataSnapshot s : snapshot.getChildren()) {
-                            ModelBarang modelBarang = s.getValue(ModelBarang.class);
-                            barangList.add(modelBarang);
+                            try {
+                                ModelBarang modelBarang = s.getValue(ModelBarang.class);
+                                barangList.add(modelBarang);
+                            } catch (Exception e) {
+                                Log.e(TAG, "onDataChange: ", e);
+                            }
                         }
 
                         // setup adapter

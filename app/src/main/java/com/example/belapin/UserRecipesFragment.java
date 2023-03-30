@@ -1,6 +1,5 @@
 package com.example.belapin;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -17,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,17 +24,16 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class AdminRecipesFragment extends Fragment {
+
+public class UserRecipesFragment extends Fragment {
 
     private EditText searchEt;
     private RecyclerView recipesRv;
-    private FirebaseAuth firebaseAuth;
-    private ProgressDialog progressDialog;
-    private static final String TAG = "ADMIN_RECIPES_TAG";
+    private static final String TAG = "RECIPES_TAG";
     private Context mContext;
 
-    private ArrayList<ModelRecipeAdmin> recipeAdminArrayList;
-    private AdapterRecipeAdmin adapterRecipeAdmin;
+    private ArrayList<ModelRecipeUser> recipeAdminArrayList;
+    private AdapterRecipeUser adapterRecipeAdmin;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -44,14 +41,14 @@ public class AdminRecipesFragment extends Fragment {
         super.onAttach(context);
     }
 
-    public AdminRecipesFragment() {
+    public UserRecipesFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin_recipes, container, false);
+        return inflater.inflate(R.layout.fragment_user_recipes, container, false);
     }
 
     @Override
@@ -61,18 +58,11 @@ public class AdminRecipesFragment extends Fragment {
         searchEt = view.findViewById(R.id.searchEt);
         recipesRv = view.findViewById(R.id.recipesRv);
 
-        progressDialog = new ProgressDialog(mContext);
-        progressDialog.setTitle("Mohon Tunggu");
-        progressDialog.setCanceledOnTouchOutside(false);
-
-        firebaseAuth = FirebaseAuth.getInstance();
-
         loadRecipes();
 
         searchEt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
@@ -82,7 +72,6 @@ public class AdminRecipesFragment extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
@@ -97,7 +86,7 @@ public class AdminRecipesFragment extends Fragment {
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         databaseReference
-                .child(""+firebaseAuth.getUid())
+                .child("" + ((DetailPasar) mContext).tokoUid)
                 .child("Recipes")
                 .addValueEventListener(new ValueEventListener() {
                     @Override
@@ -107,16 +96,15 @@ public class AdminRecipesFragment extends Fragment {
 
                         for (DataSnapshot s : snapshot.getChildren()) {
                             try {
-                                ModelRecipeAdmin modelRecipeAdmin = s.getValue(ModelRecipeAdmin.class);
+                                ModelRecipeUser modelRecipeAdmin = s.getValue(ModelRecipeUser.class);
                                 recipeAdminArrayList.add(modelRecipeAdmin);
-                            }
-                            catch (Exception e){
+                            } catch (Exception e) {
                                 Log.e(TAG, "onDataChange: ", e);
                             }
                         }
 
                         // setup adapter
-                        adapterRecipeAdmin = new AdapterRecipeAdmin(mContext, recipeAdminArrayList);
+                        adapterRecipeAdmin = new AdapterRecipeUser(mContext, recipeAdminArrayList);
                         // set adapter
                         recipesRv.setAdapter(adapterRecipeAdmin);
                     }

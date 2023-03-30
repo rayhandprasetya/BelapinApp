@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,7 @@ import java.util.ArrayList;
 public class AdminOrdersFragment extends Fragment {
 
     private RecyclerView ordersRv;
-
+    private static final String TAG = "ADMIN_ORDERS_TAG";
     private Context mContext;
 
     private FirebaseAuth firebaseAuth;
@@ -77,10 +78,14 @@ public class AdminOrdersFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         //clear list before adding new data in it
                         orderShopArrayList.clear();
-                        for (DataSnapshot ds: dataSnapshot.getChildren()){
-                            ModelOrderShop modelOrderShop = ds.getValue(ModelOrderShop.class);
-                            //add to list
-                            orderShopArrayList.add(modelOrderShop);
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            try {
+                                ModelOrderShop modelOrderShop = ds.getValue(ModelOrderShop.class);
+                                //add to list
+                                orderShopArrayList.add(modelOrderShop);
+                            } catch (Exception e) {
+                                Log.e(TAG, "onDataChange: ", e);
+                            }
                         }
                         //setup adapter
                         adapterOrderShop = new AdapterOrderShop(mContext, orderShopArrayList);

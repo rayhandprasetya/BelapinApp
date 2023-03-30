@@ -2,6 +2,7 @@ package com.example.belapin;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
@@ -39,8 +40,6 @@ public class DetailPasar extends AppCompatActivity {
 
     private ImageButton tmblTambah, tmblKembali;
     private TextView totalBarangKeranjang, namaPasar, alamatPasar;
-    private EditText searchEt;
-    private RecyclerView recipesRv;
 
     private static final String TAG = "SHOP_DETAILS_TAG";
 
@@ -51,24 +50,24 @@ public class DetailPasar extends AppCompatActivity {
     private String namaPasarLain = "";
     private String alamatPasarLain = "";
     private String phoneKu = "";
-    private String tokoUid = "";
+    public String tokoUid = "";
 
     EasyDB easyDB;
-    private ArrayList<ModelRecipeUser> recipeAdminArrayList;
-    private AdapterRecipeUser adapterRecipeAdmin;
+
+    private TextView tabProductsTv, tabRecipesTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_pasar);
 
+        tabProductsTv = findViewById(R.id.tabProductsTv);
+        tabRecipesTv = findViewById(R.id.tabRecipesTv);
         tmblKembali = findViewById(R.id.tmblKembali);
         tmblTambah = findViewById(R.id.tmblTambah);
         namaPasar = findViewById(R.id.namaPasar);
         alamatPasar = findViewById(R.id.alamatPasar);
         totalBarangKeranjang = findViewById(R.id.totalBarangKeranjang);
-        searchEt = findViewById(R.id.searchEt);
-        recipesRv = findViewById(R.id.recipesRv);
 
         // init dialog
         progressDialog = new ProgressDialog(this);
@@ -78,9 +77,10 @@ public class DetailPasar extends AppCompatActivity {
         // get pasar uid from intent
         tokoUid = getIntent().getStringExtra("tokoUid");
         firebaseAuth = FirebaseAuth.getInstance();
+
         loadUser();
         loadPasar();
-        loadRecipes();
+        fragmentProducts();
 
         // declere it to class level and init in on create
         easyDB = EasyDB.init(this, "DB_ITEMS")
@@ -113,26 +113,49 @@ public class DetailPasar extends AppCompatActivity {
             }
         });
 
-        searchEt.addTextChangedListener(new TextWatcher() {
+        tabProductsTv.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                try {
-                    adapterRecipeAdmin.getFilter().filter(charSequence);
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
+            public void onClick(View view) {
+                // load barang
+                fragmentProducts();
 
             }
         });
 
+        tabRecipesTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // load order
+                fragmentRecipes();
+
+            }
+        });
+    }
+
+    private void fragmentProducts() {
+        tabProductsTv.setTextColor(getResources().getColor(R.color.black));
+        tabProductsTv.setBackgroundResource(R.drawable.shape_rect04);
+
+        tabRecipesTv.setTextColor(getResources().getColor(R.color.white));
+        tabRecipesTv.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+
+        UserProductsFragment fragment = new UserProductsFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout, fragment, "UserProductsFragment");  //create first framelayout with id fram in the activity where fragments will be displayed
+        fragmentTransaction.commit();
+    }
+
+    private void fragmentRecipes() {
+        tabProductsTv.setTextColor(getResources().getColor(R.color.white));
+        tabProductsTv.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+
+        tabRecipesTv.setTextColor(getResources().getColor(R.color.black));
+        tabRecipesTv.setBackgroundResource(R.drawable.shape_rect04);
+
+        UserRecipesFragment fragment = new UserRecipesFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout, fragment, "UserRecipesFragment");  //create first framelayout with id fram in the activity where fragments will be displayed
+        fragmentTransaction.commit();
     }
 
     private void hapusDataKeranjang() {
@@ -356,37 +379,6 @@ public class DetailPasar extends AppCompatActivity {
         });
 
 
-    }
-
-    private void loadRecipes() {
-        recipeAdminArrayList = new ArrayList<>();
-
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
-        databaseReference
-                .child(""+tokoUid)
-                .child("Recipes")
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        // before getting list reset
-                        recipeAdminArrayList.clear();
-
-                        for (DataSnapshot s : snapshot.getChildren()) {
-                            ModelRecipeUser modelRecipeAdmin = s.getValue(ModelRecipeUser.class);
-                            recipeAdminArrayList.add(modelRecipeAdmin);
-                        }
-
-                        // setup adapter
-                        adapterRecipeAdmin = new AdapterRecipeUser(DetailPasar.this, recipeAdminArrayList);
-                        // set adapter
-                        recipesRv.setAdapter(adapterRecipeAdmin);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
     }
 
 }

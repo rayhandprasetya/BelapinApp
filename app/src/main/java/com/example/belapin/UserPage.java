@@ -3,6 +3,7 @@ package com.example.belapin;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -35,6 +36,9 @@ public class UserPage extends AppCompatActivity {
     private ImageButton tombolKeluar;
     private RelativeLayout catalog, riwayat;
     private RecyclerView tokoTampilan, belanjaanHistory;
+
+    private static final String TAG = "USER_TAG";
+
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
     private ArrayList<ModelPasar> tokoList;
@@ -211,19 +215,20 @@ public class UserPage extends AppCompatActivity {
                 belanjaanArrayList.clear();
                 for (DataSnapshot s : snapshot.getChildren()) {
                     String uid = "" + s.getRef().getKey();
-                    DatabaseReference databaseReference = FirebaseDatabase
-                            .getInstance()
-                            .getReference("Users").child(uid).child("Belanjaan");
+                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(uid).child("Belanjaan");
                     databaseReference.orderByChild("yangOrder").equalTo(firebaseAuth.getUid())
                             .addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     if (snapshot.exists()) {
                                         for (DataSnapshot s : snapshot.getChildren()) {
-                                            ModelBelanjaan modelBelanjaan = s.getValue(ModelBelanjaan.class);
-
-                                            // add to list
-                                            belanjaanArrayList.add(modelBelanjaan);
+                                            try {
+                                                ModelBelanjaan modelBelanjaan = s.getValue(ModelBelanjaan.class);
+                                                // add to list
+                                                belanjaanArrayList.add(modelBelanjaan);
+                                            } catch (Exception e) {
+                                                Log.e(TAG, "onDataChange: ", e);
+                                            }
                                         }
 
                                         // setup adapter
@@ -302,9 +307,7 @@ public class UserPage extends AppCompatActivity {
 
         tokoList = new ArrayList<>();
 
-        DatabaseReference databaseReference = FirebaseDatabase
-                .getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app")
-                .getReference("Users");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         databaseReference.orderByChild("tipeAkun").equalTo("Admin")
                 .addValueEventListener(new ValueEventListener() {
                     @Override
@@ -312,7 +315,8 @@ public class UserPage extends AppCompatActivity {
                         // clear list befor add
                         tokoList.clear();
                         for (DataSnapshot s : snapshot.getChildren()) {
-                            ModelPasar modelToko = s.getValue(ModelPasar.class);
+                            try {
+                                ModelPasar modelToko = s.getValue(ModelPasar.class);
 
 //                    String tokoKota = ""+s.child("kota").getValue();
 //
@@ -322,12 +326,14 @@ public class UserPage extends AppCompatActivity {
 //                    }
 
 //                     if want to display all shop, skip if statment and add this
-                            tokoList.add(modelToko);
+                                tokoList.add(modelToko);
+                            } catch (Exception e) {
+                                Log.e(TAG, "onDataChange: ", e);
+                            }
                         }
 
                         // setup adapter
                         adapterToko = new AdapterPasar(UserPage.this, tokoList);
-
                         // set adapter for recyclerview
                         tokoTampilan.setAdapter(adapterToko);
                     }

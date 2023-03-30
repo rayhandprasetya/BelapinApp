@@ -1,18 +1,12 @@
 package com.example.belapin;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,10 +25,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
-public class AdminPage extends AppCompatActivity {
+public class AdminPageActivity extends AppCompatActivity {
 
     private TextView namaAkun, tabProductsTv, tabRecipesTv, tabOrdersTv;
     private ImageButton tombolKeluar, tambahBarang;
@@ -123,11 +115,11 @@ public class AdminPage extends AppCompatActivity {
                 int itemId = item.getItemId();
                 if (itemId == 1) {
                     // add product
-                    Intent intent = new Intent(AdminPage.this, TambahBarang.class);
+                    Intent intent = new Intent(AdminPageActivity.this, TambahBarang.class);
                     startActivity(intent);
                 } else if (itemId == 2) {
                     // add Recipe
-                    Intent intent = new Intent(AdminPage.this, RecipeAddActivity.class);
+                    Intent intent = new Intent(AdminPageActivity.this, RecipeAddActivity.class);
                     startActivity(intent);
                 }
                 return false;
@@ -181,7 +173,7 @@ public class AdminPage extends AppCompatActivity {
             public void onFailure(@NonNull Exception e) {
                 // gagal update
                 progressDialog.dismiss();
-                Toast.makeText(AdminPage.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(AdminPageActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -190,7 +182,7 @@ public class AdminPage extends AppCompatActivity {
     private void checkUser() {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user == null) {
-            startActivity(new Intent(AdminPage.this, Login.class));
+            startActivity(new Intent(AdminPageActivity.this, Login.class));
             finish();
         } else {
             loadDataUser();

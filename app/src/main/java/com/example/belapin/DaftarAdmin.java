@@ -2,17 +2,9 @@ package com.example.belapin;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -32,8 +24,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 
 public class DaftarAdmin extends AppCompatActivity {
 
@@ -178,7 +168,7 @@ public class DaftarAdmin extends AppCompatActivity {
                 public void onSuccess(Void unused) {
                     // database updated
                     progressDialog.dismiss();
-                    Intent intent = new Intent(DaftarAdmin.this, AdminPage.class);
+                    Intent intent = new Intent(DaftarAdmin.this, AdminPageActivity.class);
                     startActivity(intent);
                     finish();
                 }
@@ -187,7 +177,7 @@ public class DaftarAdmin extends AppCompatActivity {
                 public void onFailure(@NonNull Exception e) {
                     // failed update database
                     progressDialog.dismiss();
-                    Intent intent = new Intent(DaftarAdmin.this, AdminPage.class);
+                    Intent intent = new Intent(DaftarAdmin.this, AdminPageActivity.class);
                     startActivity(intent);
                     finish();
                 }

@@ -52,7 +52,7 @@
             android:name=".UserPage"
             android:exported="false" />
         <activity
-            android:name=".AdminPage"
+            android:name=".AdminPageActivity"
             android:exported="false" />
         <activity
             android:name=".LupaPassword"
