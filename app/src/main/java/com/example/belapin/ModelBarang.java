@@ -1,9 +1,7 @@
 package com.example.belapin;
 
 public class ModelBarang {
-    private String barangId, barangJudul, barangDeskripsi, barangKategori,
-            barangKuantiti, hargaAsli, barangIcon, hargaDiskon, hargaDiskonNote,
-            diskonTersedia, timestamp, uid;
+    private String barangId, barangJudul, barangDeskripsi, barangKategori, barangKuantiti, hargaAsli, barangIcon, hargaDiskon, hargaDiskonNote, diskonTersedia, timestamp, uid;
 
     public ModelBarang() {
     }

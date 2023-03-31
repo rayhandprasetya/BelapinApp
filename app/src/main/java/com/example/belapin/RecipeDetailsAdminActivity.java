@@ -195,9 +195,11 @@ public class RecipeDetailsAdminActivity extends AppCompatActivity {
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                                             try {
                                                 ModelBarang modelBarang = snapshot.getValue(ModelBarang.class);
-                                                barangList.add(modelBarang);
+                                                if (modelBarang != null && modelBarang.getBarangId() != null) {
+                                                    barangList.add(modelBarang);
 
-                                                adapterBarangAdmin.notifyItemChanged(barangList.size() - 1);
+                                                    adapterBarangAdmin.notifyItemChanged(barangList.size() - 1);
+                                                }
                                             } catch (Exception e) {
                                                 Log.e(TAG, "onDataChange: ", e);
                                             }

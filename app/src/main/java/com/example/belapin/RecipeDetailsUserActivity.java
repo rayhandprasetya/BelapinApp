@@ -1,11 +1,9 @@
 package com.example.belapin;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,11 +11,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,8 +38,8 @@ public class RecipeDetailsUserActivity extends AppCompatActivity {
     String recipeId = "";
     String showUid = "";
 
-    private ArrayList<ModelBarang> barangList;
-    private AdapterBarangUser adapterBarangAdmin;
+    private ArrayList<ModelBarang> barangArrayList;
+    private AdapterBarangUser adapterBarangUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,13 +139,13 @@ public class RecipeDetailsUserActivity extends AppCompatActivity {
     }
 
     private void loadRecipeProducts() {
-        barangList = new ArrayList<>();
+        barangArrayList = new ArrayList<>();
         // get all barang
 
         // setup adapter
-        adapterBarangAdmin = new AdapterBarangUser(RecipeDetailsUserActivity.this, barangList);
+        adapterBarangUser = new AdapterBarangUser(RecipeDetailsUserActivity.this, barangArrayList);
         // set adapter
-        materialProductRv.setAdapter(adapterBarangAdmin);
+        materialProductRv.setAdapter(adapterBarangUser);
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
         ref.child("" + showUid)
@@ -160,7 +155,7 @@ public class RecipeDetailsUserActivity extends AppCompatActivity {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        barangList.clear();
+                        barangArrayList.clear();
 
                         for (DataSnapshot ds : snapshot.getChildren()) {
                             String productId = "" + ds.child("productId").getValue();
@@ -174,9 +169,11 @@ public class RecipeDetailsUserActivity extends AppCompatActivity {
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                                             try {
                                                 ModelBarang modelBarang = snapshot.getValue(ModelBarang.class);
-                                                barangList.add(modelBarang);
+                                                if (modelBarang != null && modelBarang.getBarangId() != null) {
+                                                    barangArrayList.add(modelBarang);
 
-                                                adapterBarangAdmin.notifyItemChanged(barangList.size() - 1);
+                                                    adapterBarangUser.notifyItemChanged(barangArrayList.size() - 1);
+                                                }
                                             } catch (Exception e) {
                                                 Log.e(TAG, "onDataChange: ", e);
                                             }

@@ -87,6 +87,7 @@ public class AdapterKeranjang extends RecyclerView.Adapter<AdapterKeranjang.Hold
                 double totalPriceLain = Double.parseDouble(String.format("%.2f", totalPrice).replace(",", "").replace("Rp", ""));
                 ((DetailPasar)context).totalSemuaHarga = 0.00;
                 ((DetailPasar)context).totalSemua.setText("Rp"+String.format("%.2f", totalPriceLain));
+                ((DetailPasar)context).onResume();
 
             }
         });
