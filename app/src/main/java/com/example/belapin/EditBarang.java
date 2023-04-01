@@ -93,7 +93,7 @@ public class EditBarang extends AppCompatActivity {
 
 
         progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Mohon Tunggu");
+        progressDialog.setTitle("Please wait");
         progressDialog.setCanceledOnTouchOutside(false);
 
 //        diskon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -212,15 +212,15 @@ public class EditBarang extends AppCompatActivity {
 
         // validate data
         if (TextUtils.isEmpty(barangJudul)) {
-            Toast.makeText(this, "Judul harus diisi", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Title is required", Toast.LENGTH_SHORT).show();
             return; // dont proceed further
         }
         if (TextUtils.isEmpty(barangDesc)) {
-            Toast.makeText(this, "Deskripsi harus diisi", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Description is required", Toast.LENGTH_SHORT).show();
             return; // dont proceed further
         }
         if (TextUtils.isEmpty(barangKategori)) {
-            Toast.makeText(this, "Kategori harus diisi", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Category is required", Toast.LENGTH_SHORT).show();
             return; // dont proceed further
         }
 //        if (diskonTersedia) {
@@ -242,7 +242,7 @@ public class EditBarang extends AppCompatActivity {
 
     private void updateBarang() {
         // show progress
-        progressDialog.setMessage("Mengupdate barang");
+        progressDialog.setMessage("Updating product");
         progressDialog.show();
 
         if (imageUri == null) {
@@ -268,7 +268,7 @@ public class EditBarang extends AppCompatActivity {
                         public void onSuccess(Void unused) {
                             // update success
                             progressDialog.dismiss();
-                            Toast.makeText(EditBarang.this, "Edit berhasil", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditBarang.this, "Edit was successful", Toast.LENGTH_SHORT).show();
 
                         }
                     }).addOnFailureListener(new OnFailureListener() {
@@ -317,7 +317,7 @@ public class EditBarang extends AppCompatActivity {
                                     public void onSuccess(Void unused) {
                                         // update success
                                         progressDialog.dismiss();
-                                        Toast.makeText(EditBarang.this, "Edit berhasil", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(EditBarang.this, "Edit was successful", Toast.LENGTH_SHORT).show();
 
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
@@ -345,7 +345,7 @@ public class EditBarang extends AppCompatActivity {
 
     private void categoryDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Kategori Barang").setItems(Constants.kategoriBarang, new DialogInterface.OnClickListener() {
+        builder.setTitle("Product Category").setItems(Constants.kategoriBarang, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -361,7 +361,7 @@ public class EditBarang extends AppCompatActivity {
     private void showImageDialog() {
         String[] options = {"Kamera", "Galeri"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Pilih gambar").setItems(options, new DialogInterface.OnClickListener() {
+        builder.setTitle("Choose image").setItems(options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (i == 0) {

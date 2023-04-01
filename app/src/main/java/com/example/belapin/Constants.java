@@ -4,15 +4,15 @@ public class Constants {
     // kategori barang
 
     public static final String[] kategoriBarang = {
-            "Sayuran",
-            "Daging",
-            "Bumbu",
+            "Vegetables",
+            "Meat",
+            "Seasoning",
     };
 
     public static final String[] kategoriBarang1 = {
             "All",
-            "Sayuran",
-            "Daging",
-            "Bumbu",
+            "Vegetables",
+            "Meat",
+            "Seasoning",
     };
 }

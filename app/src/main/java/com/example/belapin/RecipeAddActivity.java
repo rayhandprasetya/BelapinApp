@@ -83,7 +83,7 @@ public class RecipeAddActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 
         progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Mohon Tunggu");
+        progressDialog.setTitle("Please wait");
         progressDialog.setCanceledOnTouchOutside(false);
 
         loadProducts();
@@ -172,9 +172,9 @@ public class RecipeAddActivity extends AppCompatActivity {
     }
 
     private void uploadProfileImageStorage() {
-        progressDialog.setMessage("Updating user profile image...");
+        progressDialog.setMessage("Updating image...");
         progressDialog.show();
-        Log.d(TAG, "uploadProfileImageStorage: Updating user profile image...");
+        Log.d(TAG, "uploadProfileImageStorage: Updating image...");
 
         String filePathAndName = "RecipeImages/" + "recipe_" + timestamp;
 
@@ -184,7 +184,7 @@ public class RecipeAddActivity extends AppCompatActivity {
                     @Override
                     public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
                         double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
-                        progressDialog.setMessage("Uploading user profile image. Progress: " + (int) progress + "%");
+                        progressDialog.setMessage("Uploading image...");
                     }
                 })
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -258,8 +258,8 @@ public class RecipeAddActivity extends AppCompatActivity {
 
                         }
 
-                        Log.d(TAG, "onSuccess: Recipe added...");
-                        Toast.makeText(RecipeAddActivity.this, "Recipe added...", Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "onSuccess: Recipe added");
+                        Toast.makeText(RecipeAddActivity.this, "Recipe added", Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
                     }
                 })
@@ -373,7 +373,7 @@ public class RecipeAddActivity extends AppCompatActivity {
                                 .into(recipeIv);
                     } else {
                         //Cancelled
-                        Toast.makeText(RecipeAddActivity.this, "Cancelled...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RecipeAddActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -391,7 +391,7 @@ public class RecipeAddActivity extends AppCompatActivity {
                         pickImageGallery();
                     } else {
                         //user denied permission so we can't pick image from gallery
-                        Toast.makeText(RecipeAddActivity.this, "Permission denied...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RecipeAddActivity.this, "Permission denied", Toast.LENGTH_SHORT).show();
 
                     }
                 }

@@ -32,7 +32,7 @@
                 android:layout_marginTop="3dp"
                 android:layout_marginEnd="3dp"
                 android:layout_marginBottom="3dp"
-                android:text="Nama Pasar"
+                android:text="Market's nama"
                 android:textColor="@color/white" />
 
             <TextView
@@ -42,7 +42,7 @@
                 android:layout_below="@id/namaPasar"
                 android:layout_marginStart="3dp"
                 android:layout_marginTop="10dp"
-                android:text="Alamat Pasar"
+                android:text="Market's address"
                 android:textColor="@color/white" />
 
         </RelativeLayout>
@@ -75,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:text="Detail Pasar"
+                android:text="Market Detail"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />

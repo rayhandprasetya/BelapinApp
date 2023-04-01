@@ -48,7 +48,7 @@ public class Login extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Mohon tunggu");
+        progressDialog.setTitle("Please wait");
         progressDialog.setCanceledOnTouchOutside(false);
 
 
@@ -83,15 +83,15 @@ public class Login extends AppCompatActivity {
         password = passwordAkun.getText().toString().trim();
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            Toast.makeText(this, "Email salah", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Wrong email", Toast.LENGTH_SHORT).show();
             return;
         }
         if (TextUtils.isEmpty(password)){
-            Toast.makeText(this, "Masukan password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Wrong password", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        progressDialog.setMessage("Masukkk");
+        progressDialog.setMessage("Login");
         progressDialog.show();
 
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
@@ -110,23 +110,24 @@ public class Login extends AppCompatActivity {
 
     private void berhasilMasuk() {
         // after login, make user online
-        progressDialog.setMessage("Sedang mengecek");
+        progressDialog.setMessage("Checking");
 
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("online","true");
 
         //update value to database
-        DatabaseReference reference = FirebaseDatabase.getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
+        DatabaseReference reference = FirebaseDatabase.
+                getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
         reference.child(firebaseAuth.getUid()).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                // Update sukses
+                // Update success
                 CheckUserType();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                // gagal update
+                // failed update
                 progressDialog.dismiss();
                 Toast.makeText(Login.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
 
@@ -136,7 +137,8 @@ public class Login extends AppCompatActivity {
 
     private void CheckUserType() {
         // check if user is seller, start seller page, otherwise start user page
-        DatabaseReference reference = FirebaseDatabase.getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
+        DatabaseReference reference = FirebaseDatabase.
+                getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
         reference.orderByChild("uid").equalTo(firebaseAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

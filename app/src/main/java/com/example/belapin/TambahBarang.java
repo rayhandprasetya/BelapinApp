@@ -87,7 +87,7 @@ public class TambahBarang extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 
         progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Mohon Tunggu");
+        progressDialog.setTitle("Please wait");
         progressDialog.setCanceledOnTouchOutside(false);
 
 
@@ -155,15 +155,15 @@ public class TambahBarang extends AppCompatActivity {
 
         // validate data
         if (TextUtils.isEmpty(barangJudul)) {
-            Toast.makeText(this, "Judul harus diisi", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Title is required", Toast.LENGTH_SHORT).show();
             return; // dont proceed further
         }
         if (TextUtils.isEmpty(barangDesc)) {
-            Toast.makeText(this, "Deskripsi harus diisi", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Description is required", Toast.LENGTH_SHORT).show();
             return; // dont proceed further
         }
         if (TextUtils.isEmpty(barangKategori)) {
-            Toast.makeText(this, "Kategori harus diisi", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Category is required", Toast.LENGTH_SHORT).show();
             return; // dont proceed further
         }
 //        if (diskonTersedia) {
@@ -185,7 +185,7 @@ public class TambahBarang extends AppCompatActivity {
     private void tambahBarang() {
         Log.d(TAG, "tambahBarang: ");
         // Data added to database
-        progressDialog.setMessage("Menambah barang");
+        progressDialog.setMessage("Adding product");
         progressDialog.show();
 
         final String timestamp = "" + System.currentTimeMillis();
@@ -220,7 +220,7 @@ public class TambahBarang extends AppCompatActivity {
                             // success add data to db
                             Log.d(TAG, "onSuccess: uploaded");
                             progressDialog.dismiss();
-                            Toast.makeText(TambahBarang.this, "Barang berhasil ditambahkan", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(TambahBarang.this, "Product added successfully", Toast.LENGTH_SHORT).show();
                             clearData();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
@@ -324,7 +324,7 @@ public class TambahBarang extends AppCompatActivity {
 
     private void categoryDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Kategori Barang").setItems(Constants.kategoriBarang, new DialogInterface.OnClickListener() {
+        builder.setTitle("Product category").setItems(Constants.kategoriBarang, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -339,7 +339,7 @@ public class TambahBarang extends AppCompatActivity {
     private void showImageDialog() {
         String[] options = {"Kamera", "Galeri"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Pilih gambar").setItems(options, new DialogInterface.OnClickListener() {
+        builder.setTitle("Choose image").setItems(options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (i == 0) {

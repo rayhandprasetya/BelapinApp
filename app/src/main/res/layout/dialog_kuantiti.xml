@@ -25,28 +25,28 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@id/tambahGambar"
             android:layout_marginTop="5dp"
-            android:text="Nama Barang"
+            android:text="Product Name"
             android:textColor="@color/white"/>
 
-        <TextView
-            android:id="@+id/kuantiti"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/judul"
-            android:layout_marginTop="5dp"
-            android:text="Kuantiti"
-            android:textSize="10sp"
-            android:textColor="@color/white"/>
+<!--        <TextView-->
+<!--            android:id="@+id/kuantiti"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            android:layout_below="@id/judul"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:text="Quantity"-->
+<!--            android:textSize="10sp"-->
+<!--            android:textColor="@color/white"/>-->
 
         <TextView
             android:id="@+id/deskripsi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_below="@id/kuantiti"
+            android:layout_below="@id/judul"
             android:layout_marginTop="5dp"
-            android:text="Deskripsi"
+            android:text="Description"
             android:textColor="@color/white"/>
 
     </RelativeLayout>
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:layout_alignParentEnd="true"
-            android:text="Harga Total"
+            android:text="Total"
             android:textAlignment="textStart"
             android:textColor="@color/black"/>
 
@@ -120,7 +120,7 @@
         android:layout_marginTop="20dp"
         android:background="#3CED97"
         android:padding="5dp"
-        android:text="Tambah ke kerajang"
+        android:text="Add to cart"
         android:textAllCaps="false"/>
 
 </LinearLayout>

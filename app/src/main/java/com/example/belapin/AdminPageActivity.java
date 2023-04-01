@@ -45,17 +45,17 @@ public class AdminPageActivity extends AppCompatActivity {
         tambahBarang = findViewById(R.id.tambahBarang);
         tabProductsTv = findViewById(R.id.tabProductsTv);
         tabRecipesTv = findViewById(R.id.tabRecipesTv);
-        tabOrdersTv = findViewById(R.id.tabOrdersTv);
+//        tabOrdersTv = findViewById(R.id.tabOrdersTv);
 
 
         progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Mohon Tunggu");
+        progressDialog.setTitle("Please wait");
         progressDialog.setCanceledOnTouchOutside(false);
 
         firebaseAuth = FirebaseAuth.getInstance();
         checkUser();
 
-        fragmentProducts();
+//        fragmentProducts();
 
         tombolKeluar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,14 +90,14 @@ public class AdminPageActivity extends AppCompatActivity {
             }
         });
 
-        tabOrdersTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // load order
-                fragmentOrders();
-
-            }
-        });
+//        tabOrdersTv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // load order
+//                fragmentOrders();
+//
+//            }
+//        });
 
     }
 
@@ -154,7 +154,7 @@ public class AdminPageActivity extends AppCompatActivity {
 
     private void signOutAdmin() {
         // logout
-        progressDialog.setMessage("Keluar");
+        progressDialog.setMessage("Sign out");
 
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("online", "false");
@@ -224,8 +224,8 @@ public class AdminPageActivity extends AppCompatActivity {
         tabRecipesTv.setTextColor(getResources().getColor(R.color.white));
         tabRecipesTv.setBackgroundColor(getResources().getColor(android.R.color.transparent));
 
-        tabOrdersTv.setTextColor(getResources().getColor(R.color.white));
-        tabOrdersTv.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+//        tabOrdersTv.setTextColor(getResources().getColor(R.color.white));
+//        tabOrdersTv.setBackgroundColor(getResources().getColor(android.R.color.transparent));
 
         AdminProductsFragment fragment = new AdminProductsFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -239,8 +239,8 @@ public class AdminPageActivity extends AppCompatActivity {
         tabRecipesTv.setTextColor(getResources().getColor(R.color.black));
         tabRecipesTv.setBackgroundResource(R.drawable.shape_rect04);
 
-        tabOrdersTv.setTextColor(getResources().getColor(R.color.white));
-        tabOrdersTv.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+//        tabOrdersTv.setTextColor(getResources().getColor(R.color.white));
+//        tabOrdersTv.setBackgroundColor(getResources().getColor(android.R.color.transparent));
 
         AdminRecipesFragment fragment = new AdminRecipesFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -255,8 +255,8 @@ public class AdminPageActivity extends AppCompatActivity {
         tabRecipesTv.setTextColor(getResources().getColor(R.color.white));
         tabRecipesTv.setBackgroundColor(getResources().getColor(android.R.color.transparent));
 
-        tabOrdersTv.setTextColor(getResources().getColor(R.color.black));
-        tabOrdersTv.setBackgroundResource(R.drawable.shape_rect04);
+//        tabOrdersTv.setTextColor(getResources().getColor(R.color.black));
+//        tabOrdersTv.setBackgroundResource(R.drawable.shape_rect04);
 
         AdminOrdersFragment fragment = new AdminOrdersFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();

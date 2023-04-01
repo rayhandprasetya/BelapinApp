@@ -68,7 +68,7 @@ public class AdapterKeranjang extends RecyclerView.Adapter<AdapterKeranjang.Hold
                         .doneTableColumn();
 
                 easyDB.deleteRow(1, id);
-                Toast.makeText(context, "Terhapus dari keranjang", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Removed from cart", Toast.LENGTH_SHORT).show();
 
                 // refresh list
                 keranjang.remove(position);

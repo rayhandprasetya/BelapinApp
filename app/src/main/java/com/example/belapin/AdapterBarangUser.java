@@ -118,7 +118,7 @@ public class AdapterBarangUser extends RecyclerView.Adapter<AdapterBarangUser.Ho
         // ini layout view
         ImageView tambahGambar = view.findViewById(R.id.tambahGambar);
         TextView judul = view.findViewById(R.id.judul);
-        TextView kuantiti = view.findViewById(R.id.kuantiti);
+//        TextView kuantiti = view.findViewById(R.id.kuantiti);
         TextView deskripsi = view.findViewById(R.id.deskripsi);
         TextView hargaAsli = view.findViewById(R.id.hargaAsli);
         TextView hargaTotal = view.findViewById(R.id.hargaTotal);
@@ -151,7 +151,7 @@ public class AdapterBarangUser extends RecyclerView.Adapter<AdapterBarangUser.Ho
         }
 
         judul.setText("" + judulBrg);
-        kuantiti.setText("" + kuantitiBrg);
+//        kuantiti.setText("" + kuantitiBrg);
         deskripsi.setText("" + deskripsiBrg);
         kuantitiTambahKurang.setText("" + kuantitiBrgApk);
         hargaAsli.setText("Rp" + modelBarang.getHargaAsli());
@@ -232,7 +232,7 @@ public class AdapterBarangUser extends RecyclerView.Adapter<AdapterBarangUser.Ho
                 .addData("Barang_Kuantiti", kuantitiL)
                 .doneDataAdding();
 
-        Toast.makeText(context, "Menambah ke keranjang...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Adding product to cart...", Toast.LENGTH_SHORT).show();
 
     }
 

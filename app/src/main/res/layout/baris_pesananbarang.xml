@@ -15,7 +15,7 @@
             android:id="@+id/namaBarang"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nama Barang"
+            android:text="Product"
             android:textColor="@color/black"/>
 
         <TextView

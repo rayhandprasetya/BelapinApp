@@ -67,7 +67,7 @@ public class DaftarAdmin extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Mohon Tunggu");
+        progressDialog.setTitle("Please wait");
         progressDialog.setCanceledOnTouchOutside(false);
 
         tmblKembali.setOnClickListener(new View.OnClickListener() {
@@ -97,34 +97,34 @@ public class DaftarAdmin extends AppCompatActivity {
         pasKon = passwordKonfirmasi.getText().toString().trim();
 
         if (TextUtils.isEmpty(namaLengkap)){
-            Toast.makeText(this, "Masukkan nama", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Name", Toast.LENGTH_SHORT).show();
             return;
         }
         if (TextUtils.isEmpty(toko)){
-            Toast.makeText(this, "Masukkan nama Toko", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Market's name", Toast.LENGTH_SHORT).show();
             return;
         }
         if (TextUtils.isEmpty(alamat)){
-            Toast.makeText(this, "Masukkan alamat", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Market's address", Toast.LENGTH_SHORT).show();
             return;
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            Toast.makeText(this, "Email tidak valid", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Invalid email", Toast.LENGTH_SHORT).show();
             return;
         }
         if (password.length()<8){
-            Toast.makeText(this, "Password minimal 8 karakter", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Password Minimum 8 characters", Toast.LENGTH_SHORT).show();
             return;
         }
         if (!password.equals(pasKon)){
-            Toast.makeText(this, "Password harus sama", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Password must be the same", Toast.LENGTH_SHORT).show();
             return;
         }
         buatAkun();
     }
 
     private void buatAkun() {
-        progressDialog.setMessage("Membuat akun....");
+        progressDialog.setMessage("Creating account....");
         progressDialog.show();
 
         //buat akun
@@ -146,7 +146,7 @@ public class DaftarAdmin extends AppCompatActivity {
     }
 
     private void saveDataFirebase() {
-        progressDialog.setMessage("Menyimpan Akun");
+        progressDialog.setMessage("Saving account");
         String timestamp = ""+System.currentTimeMillis();
         if (image_uri==null) {
 

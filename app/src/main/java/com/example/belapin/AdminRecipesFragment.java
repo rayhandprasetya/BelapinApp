@@ -62,7 +62,7 @@ public class AdminRecipesFragment extends Fragment {
         recipesRv = view.findViewById(R.id.recipesRv);
 
         progressDialog = new ProgressDialog(mContext);
-        progressDialog.setTitle("Mohon Tunggu");
+        progressDialog.setTitle("Please wait");
         progressDialog.setCanceledOnTouchOutside(false);
 
         firebaseAuth = FirebaseAuth.getInstance();

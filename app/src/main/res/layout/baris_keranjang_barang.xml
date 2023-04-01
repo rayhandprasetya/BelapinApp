@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
-        android:text="Nama Barang"/>
+        android:text="Product"/>
 
     <TextView
         android:id="@+id/hargaBarang"
@@ -48,7 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/namaBarang"
-        android:text="Hapus"
+        android:text="Delete"
         android:layout_alignParentEnd="true"
         android:textColor="#D87063"/>
 

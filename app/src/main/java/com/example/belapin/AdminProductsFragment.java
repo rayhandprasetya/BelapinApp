@@ -81,7 +81,7 @@ public class AdminProductsFragment extends Fragment {
         banyakBarang = view.findViewById(R.id.banyakBarang);
 
         progressDialog = new ProgressDialog(mContext);
-        progressDialog.setTitle("Mohon Tunggu");
+        progressDialog.setTitle("Please Wait");
         progressDialog.setCanceledOnTouchOutside(false);
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -135,7 +135,7 @@ public class AdminProductsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                builder.setTitle("Pilih kategori").setItems(Constants.kategoriBarang1, new DialogInterface.OnClickListener() {
+                builder.setTitle("Choose Category").setItems(Constants.kategoriBarang1, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         // get selected item

@@ -15,7 +15,7 @@
             android:id="@+id/belanjaanId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Belanjaan: 1234"
+            android:text="Order ID: 1234"
             android:textColor="@color/black"
             android:textStyle="bold"/>
 
@@ -30,7 +30,7 @@
             android:id="@+id/namaPasar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pasar Pagi"
+            android:text="Pasar Traditional Market"
             android:layout_below="@id/waktu"/>
 
         <TextView

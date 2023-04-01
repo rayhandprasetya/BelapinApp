@@ -24,10 +24,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Riwayat Pesanan"
+            android:text="Order History"
             android:textColor="@color/white"
-            android:textStyle="bold"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 
@@ -48,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
-                    android:text="Nomor Belanjaan"
+                    android:text="Purchase ID"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
@@ -70,7 +70,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
-                    android:text="Tanggal"
+                    android:text="Date"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
@@ -114,7 +114,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
-                    android:text="Nama Pasar"
+                    android:text="Market's name"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
@@ -136,7 +136,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
-                    android:text="Barang"
+                    android:text="Total Product"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
@@ -184,7 +184,7 @@
         android:background="#3CED97"
         android:textColor="@color/white"
         android:textStyle="bold"
-        android:text="Barang Belanjaan"
+        android:text="Product"
         android:textAlignment="center"/>
     
     <androidx.recyclerview.widget.RecyclerView

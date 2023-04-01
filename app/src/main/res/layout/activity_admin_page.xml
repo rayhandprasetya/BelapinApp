@@ -35,23 +35,23 @@
             android:id="@+id/namaAkun"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nama"
+            android:text="Name"
             android:textColor="@color/white"
             android:textSize="15sp" />
 
-        <TextView
-            android:id="@+id/namaToko"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/namaAkun"
-            android:text="Nama Pasar"
-            android:textColor="@color/white"
-            android:textSize="15sp" />
+<!--        <TextView-->
+<!--            android:id="@+id/namaToko"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/namaAkun"-->
+<!--            android:text="Store Name"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="15sp" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_below="@+id/namaToko"
+            android:layout_below="@+id/tambahBarang"
             android:layout_marginTop="5dp"
             android:background="@drawable/shape_rect03"
             android:orientation="horizontal">
@@ -78,14 +78,14 @@
                 android:textColor="@color/white" />
 
             <!--Orders-->
-            <TextView
-                android:id="@+id/tabOrdersTv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Orders"
-                android:textColor="@color/white" />
+<!--            <TextView-->
+<!--                android:id="@+id/tabOrdersTv"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_weight="1"-->
+<!--                android:gravity="center"-->
+<!--                android:text="Orders"-->
+<!--                android:textColor="@color/white" />-->
 
         </LinearLayout>
 

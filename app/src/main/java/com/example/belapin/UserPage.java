@@ -60,12 +60,12 @@ public class UserPage extends AppCompatActivity {
         catalog = findViewById(R.id.catalog);
         riwayat = findViewById(R.id.riwayat);
         tokoTampilan = findViewById(R.id.tokoTampilan);
-        foodMenu = findViewById(R.id.foodMenu);
+//        foodMenu = findViewById(R.id.foodMenu);
         belanjaanHistory = findViewById(R.id.belanjaanHistory);
 //        belanjaanHistory.setLayoutManager(new LinearLayoutManager(UserPage.this));
 
         progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Mohon Tunggu");
+        progressDialog.setTitle("Please wait");
         progressDialog.setCanceledOnTouchOutside(false);
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -137,7 +137,7 @@ public class UserPage extends AppCompatActivity {
 
     private void signOutUser() {
         // logout
-        progressDialog.setMessage("Keluar");
+        progressDialog.setMessage("Sign out");
 
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("online", "false");

@@ -71,7 +71,7 @@ public class DetailPasar extends AppCompatActivity {
 
         // init dialog
         progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Mohon tunggu");
+        progressDialog.setTitle("Please wait");
         progressDialog.setCanceledOnTouchOutside(false);
 
         // get pasar uid from intent
@@ -265,7 +265,7 @@ public class DetailPasar extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (keranjangBarangList.size() == 0) {
-                    Toast.makeText(DetailPasar.this, "Tidak ada barang di keranjang", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailPasar.this, "No product in cart", Toast.LENGTH_SHORT).show();
                     return; // dont proceed further
                 }
                 confirmOrder();
@@ -277,7 +277,7 @@ public class DetailPasar extends AppCompatActivity {
     private AdapterKeranjang adapterKeranjang;
     private void confirmOrder() {
         // show progress dialog
-        progressDialog.setMessage("Membuat pesanan...");
+        progressDialog.setMessage("Creating list of order...");
         progressDialog.show();
 
         // for order id and order date
@@ -317,7 +317,7 @@ public class DetailPasar extends AppCompatActivity {
                 }
 
                 progressDialog.dismiss();
-                Toast.makeText(DetailPasar.this, "Belanjaan berhasil disimpan", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetailPasar.this, "List of order has been saved", Toast.LENGTH_SHORT).show();
 
                 // open belanjaan detail after placing pesanan
                 Intent intent = new Intent(DetailPasar.this, BelanjaanDetailUser.class);

@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="2dp"
-            android:text="Detail Barang"
+            android:text="Detail Product"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"/>
@@ -80,7 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="Judul Barang"
+            android:text="Product"
             android:textColor="@color/black"
             android:textSize="18dp"
             android:textStyle="bold"/>
@@ -90,7 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="Deskripsi Barang"
+            android:text="Description"
             android:textColor="@color/black" />
 
         <TextView
@@ -98,7 +98,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="Kategori"
+            android:text="Category"
             android:textColor="@color/black" />
 
 <!--        <TextView-->

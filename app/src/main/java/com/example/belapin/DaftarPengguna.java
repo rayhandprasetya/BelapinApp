@@ -79,7 +79,7 @@ public class DaftarPengguna extends AppCompatActivity{
 
         firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Mohon tunggu");
+        progressDialog.setTitle("Please wait");
         progressDialog.setCanceledOnTouchOutside(false);
 
         tmblKembali.setOnClickListener(new View.OnClickListener() {
@@ -114,33 +114,33 @@ public class DaftarPengguna extends AppCompatActivity{
         pasKon = passwordKonfirmasi.getText().toString().trim();
 
         if (TextUtils.isEmpty(namaLengkap)){
-            Toast.makeText(this, "Masukkan nama", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Name", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            Toast.makeText(this, "Email tidak valid", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Invalid email", Toast.LENGTH_SHORT).show();
             return;
         }
         if (password.length()<8){
-            Toast.makeText(this, "Password minimal 8 karakter", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Password minimum 8 characters", Toast.LENGTH_SHORT).show();
             return;
         }
         if (!password.equals(pasKon)){
-            Toast.makeText(this, "Password harus sama", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Password must be the same", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (latitude==0.0 || longitude==0.0){
-            Toast.makeText(this, "Klik gps untuk lokasi", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        if (latitude==0.0 || longitude==0.0){
+//            Toast.makeText(this, "Klik gps untuk lokasi", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
 
         buatAkun();
 
     }
 
     private void buatAkun() {
-        progressDialog.setMessage("Membuat akun....");
+        progressDialog.setMessage("Creating account....");
         progressDialog.show();
 
         //buat akun
@@ -162,7 +162,7 @@ public class DaftarPengguna extends AppCompatActivity{
     }
 
     private void saveDataFirebase() {
-        progressDialog.setMessage("Menyimpan Akun");
+        progressDialog.setMessage("Saving account");
         String timestamp = ""+System.currentTimeMillis();
         if (image_uri==null) {
 
@@ -176,7 +176,8 @@ public class DaftarPengguna extends AppCompatActivity{
             hashMap.put("online","true");
             hashMap.put("tokoBuka","true");
 
-            DatabaseReference reference = FirebaseDatabase.getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
+            DatabaseReference reference = FirebaseDatabase.
+                    getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
             reference.child(firebaseAuth.getUid()).setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void unused) {

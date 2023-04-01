@@ -187,7 +187,7 @@ public class AdapterBarangAdmin extends RecyclerView.Adapter<AdapterBarangAdmin.
 
                 // show delete confirmation
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Hapus").setMessage("Yakin hapus" + judul + " ?")
+                builder.setTitle("Removed").setMessage("Are you sure want to remove" + judul + " ?")
                         .setPositiveButton("HAPUS", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -195,7 +195,7 @@ public class AdapterBarangAdmin extends RecyclerView.Adapter<AdapterBarangAdmin.
                                 deleteBarang(id); // id is barang id
 
                             }
-                        }).setNegativeButton("TIDAK", new DialogInterface.OnClickListener() {
+                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 // cancel delete
@@ -228,7 +228,7 @@ public class AdapterBarangAdmin extends RecyclerView.Adapter<AdapterBarangAdmin.
                     @Override
                     public void onSuccess(Void unused) {
                         // barang deleted
-                        Toast.makeText(context, "Barang dihapus", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Product deleted", Toast.LENGTH_SHORT).show();
 
                     }
                 }).addOnFailureListener(new OnFailureListener() {
