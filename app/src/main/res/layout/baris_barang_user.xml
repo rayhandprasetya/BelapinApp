@@ -24,7 +24,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toStartOf="@id/next"
             android:layout_centerVertical="true"
             android:orientation="vertical"
             android:layout_toEndOf="@id/gambarBarang">
@@ -69,13 +68,23 @@
                 android:layout_below="@id/description"
                 android:textColor="@color/black"/>
 
-            <RelativeLayout
+            <TextView
+                android:id="@+id/hargaAsli"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:layout_below="@id/tambahKeranjang"
+                android:text="Rp10000"
+                android:layout_marginEnd="5dp"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="5dp">
+                android:layout_centerVertical="true"
+                android:textColor="#BBBBBB"/>
+
+<!--            <RelativeLayout-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:padding="5dp"-->
+<!--                android:layout_below="@id/tambahKeranjang"-->
+<!--                android:layout_alignParentEnd="true"-->
+<!--                android:layout_marginTop="5dp">-->
 
 <!--                <TextView-->
 <!--                    android:id="@+id/hargaDiskon"-->
@@ -85,27 +94,27 @@
 <!--                    android:layout_marginEnd="10dp"-->
 <!--                    android:textColor="#BBBBBB"/>-->
 
-                <TextView
-                    android:id="@+id/hargaAsli"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Rp10000"
-                    android:textColor="#BBBBBB"/>
+<!--                <TextView-->
+<!--                    android:id="@+id/hargaAsli"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Rp10000"-->
+<!--                    android:textColor="#BBBBBB"/>-->
 
-            </RelativeLayout>
+<!--            </RelativeLayout>-->
 
         </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/next"
-            android:layout_alignParentEnd="true"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_next"
-            android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:layout_height="wrap_content"/>
+<!--        <ImageView-->
+<!--            android:id="@+id/next"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:adjustViewBounds="true"-->
+<!--            android:scaleType="fitCenter"-->
+<!--            android:src="@drawable/ic_next"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_marginEnd="5dp"-->
+<!--            android:layout_height="wrap_content"/>-->
 
     </RelativeLayout>
 

@@ -47,7 +47,7 @@ public class RecipeDetailsUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_details_user);
 
         toolbarBackBtn = findViewById(R.id.toolbarBackBtn);
-        toolbarDeleteBtn = findViewById(R.id.toolbarDeleteBtn);
+//        toolbarDeleteBtn = findViewById(R.id.toolbarDeleteBtn);
         recipeIv = findViewById(R.id.recipeIv);
         recipeNameTv = findViewById(R.id.recipeNameTv);
         recipePersonCountTv = findViewById(R.id.recipePersonCountTv);

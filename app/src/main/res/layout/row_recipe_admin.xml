@@ -50,22 +50,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="5 - 7 Persons"
+                android:text="5 - 7 Portions"
                 android:textColor="#959595"
                 android:textSize="12sp" />
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="5dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_next" />
+<!--        <ImageView-->
+<!--            android:id="@+id/next"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_marginEnd="5dp"-->
+<!--            android:adjustViewBounds="true"-->
+<!--            android:scaleType="fitCenter"-->
+<!--            android:src="@drawable/ic_next" />-->
 
     </RelativeLayout>
 

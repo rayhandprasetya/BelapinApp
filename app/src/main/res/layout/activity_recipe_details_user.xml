@@ -70,7 +70,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="5 - 7 Persons"
+                    android:text="5 - 7 Portions"
                     android:textColor="@color/colorGray01"
                     android:textSize="12sp" />
 
@@ -102,8 +102,7 @@
                     android:background="@drawable/shape_rect04"
                     android:gravity="center"
                     android:text="Material"
-                    android:textColor="@color/black"
-                    android:textSize="10sp" />
+                    android:textColor="@color/black" />
 
                 <!--Orders-->
                 <TextView
@@ -112,9 +111,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Ingredients &amp; Recipe"
-                    android:textColor="@color/white"
-                    android:textSize="10sp" />
+                    android:text="Recipe"
+                    android:textColor="@color/white" />
 
             </LinearLayout>
 

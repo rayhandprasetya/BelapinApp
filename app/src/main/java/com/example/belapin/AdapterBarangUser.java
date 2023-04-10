@@ -160,7 +160,7 @@ public class AdapterBarangUser extends RecyclerView.Adapter<AdapterBarangUser.Ho
         AlertDialog dialog = builder.create();
         dialog.show();
 
-        // add kuantiti
+        // add quantity
         tombolTambah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -172,7 +172,7 @@ public class AdapterBarangUser extends RecyclerView.Adapter<AdapterBarangUser.Ho
             }
         });
 
-        // decrease barang kuantiti only if kuantiti > 1
+        // decrease product quantity only if quantity > 1
         tombolKurang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -263,7 +263,7 @@ public class AdapterBarangUser extends RecyclerView.Adapter<AdapterBarangUser.Ho
 
             // init views
             gambarBarang = itemView.findViewById(R.id.gambarBarang);
-            next = itemView.findViewById(R.id.next);
+//            next = itemView.findViewById(R.id.next);
 //            hargaDiskonNote = itemView.findViewById(R.id.hargaDiskonNote);
             judul = itemView.findViewById(R.id.judul);
             description = itemView.findViewById(R.id.description);

@@ -93,7 +93,7 @@ public class EditBarang extends AppCompatActivity {
 
 
         progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Please wait");
+        progressDialog.setTitle("Please wait    ");
         progressDialog.setCanceledOnTouchOutside(false);
 
 //        diskon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

@@ -188,13 +188,10 @@ public class DetailPasar extends AppCompatActivity {
     // access these views in adapter and making public
     public TextView totalSemua;
     private void showKeranjangBarang() {
-
         // init list
         keranjangBarangList = new ArrayList<>();
-
         // inflate keranjang layout
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_keranjang, null);
-
         // init views
         TextView namaPasar = view.findViewById(R.id.namaPasar);
         totalSemua = view.findViewById(R.id.totalHarga);

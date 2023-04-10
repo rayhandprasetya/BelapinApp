@@ -188,7 +188,7 @@ public class AdapterBarangAdmin extends RecyclerView.Adapter<AdapterBarangAdmin.
                 // show delete confirmation
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Removed").setMessage("Are you sure want to remove" + judul + " ?")
-                        .setPositiveButton("HAPUS", new DialogInterface.OnClickListener() {
+                        .setPositiveButton("REMOVED", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 // delete barang

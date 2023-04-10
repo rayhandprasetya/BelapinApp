@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         android:padding="10dp">
 
-
         <ImageButton
             android:id="@+id/backBtn"
             android:layout_width="30dp"
@@ -215,7 +214,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/purple_200"
+        android:background="@color/colorGreen"
         android:padding="5dp"
         android:text="Ordered Items"
         android:textAlignment="center"

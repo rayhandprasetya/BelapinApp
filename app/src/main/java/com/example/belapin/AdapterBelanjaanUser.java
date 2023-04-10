@@ -56,7 +56,7 @@ public class AdapterBelanjaanUser extends RecyclerView.Adapter<AdapterBelanjaanU
         loadPasarInfo(modelBelanjaan, holder);
 
         holder.totalAmount.setText("Total: Rp"+biayaOrder);
-        holder.belanjaanId.setText("Belanjaan ID:"+pesananId);
+        holder.belanjaanId.setText("Order ID:"+pesananId);
 //        holder.statusBelanjaan.setText(statusOrder);
         // change status
 //        if (statusOrder.equals("Selesai")) {
@@ -123,7 +123,7 @@ public class AdapterBelanjaanUser extends RecyclerView.Adapter<AdapterBelanjaanU
             namaPasar = itemView.findViewById(R.id.namaPasar);
             totalAmount = itemView.findViewById(R.id.totalAmount);
 //            statusBelanjaan = itemView.findViewById(R.id.statusBelanjaan);
-            next = itemView.findViewById(R.id.next);
+//            next = itemView.findViewById(R.id.next);
 
         }
     }

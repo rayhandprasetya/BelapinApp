@@ -42,8 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginStart="10dp"
-            android:layout_toStartOf="@id/next">
+            android:layout_marginStart="10dp">
 
             <TextView
                 android:id="@+id/namaToko"
@@ -71,13 +70,13 @@
                 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_next"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"/>
+<!--        <ImageView-->
+<!--            android:id="@+id/next"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:src="@drawable/ic_next"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:layout_centerVertical="true"/>-->
 
     </RelativeLayout>
 
