@@ -143,11 +143,14 @@ public class AdminProductsFragment extends Fragment {
                         filteredBarang.setText(selected);
 
                         if (selected.equals("All")) {
-                            // load all barang
+                            // load all products
                             loadAllBarang();
-
+                        } else if (selected.equalsIgnoreCase("Price Lowest")) {
+                            loadAllBarangPriceLowest();
+                        } else if (selected.equalsIgnoreCase("Price Highest")) {
+                            loadAllBarangPriceHighest();
                         } else {
-                            // load selected barang
+                            // load selected products
                             loadFilteredBarang(selected);
                         }
 
@@ -231,6 +234,103 @@ public class AdminProductsFragment extends Fragment {
                     }
                 });
     }
+
+    private void loadAllBarangPriceLowest() {
+        barangList = new ArrayList<>();
+        // get all barang
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        databaseReference
+                .child("" + firebaseAuth.getUid())
+                .child("Barang")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        // before getting list reset
+                        barangList.clear();
+
+                        for (DataSnapshot s : snapshot.getChildren()) {
+                            try {
+                                ModelBarang modelBarang = s.getValue(ModelBarang.class);
+                                barangList.add(modelBarang);
+                            } catch (Exception e) {
+                                Log.e(TAG, "onDataChange: ", e);
+                            }
+                        }
+
+                        // Bubble sort implementation for price lowest -> highest
+                        for (int i = 0; i < barangList.size() - 1; i++) {
+                            for (int j = 0; j < barangList.size() - i - 1; j++) {
+                                if (Double.parseDouble(barangList.get(j).getHargaAsli()) > Double.parseDouble(barangList.get(j + 1).getHargaAsli())) {
+                                    // Swap the elements
+                                    ModelBarang temp = barangList.get(j);
+                                    barangList.set(j, barangList.get(j + 1));
+                                    barangList.set(j + 1, temp);
+                                }
+                            }
+                        }
+
+                        // setup adapter
+                        adapterBarangAdmin = new AdapterBarangAdmin(mContext, barangList);
+                        // set adapter
+                        banyakBarang.setAdapter(adapterBarangAdmin);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }
+
+    private void loadAllBarangPriceHighest() {
+        barangList = new ArrayList<>();
+        // get all barang
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        databaseReference
+                .child("" + firebaseAuth.getUid())
+                .child("Barang")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        // before getting list reset
+                        barangList.clear();
+
+                        for (DataSnapshot s : snapshot.getChildren()) {
+                            try {
+                                ModelBarang modelBarang = s.getValue(ModelBarang.class);
+                                barangList.add(modelBarang);
+                            } catch (Exception e) {
+                                Log.e(TAG, "onDataChange: ", e);
+                            }
+                        }
+
+                        // Bubble sort implementation for price highest -> lowest
+                        for (int i = 0; i < barangList.size() - 1; i++) {
+                            for (int j = 0; j < barangList.size() - i - 1; j++) {
+                                if (Double.parseDouble(barangList.get(j).getHargaAsli()) < Double.parseDouble(barangList.get(j + 1).getHargaAsli())) {
+                                    // Swap the elements
+                                    ModelBarang temp = barangList.get(j);
+                                    barangList.set(j, barangList.get(j + 1));
+                                    barangList.set(j + 1, temp);
+                                }
+                            }
+                        }
+
+                        // setup adapter
+                        adapterBarangAdmin = new AdapterBarangAdmin(mContext, barangList);
+                        // set adapter
+                        banyakBarang.setAdapter(adapterBarangAdmin);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }
+
 
 //    private void showBarang() {
 //        // show barang menu and hide order menu

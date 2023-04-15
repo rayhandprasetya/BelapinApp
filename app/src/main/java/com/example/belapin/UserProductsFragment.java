@@ -109,11 +109,14 @@ public class UserProductsFragment extends Fragment {
                         filteredBarang.setText(selected);
 
                         if (selected.equals("All")) {
-                            // load all barang
+                            // load all products
                             loadAllBarang();
-
+                        } else if (selected.equalsIgnoreCase("Price Lowest")) {
+                            loadAllBarangPriceLowest();
+                        } else if (selected.equalsIgnoreCase("Price Highest")) {
+                            loadAllBarangPriceHighest();
                         } else {
-                            // load selected barang
+                            // load selected products
                             loadFilteredBarang(selected);
                         }
 
@@ -144,6 +147,100 @@ public class UserProductsFragment extends Fragment {
                                 barangArrayList.add(modelBarang);
                             } catch (Exception e) {
                                 Log.e(TAG, "onDataChange: ", e);
+                            }
+                        }
+
+                        // setup adapter
+                        adapterBarangUser = new AdapterBarangUser(mContext, barangArrayList);
+                        // set adapter
+                        productsRv.setAdapter(adapterBarangUser);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }
+    private void loadAllBarangPriceLowest() {
+        barangArrayList = new ArrayList<>();
+        // get all barang
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        databaseReference
+                .child("" + ((DetailPasar) mContext).tokoUid)
+                .child("Barang")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        // before getting list reset
+                        barangArrayList.clear();
+
+                        for (DataSnapshot s : snapshot.getChildren()) {
+                            try {
+                                ModelBarang modelBarang = s.getValue(ModelBarang.class);
+                                barangArrayList.add(modelBarang);
+                            } catch (Exception e) {
+                                Log.e(TAG, "onDataChange: ", e);
+                            }
+                        }
+
+                        // Bubble sort implementation for price lowest -> highest
+                        for (int i = 0; i < barangArrayList.size() - 1; i++) {
+                            for (int j = 0; j < barangArrayList.size() - i - 1; j++) {
+                                if (Double.parseDouble(barangArrayList.get(j).getHargaAsli()) > Double.parseDouble(barangArrayList.get(j + 1).getHargaAsli())) {
+                                    // Swap the elements
+                                    ModelBarang temp = barangArrayList.get(j);
+                                    barangArrayList.set(j, barangArrayList.get(j + 1));
+                                    barangArrayList.set(j + 1, temp);
+                                }
+                            }
+                        }
+
+                        // setup adapter
+                        adapterBarangUser = new AdapterBarangUser(mContext, barangArrayList);
+                        // set adapter
+                        productsRv.setAdapter(adapterBarangUser);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }
+    private void loadAllBarangPriceHighest() {
+        barangArrayList = new ArrayList<>();
+        // get all barang
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        databaseReference
+                .child("" + ((DetailPasar) mContext).tokoUid)
+                .child("Barang")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        // before getting list reset
+                        barangArrayList.clear();
+
+                        for (DataSnapshot s : snapshot.getChildren()) {
+                            try {
+                                ModelBarang modelBarang = s.getValue(ModelBarang.class);
+                                barangArrayList.add(modelBarang);
+                            } catch (Exception e) {
+                                Log.e(TAG, "onDataChange: ", e);
+                            }
+                        }
+
+                        // Bubble sort implementation for price highest -> lowest
+                        for (int i = 0; i < barangArrayList.size() - 1; i++) {
+                            for (int j = 0; j < barangArrayList.size() - i - 1; j++) {
+                                if (Double.parseDouble(barangArrayList.get(j).getHargaAsli()) < Double.parseDouble(barangArrayList.get(j + 1).getHargaAsli())) {
+                                    // Swap the elements
+                                    ModelBarang temp = barangArrayList.get(j);
+                                    barangArrayList.set(j, barangArrayList.get(j + 1));
+                                    barangArrayList.set(j + 1, temp);
+                                }
                             }
                         }
 
