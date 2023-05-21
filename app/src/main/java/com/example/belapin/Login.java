@@ -136,7 +136,7 @@ public class Login extends AppCompatActivity {
     }
 
     private void CheckUserType() {
-        // check if user is seller, start seller page, otherwise start user page
+        // check if user is seller, start seller page, otherwis e start user page
         DatabaseReference reference = FirebaseDatabase.
                 getInstance("https://belapin2-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users");
         reference.orderByChild("uid").equalTo(firebaseAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {

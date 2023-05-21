@@ -6,9 +6,9 @@ public class Constants {
     public static final String[] kategoriBarang = {
             "Vegetables",
             "Meat",
-            "Seasoning",
-            "Price Lowest",
-            "Price Highest"
+            "Seasoning"
+//            "Price Lowest",
+//            "Price Highest"
     };
 
     public static final String[] kategoriBarang1 = {

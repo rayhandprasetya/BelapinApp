@@ -21,6 +21,9 @@
         android:theme="@style/AppTheme.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".ReccomendationMarket"
+            android:exported="false" />
+        <activity
             android:name=".OrderDetailsSellerActivity"
             android:exported="false" />
         <activity

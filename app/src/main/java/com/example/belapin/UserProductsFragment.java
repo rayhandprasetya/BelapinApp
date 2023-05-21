@@ -267,7 +267,7 @@ public class UserProductsFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                        // before getting list reset
+
                         for (DataSnapshot s : snapshot.getChildren()) {
                             String barangKategori = "" + s.child("barangKategori").getValue();
 

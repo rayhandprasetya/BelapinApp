@@ -32,7 +32,7 @@ import java.util.HashMap;
 public class UserPage extends AppCompatActivity {
 
     private TextView namaAkun, emailAkun;
-    private ImageView tabToko, tabOrder, foodMenu;
+    private ImageView tabToko, tabOrder, reccomendation;
     private ImageButton tombolKeluar;
     private RelativeLayout catalog, riwayat;
     private RecyclerView tokoTampilan, belanjaanHistory;
@@ -60,7 +60,7 @@ public class UserPage extends AppCompatActivity {
         catalog = findViewById(R.id.catalog);
         riwayat = findViewById(R.id.riwayat);
         tokoTampilan = findViewById(R.id.tokoTampilan);
-//        foodMenu = findViewById(R.id.foodMenu);
+        reccomendation = findViewById(R.id.recommendationMarket);
         belanjaanHistory = findViewById(R.id.belanjaanHistory);
 //        belanjaanHistory.setLayoutManager(new LinearLayoutManager(UserPage.this));
 
@@ -88,13 +88,13 @@ public class UserPage extends AppCompatActivity {
             }
         });
 
-//        foodMenu.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(UserPage.this, FoodMenu.class);
-//                startActivity(intent);
-//            }
-//        });
+        reccomendation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UserPage.this, ReccomendationMarket.class);
+                startActivity(intent);
+            }
+        });
 
         tabOrder.setOnClickListener(new View.OnClickListener() {
             @Override

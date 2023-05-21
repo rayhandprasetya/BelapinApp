@@ -279,7 +279,7 @@ public class TambahBarang extends AppCompatActivity {
                                                 // success add data to db
                                                 Log.d(TAG, "onSuccess: uploaded");
                                                 progressDialog.dismiss();
-                                                Toast.makeText(TambahBarang.this, "Barang berhasil ditambahkan", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(TambahBarang.this, "Product was successfully added", Toast.LENGTH_SHORT).show();
                                                 clearData();
                                             }
                                         }).addOnFailureListener(new OnFailureListener() {

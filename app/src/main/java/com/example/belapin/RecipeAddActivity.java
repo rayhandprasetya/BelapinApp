@@ -276,7 +276,7 @@ public class RecipeAddActivity extends AppCompatActivity {
     private void showImageDialog() {
         String[] options = {"Kamera", "Galeri"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Pilih gambar").setItems(options, new DialogInterface.OnClickListener() {
+        builder.setTitle("Choose image").setItems(options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (i == 0) {

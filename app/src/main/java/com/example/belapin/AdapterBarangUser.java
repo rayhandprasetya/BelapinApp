@@ -194,7 +194,7 @@ public class AdapterBarangUser extends RecyclerView.Adapter<AdapterBarangUser.Ho
                 String harga = hargaTotal.getText().toString().trim().replace("Rp", "");
                 String kuantitiL = kuantitiTambahKurang.getText().toString().trim();
 
-                // add to database (SQLite)
+                // add to database
                 tambahKeranjang(barangId, judulL, hargaSatuan, harga, kuantitiL);
 
                 dialog.dismiss();

@@ -180,7 +180,7 @@ public class DetailPasar extends AppCompatActivity {
         else {
             // have barang in keranjang, then show hitung keranjang textview and set hitung
             totalBarangKeranjang.setVisibility(View.VISIBLE);
-            totalBarangKeranjang.setText(""+hitung); // concatenate with string because cant set integer in textview
+                totalBarangKeranjang.setText(""+hitung); // concatenate with string because cant set integer in textview
         }
     }
 
